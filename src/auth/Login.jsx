@@ -72,19 +72,34 @@ export default function Login() {
   };
 
   //TESTED DB FETCH ID
-    //adding a friend, need to change to u
-    const addFriends = async ()=>{
+  //done with vibe
+    //adding a vibe, mutual still false
+    const vibe = async ()=>{
       try {
         const { data, error } = await supabase
       .from('Vibe')
       .insert([
-      { friendId: 13, userId: 6 },
+      { friendId: 6, userId: 10 },
     ])
     console.log('clicked')
       } catch (error) {
         console.log(error)
       }
     }
+
+    //delete a vibe && setMutual false
+    const deleteVibe = async (userId, friendId)=>{
+      try {
+        const { data, error } = await supabase
+      .from('Vibe')
+      .delete()
+      .match({userId:userId,friendId:friendId})
+      let {data:deleteMutual}  = await supabase.from('Vibe').update({ mutual: 'false' }).match({ userId:friendId, friendId:userId })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
   
   // fetching user's friends
   const superbaseDB = async () => {
@@ -97,7 +112,7 @@ export default function Login() {
       .from("User")
       .select("*")
       .eq("id",friend.friendId)))
-      console.log("after map",users)
+      console.log("after map",users[0].data)
     } catch (error) {
       console.log(error);
     }
@@ -118,37 +133,50 @@ export default function Login() {
   }
 
   //checkFriend
-  const checkFriend = async() => {
+  //ex. check before writing on wall
+  const checkMutual = async() => {
     try {
-      let {data:userA, error} = await supabase
-      .from('Vibe')
-      .select('*')
-      .eq("userId",6)
-      console.log(userA)
-      let {data:userB} = await supabase
-      .from('Vibe')
-      .select('*')
-      .eq("userId",13)
-      console.log(userB)
-      
-      let { data : user6}  = 
-      await supabase.from("Vibe").select("mutual").match({userId:6,friendId:13})
-      // let user13 = user6.filter(user=>user.friendId ===13)
-      let {data:mutual}  = await supabase
-      .from('Vibe')
-      .update({ mutual: 'true' })
-      .match({userId:6,friendId:13})
-
-      console.log('user6',user6)
-      console.log('mutual',mutual)
-
+      //find status of one user's mutual, if one is true assume the other is also true. in this case checking userid 6
+      let {data : user}  = await supabase.from("Vibe").select("mutual").match({userId:6,friendId:10})
+      console.log(user)
     } catch (error) {
       console.log(error)
     }
   }
 
+  //change status to true on both user rows
+  const setMutual = async()=>{
+      //update mutual status of one user, if one is false, will need to update the other one
+      try{
+      let {data:setMutualA}  = await supabase.from('Vibe').update({ mutual: 'true' }).match({userId:6,friendId:10})
+      console.log(setMutualA)
+      let {data:setMutualB}  = await supabase.from('Vibe').update({ mutual: 'true' }).match({userId:10,friendId:6})
+      console.log(setMutualB)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+//Jerry goes to Le's page they are strangers, useEffect runs SELECT on Vibe table JerryUser and LeFriend check if row exists, 
+//if return null, you did not vibe yet, so vibe button is "VIBE".
+//Jerry clicks on vibe,  it will run the vibe function to add the row with jerry USER le Friend.
+//check relationship exist in the opposite, where Le user Jerry friend. if both rows exist, run setMutual. 
+//with Le's Userid check Jerry Friendid,if returns null = then dont do anything.
+//if returns a row, then run setMutual on both side.
+
+//if returns a row,button will show "VIBED" check mutual value.
+    //if mutual=true, allow write on wall. else cannot write on wall
+
+ 
+//two days, Le goes on Jerrys page after jerry already vibed, useEffects run checkmutual(), which still return false at this point. Le clicks on vibe, whichs runs the vibe function to add row Le User Jerry Friend. where Jerry user Le friend. if both rows exist, run setMutual.
+
+
+//removeVibe
+
+
+
   return (
-    
     <div>
       <h1 className="flex justify-center items-center font-medium text-6xl">
         Vibe
@@ -172,9 +200,11 @@ export default function Login() {
             Welcome
           </h1>
           <button onClick={superbaseDB}>getfriend</button>
-          <button onClick={addFriends}>addfriend</button>
+          <button onClick={vibe}>Vibe</button>
           <button onClick={addCategories}>addCategories</button>
-          <button onClick={checkFriend}>checkfriend</button>
+          <button onClick={checkMutual}>checkMutual</button>
+          <button onClick={setMutual}>setMutual</button>
+          <button onClick={()=>deleteVibe(6,10)}>deleteVibe</button>
           <a className="flex justify-center items-center">
             <button
               className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
