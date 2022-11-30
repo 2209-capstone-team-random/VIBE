@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchUserArtists, fetchUserTracks } from "../redux/userTopItems";
+import { fetchCurrentUserProfile } from "../redux/userProfile";
 
 export default function Login() {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -33,22 +37,29 @@ export default function Login() {
   const [myInfo, setMyInfo] = useState([]);
   const [searchKey, setSearchKey] = useState("");
 
+  const dispatch = useDispatch();
+
   // Set Token and store in Local Storage
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
 
     if (!token && hash) {
-      token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
+      let urlParams = new URLSearchParams(hash.replace("#", "?"));
+      token = urlParams.get("access_token");
+      // token = hash
+      //   .substring(1)
+      //   .split("&")
+      //   .find((elem) => elem.startsWith("access_token"))
+      //   .split("=")[1];
 
       window.location.hash = "";
       window.localStorage.setItem("token", token);
     }
     setToken(token);
+    dispatch(fetchUserArtists(token));
+    dispatch(fetchUserTracks(token));
+    dispatch(fetchCurrentUserProfile(token));
   }, []);
 
   // Remove Token from Local Storage
@@ -141,43 +152,6 @@ export default function Login() {
   //   }
   // };
 
-  // // GET Current User's Profile
-  // const getCurrentUserProfile = async () => {
-  //   try {
-  //     const { data } = await axios.get("https://api.spotify.com/v1/me", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // GET Current User's Top Items (Artists or Tracks)
-  const getCurrentUserTopItems = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://api.spotify.com/v1/me/top/tracks",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          params: {
-            time_range: "short_term",
-          },
-        }
-      );
-      setMyInfo(data.items);
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   // // GET Genres
   // const getGenres = async () => {
   //   try {
@@ -239,21 +213,21 @@ export default function Login() {
           <h1 className="flex justify-center items-center font-medium text-3xl">
             Welcome
           </h1>
-          <a className="flex justify-center items-center">
+          {/* <a className="flex justify-center items-center">
             <button
               className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
-              onClick={getCurrentUserTopItems}
+              // onClick={() => dispatch(fetchUserArtists(token))}
             >
               Get My Info
             </button>
-            {/* <form onSubmit={searchArtists}>
+            <form onSubmit={searchArtists}>
               <input
                 type="text"
                 onChange={(e) => setSearchKey(e.target.value)}
               />
               <button type={"submit"}>Search</button>
-            </form> */}
-          </a>
+            </form>
+          </a> */}
           <a className="flex justify-center items-center h-screen p-20">
             <button
               className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
