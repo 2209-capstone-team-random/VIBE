@@ -360,7 +360,6 @@ console.log('clicked')
           <button onClick={setMutual}>setMutual</button>
           <button onClick={()=>deleteVibe(6,10)}>deleteVibe</button>
           <button onClick={postOnWall}>postOnWall</button>
-          <a className="flex justify-center items-center">
 
           {/* <a className="flex justify-center items-center">
 
@@ -387,7 +386,9 @@ console.log('clicked')
             </button>
           </a>
         </div>
-      )}
+        )
+      }
     </div>
-  );
-}
+);
+        }
+        
