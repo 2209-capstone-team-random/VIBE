@@ -148,6 +148,7 @@ export default function Login() {
   }
 
   return (
+    
     <div>
       <h1 className="flex justify-center items-center font-medium text-6xl">
         Vibe
