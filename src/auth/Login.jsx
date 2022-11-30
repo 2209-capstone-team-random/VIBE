@@ -118,7 +118,7 @@ export default function Login() {
     }
   };
 
-  //
+  //add categories upon 1st time User's pick
   const addCategories =async ()=>{
     try {
       let { data: users, error } = await supabase
@@ -132,7 +132,7 @@ export default function Login() {
     }
   }
 
-  //checkFriend
+  //checkMutual 
   //ex. check before writing on wall
   const checkMutual = async() => {
     try {
@@ -143,6 +143,8 @@ export default function Login() {
       console.log(error)
     }
   }
+
+
 
   //change status to true on both user rows
   const setMutual = async()=>{
@@ -161,19 +163,32 @@ export default function Login() {
 //Jerry goes to Le's page they are strangers, useEffect runs SELECT on Vibe table JerryUser and LeFriend check if row exists, 
 //if return null, you did not vibe yet, so vibe button is "VIBE".
 //Jerry clicks on vibe,  it will run the vibe function to add the row with jerry USER le Friend.
-//check relationship exist in the opposite, where Le user Jerry friend. if both rows exist, run setMutual. 
+//check relationship exist in the opposite, where Le user Jerry friend. if returns a row, then run setMutual on both side.
 //with Le's Userid check Jerry Friendid,if returns null = then dont do anything.
-//if returns a row, then run setMutual on both side.
+
 
 //if returns a row,button will show "VIBED" check mutual value.
     //if mutual=true, allow write on wall. else cannot write on wall
 
- 
 //two days, Le goes on Jerrys page after jerry already vibed, useEffects run checkmutual(), which still return false at this point. Le clicks on vibe, whichs runs the vibe function to add row Le User Jerry Friend. where Jerry user Le friend. if both rows exist, run setMutual.
 
 
-//removeVibe
 
+//WALL POSTS
+//(posterId)userID_ONE writes on (userId)userID_TWO's wall.
+const postOnWall = async ()=>{
+  try {
+    const { data:wallpost, error } = await supabase
+    .from('Wall_Post')
+    .insert([
+      { userId: 1, posterId:2},
+    ])
+console.log('wallpost',wallpost)
+console.log('clicked')
+  }catch(error){
+    console.log(error)
+  }
+}
 
 
   return (
@@ -205,6 +220,7 @@ export default function Login() {
           <button onClick={checkMutual}>checkMutual</button>
           <button onClick={setMutual}>setMutual</button>
           <button onClick={()=>deleteVibe(6,10)}>deleteVibe</button>
+          <button onClick={postOnWall}>postOnWall</button>
           <a className="flex justify-center items-center">
             <button
               className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
