@@ -57,7 +57,7 @@ export default function Login() {
   const me = async () => {
     try {
       const { data } = await axios.get(
-        "https://api.spotify.com/v1/me/playlists",
+        "https://api.spotify.com/v1/me/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,6 +70,82 @@ export default function Login() {
       console.log(e);
     }
   };
+
+  //TESTED DB FETCH ID
+    //adding a friend, need to change to u
+    const addFriends = async ()=>{
+      try {
+        const { data, error } = await supabase
+      .from('Vibe')
+      .insert([
+      { friendId: 13, userId: 6 },
+    ])
+    console.log('clicked')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  
+  // fetching user's friends
+  const superbaseDB = async () => {
+    try {
+      let { data: friends, error } = await supabase.from("Vibe").select("friendId").eq("userId",6);
+      console.log("before map",friends);
+
+     let users = await Promise.all(friends.map(friend => 
+       supabase
+      .from("User")
+      .select("*")
+      .eq("id",friend.friendId)))
+      console.log("after map",users)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //
+  const addCategories =async ()=>{
+    try {
+      let { data: users, error } = await supabase
+  .from('User_Top_Cat')
+  .select('*') 
+  console.log(users)
+  let filteredUsers = users.filter(user=>user.favCats.includes('pop'))
+  console.log(filteredUsers)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  //checkFriend
+  const checkFriend = async() => {
+    try {
+      let {data:userA, error} = await supabase
+      .from('Vibe')
+      .select('*')
+      .eq("userId",6)
+      console.log(userA)
+      let {data:userB} = await supabase
+      .from('Vibe')
+      .select('*')
+      .eq("userId",13)
+      console.log(userB)
+      
+      let { data : user6}  = 
+      await supabase.from("Vibe").select("mutual").match({userId:6,friendId:13})
+      // let user13 = user6.filter(user=>user.friendId ===13)
+      let {data:mutual}  = await supabase
+      .from('Vibe')
+      .update({ mutual: 'true' })
+      .match({userId:6,friendId:13})
+
+      console.log('user6',user6)
+      console.log('mutual',mutual)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -94,6 +170,10 @@ export default function Login() {
           <h1 className="flex justify-center items-center font-medium text-3xl">
             Welcome
           </h1>
+          <button onClick={superbaseDB}>getfriend</button>
+          <button onClick={addFriends}>addfriend</button>
+          <button onClick={addCategories}>addCategories</button>
+          <button onClick={checkFriend}>checkfriend</button>
           <a className="flex justify-center items-center">
             <button
               className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
