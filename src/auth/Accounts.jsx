@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
@@ -17,9 +17,9 @@ const Account = ({ session }) => {
       const { user } = session;
 
       let { data, error, status } = await supabase
-        .from('profiles')
+        .from("profiles")
         .select(`username, website, avatar_url`)
-        .eq('id', user.id)
+        .eq("id", user.id)
         .single();
 
       if (error && status !== 406) {
@@ -53,7 +53,7 @@ const Account = ({ session }) => {
         updated_at: new Date(),
       };
 
-      let { error } = await supabase.from('profiles').upsert(updates);
+      let { error } = await supabase.from("profiles").upsert(updates);
 
       if (error) {
         throw error;
@@ -68,7 +68,7 @@ const Account = ({ session }) => {
   return (
     <div aria-live="polite">
       {loading ? (
-        'Saving ...'
+        "Saving ..."
       ) : (
         <form onSubmit={updateProfile} className="form-widget">
           <div>Email: {session.user.email}</div>
@@ -77,7 +77,7 @@ const Account = ({ session }) => {
             <input
               id="username"
               type="text"
-              value={username || ''}
+              value={username || ""}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -86,7 +86,7 @@ const Account = ({ session }) => {
             <input
               id="website"
               type="url"
-              value={website || ''}
+              value={website || ""}
               onChange={(e) => setWebsite(e.target.value)}
             />
           </div>
