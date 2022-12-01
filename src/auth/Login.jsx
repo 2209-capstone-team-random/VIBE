@@ -36,6 +36,7 @@ export default function Login() {
   const [token, setToken] = useState("");
   const [myInfo, setMyInfo] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [preview,setPreview] = useState('')
 
   const dispatch = useDispatch();
 
@@ -85,6 +86,35 @@ export default function Login() {
       console.log(e);
     }
   };
+
+  const genre = async () =>{
+    try {
+      const {data} = await axios.get('https://api.spotify.com/v1/recommendations/',
+      {
+        
+      headers:{
+        Authorization: `Bearer ${token}`,
+        'Content-Type' :'application/json',
+      },
+    
+      params:{
+        seed_genres: 'pop,rock',
+        // min_popularity:99,
+        // max_popularity:100
+        target_popularity:100
+        
+      },
+    },
+  )
+  console.log(data)
+     setPreview(data.tracks[0].preview_url)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  
+
 
   // // GET Artist
   // const getArtists = async (artistId) => {
@@ -353,14 +383,17 @@ console.log('clicked')
             Welcome
           </h1>
 
+          {/* <button onClick={me}>me</button> */}
           <button onClick={superbaseDB}>getfriend</button>
-          <button onClick={vibe}>Vibe</button>
+          <button onClick={genre}>Vibe</button>
           <button onClick={addCategories}>addCategories</button>
           <button onClick={checkMutual}>checkMutual</button>
           <button onClick={setMutual}>setMutual</button>
           <button onClick={()=>deleteVibe(6,10)}>deleteVibe</button>
           <button onClick={postOnWall}>postOnWall</button>
-
+        <audio controls>
+          <source src="https://p.scdn.co/mp3-preview/13593a2944a2334aca16bb8e23e15b233afde202?cid=f66d801286b24df78db5be66cb18b8e4"></source>
+        </audio>
           {/* <a className="flex justify-center items-center">
 
             <button

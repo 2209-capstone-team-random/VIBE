@@ -29,7 +29,7 @@ export const fetchCurrentUserProfile = (token) => {
           "Content-Type": "application/json",
         },
       });
-      console.log(data);
+      // console.log(data);
       dispatch(setCurrentUserProfile(data));
     } catch (err) {
       console.log(err);
@@ -49,7 +49,7 @@ export const fetchUserProfile = (token, userId) => {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       dispatch(setCurrentUserProfile(data));
     } catch (err) {
       console.log(err);
