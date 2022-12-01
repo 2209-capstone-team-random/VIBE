@@ -165,6 +165,9 @@ export default function playerReducer(state = initialState, action) {
     case CHANGE_VOLUME: {
       return action.playbackState;
     }
+    case AUDIO_SEEK: {
+      return action.playbackState;
+    }
 
     default:
       return state;
