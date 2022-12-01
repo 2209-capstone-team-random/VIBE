@@ -9,41 +9,13 @@ import {
 } from "../redux/Spotify/userTopItems";
 import { fetchCurrentUserProfile } from "../redux/Spotify/userProfile";
 import { fetchPlaybackState } from "../redux/Spotify/player";
+import AUTH_URL from "./Auth_Url";
 
 export default function Login() {
-  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
-  const CLIENT_ID = "f66d801286b24df78db5be66cb18b8e4";
-  const REDIRECT_URI = "http://localhost:5173/";
-  const RESPONSE_TYPE = "token";
-  const scope = `ugc-image-upload
-    user-modify-playback-state
-    user-read-playback-state
-    user-read-currently-playing
-    streaming
-    app-remote-control
-    user-library-modify
-    user-library-read
-    user-top-read
-    user-read-email
-    user-read-private
-    user-read-playback-position
-    user-read-recently-played
-    user-follow-read
-    user-follow-modify
-    playlist-read-private
-    playlist-read-collaborative
-    playlist-modify-public
-    playlist-modify-private`;
-
-  const AUTH_URL = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scope}`;
-
   const [token, setToken] = useState("");
-  const [myInfo, setMyInfo] = useState([]);
-  const [searchKey, setSearchKey] = useState("");
 
   const dispatch = useDispatch();
 
-  // Set Token and store in Local Storage
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -72,143 +44,6 @@ export default function Login() {
     setToken("");
     window.localStorage.removeItem("token");
   };
-
-  const me = async () => {
-    try {
-      const { data } = await axios.get("https://api.spotify.com/v1/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setMyInfo(data.items);
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // // GET Artist
-  // const getArtists = async (artistId) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.spotify.com/v1/artists/${artistId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // GET Several Artists
-  // const getSeveralArtists = async (artist1, artist2, artist3) => {
-  //   try {
-  //     const { data } = await axios.get("https://api.spotify.com/v1/artists", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       params: {
-  //         ids: `${artist1},${artist2},${artist3}`, // separate artist ids by comma
-  //       },
-  //     });
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // GET Artist's Albums
-  // const getArtistAlbums = async (artistId) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.spotify.com/v1/artists/${artistId}/albums`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // Search Artists
-  // const searchArtists = async (e) => {
-  //   e.preventDefault();
-  //   const { data } = await axios.get("https://api.spotify.com/v1/search", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     params: {
-  //       q: searchKey,
-  //       type: "artist",
-  //     },
-  //   });
-  //   console.log(data);
-  // };
-
-  // // GET User's Saved Albums
-  // const getUserSavedAlbums = async () => {
-  //   try {
-  //     const { data } = await axios.get("https://api.spotify.com/v1/me/albums", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // GET Genres
-  // const getGenres = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       "https://api.spotify.com/v1/browse/categories",
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         params: {
-  //           country: "US",
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // GET Playlist
-  // const getPlaylist = async (playlistId) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.spotify.com/v1/playlists/${playlistId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   //TESTED DB FETCH ID
   //done with vibe

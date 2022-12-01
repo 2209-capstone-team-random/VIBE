@@ -5,13 +5,11 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store";
 import App from "./App";
-import Login from "./auth/Login";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <App /> */}
-      <Login />
+      <App />
     </Provider>
   </React.StrictMode>
 );
