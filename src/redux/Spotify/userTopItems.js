@@ -35,7 +35,7 @@ export const fetchUserArtists = (token) => {
           },
         }
       );
-      console.log(items);
+      console.log("CURRENT USER TOP ARTISTS", items);
       dispatch(setUserArtists(items));
     } catch (err) {
       console.log(err);
@@ -58,7 +58,7 @@ export const fetchUserTracks = (token) => {
           },
         }
       );
-      console.log(items);
+      console.log("CURRENT USER TOP TRACKS", items);
       dispatch(setUserArtists(items));
     } catch (err) {
       console.log(err);
