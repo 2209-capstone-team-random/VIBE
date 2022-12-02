@@ -4,7 +4,7 @@ import axios from "axios";
 import AUTH_URL from "./Auth_Url";
 import TopArtists from "../components/Home/TopArtists";
 import TopTracks from "../components/Home/TopTracks";
-import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/Login/LoginPage";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -32,20 +32,20 @@ export default function Auth() {
     window.localStorage.removeItem("token");
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({ email });
-      if (error) throw error;
-      alert("Check your email for the login link!");
-    } catch (error) {
-      alert(error.error_description || error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     setLoading(true);
+  //     const { error } = await supabase.auth.signInWithOtp({ email });
+  //     if (error) throw error;
+  //     alert("Check your email for the login link!");
+  //   } catch (error) {
+  //     alert(error.error_description || error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div>
@@ -89,18 +89,7 @@ export default function Auth() {
           <TopTracks token={token} />
         </div>
       ) : (
-        <LoginPage />
-        // <a
-        //   className="flex justify-center items-center h-screen p-20"
-        //   href={AUTH_URL}
-        // >
-        //   {/* <button
-        //     className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
-        //     type="submit"
-        //   >
-        //     Login
-        //   </button> */}
-        // </a>
+        <LoginPage /> 
       )}
     </div>
   );

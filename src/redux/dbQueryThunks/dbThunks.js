@@ -1,6 +1,18 @@
  //TESTED DB FETCH ID
   //done with vibe
   //adding a vibe, mutual still false
+
+  //check if user exist in DB
+
+export const checkExistUser = async () => {
+    try { 
+  let { data: User, error } = await supabase
+  .from('User')
+  .select('id')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   export const vibe = async () => {
     try {
       const { data, error } = await supabase
@@ -163,3 +175,20 @@ const getPoster = async () => {
     console.log(error);
   }
 };
+
+// adding user into db, insert
+
+const insertUser = async (url,spotifyId,display_name) => {
+  try {
+    const { data, error } = await supabase
+  .from('User')
+  .insert([
+    { url,spotifyId,display_name},
+  ])
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+//after submit top cat, genre, onsubmit will trigger this setFirsttimeuser to false
