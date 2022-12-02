@@ -4,6 +4,8 @@ import axios from "axios";
 import AUTH_URL from "./Auth_Url";
 import TopArtists from "../components/Home/TopArtists";
 import TopTracks from "../components/Home/TopTracks";
+import Player from "../components/Home/Player";
+
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -72,7 +74,7 @@ export default function Auth() {
         Navbar placeholder
       </h1>
       {token ? (
-        <div className="">
+        <div>
           <div className="flex space-x-2 justify-end">
             <button
               className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
@@ -83,11 +85,11 @@ export default function Auth() {
               </span>
             </button>
           </div>
-          {/* <h1 className="flex justify-center items-center font-medium text-3xl">
-            Welcome
-          </h1> */}
-          <TopArtists token={token} />
-          <TopTracks token={token} />
+          <div>
+            <TopArtists token={token} />
+            {/* <TopTracks token={token} />; */}
+            <Player token={token} />
+          </div>
         </div>
       ) : (
         <a

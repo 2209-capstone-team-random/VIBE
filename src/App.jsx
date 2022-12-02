@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Auth from "./auth/Auth";
 import Account from "./auth/Accounts";
-import Login from "./auth/Login";
+import AllRoutes from "./Routes";
 // import * as dotenv from 'dotenv';
 // dotenv.config();
 
@@ -21,9 +21,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="container" style={{ padding: "50px 0 100px 0" }}>
+    <div>
       {!session ? (
-        <Auth />
+        <AllRoutes />
       ) : (
         <Account key={session.user.id} session={session} />
       )}
