@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Auth from "./auth/Auth";
 import Account from "./auth/Accounts";
-import Login from "./auth/Login";
+
 // import * as dotenv from 'dotenv';
 // dotenv.config();
 
