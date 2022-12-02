@@ -5,7 +5,6 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchUserArtists, fetchUserTracks } from "../redux/userTopItems";
 import { fetchCurrentUserProfile } from "../redux/userProfile";
-import { getURL } from "next/dist/shared/lib/utils";
 
 export default function Login() {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -37,7 +36,6 @@ export default function Login() {
   const [token, setToken] = useState("");
   const [myInfo, setMyInfo] = useState([]);
   const [searchKey, setSearchKey] = useState("");
-  const [preview, setPreview] = useState("");
 
   const dispatch = useDispatch();
 
@@ -81,32 +79,6 @@ export default function Login() {
       console.log(data);
     } catch (e) {
       console.log(e);
-    }
-  };
-
-  const genre = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://api.spotify.com/v1/recommendations/",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-
-          params: {
-            seed_genres: "pop,rock",
-            // min_popularity:99,
-            // max_popularity:100
-            target_popularity: 100,
-            limit: 10,
-          },
-        }
-      );
-      console.log(data);
-      setPreview(data.tracks[0].preview_url);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -262,19 +234,7 @@ export default function Login() {
       console.log(error);
     }
   };
-  const getuser = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("user")
-        .select()
-        .like("genre", "%indie%");
-      console.log(data);
-      const list = data[0].genre.split(" ");
-      console.log(list.filter((genre) => genre === "rock"));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   // fetching user's friends
   const superbaseDB = async () => {
     try {
@@ -393,15 +353,13 @@ export default function Login() {
 
           {/* <button onClick={me}>me</button> */}
           <button onClick={superbaseDB}>getfriend</button>
-          <button onClick={getuser}>Vibe</button>
+          <button onClick={vibe}>Vibe</button>
           <button onClick={addCategories}>addCategories</button>
           <button onClick={checkMutual}>checkMutual</button>
           <button onClick={setMutual}>setMutual</button>
           <button onClick={() => deleteVibe(6, 10)}>deleteVibe</button>
           <button onClick={postOnWall}>postOnWall</button>
-          <audio controls>
-            <source src="https://p.scdn.co/mp3-preview/13593a2944a2334aca16bb8e23e15b233afde202?cid=f66d801286b24df78db5be66cb18b8e4"></source>
-          </audio>
+
           {/* <a className="flex justify-center items-center">
 
             <button

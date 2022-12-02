@@ -10,21 +10,27 @@ const getTopTracks = (track) => {
     track,
   };
 };
-const getUser = (user) => {
+const getUserGenre = (user) => {
   return {
     type: GET_USER,
     user,
   };
 };
 
-export const fetchSimilar = () => {
+export const fetchUserGenre = (genre) => {
   return async (dispatch) => {
-    const { data, error } = await supabase.from("user").select();
-    console.log(data);
-    // dispatch(getUser(data));
-    fetchSimilar();
+    try {
+      const { data, error } = await supabase
+        .from("user")
+        .select()
+        .like("genre", `%${genre}%`);
+      dispatch(getUserGenre(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
+
 export const fetchTopTracks = (genre, token) => {
   return async (dispatch) => {
     try {
@@ -49,10 +55,18 @@ export const fetchTopTracks = (genre, token) => {
   };
 };
 
-export default function discover(state = [], action) {
+const initialState = {
+  users: [],
+  list: [],
+};
+
+export default function discover(state = initialState, action) {
   switch (action.type) {
     case GET_TOP_TRACKS: {
-      return action.track;
+      return { ...state, list: action.track };
+    }
+    case GET_USER: {
+      return { ...state, users: action.user };
     }
 
     default:

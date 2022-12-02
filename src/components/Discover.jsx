@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { fetchTopTracks } from "../redux/discover";
+import { fetchTopTracks, fetchUserGenre } from "../redux/discover";
 import { useDispatch, useSelector } from "react-redux";
 import SongCard from "./SongCard";
+import UserCard from "./UserCard";
+import { list } from "postcss";
 
-const Discover = (props) => {
-  const [genre, setGenre] = useState("");
+const Discover = () => {
+  const [genre, setGenre] = useState(null);
   const dispatch = useDispatch();
 
   let token = window.localStorage.getItem("token");
   useEffect(() => {
+    dispatch(fetchUserGenre(genre));
     dispatch(fetchTopTracks(genre, token));
   }, [genre]);
 
-  const { tracks } = useSelector((state) => state.discover);
+  const { list } = useSelector((state) => state.discover);
+  const { users } = useSelector((state) => state.discover);
+  console.log(users);
   const genres = [
     "hip-hop",
     "pop",
@@ -23,7 +28,6 @@ const Discover = (props) => {
     "r&b",
     "indie",
     "edm",
-    "k-pop",
     "jazz",
   ];
 
@@ -41,14 +45,21 @@ const Discover = (props) => {
           );
         })}
       </div>
-      <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {tracks
-          ? tracks.map((track, i) => {
+      <div className="flex flex-wrap justify-center m-4 gap-8 ">
+        {users
+          ? users.map((user) => {
+              return <UserCard user={user} />;
+            })
+          : ""}
+      </div>
+      <h2 className="text-3xl">{genre}</h2>
+      <div className="flex flex-wrap justify-center m-4 gap-8 ">
+        {list.tracks
+          ? list.tracks.map((track, i) => {
               return <SongCard key={i} track={track} />;
             })
           : ""}
       </div>
-      <div></div>
     </div>
   );
 };
