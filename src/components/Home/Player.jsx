@@ -10,7 +10,7 @@ export default function Player(props) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const token = props.token;
-  console.log("User Playlists", items);
+  // console.log("User Playlists", items);
 
   useEffect(() => {
     dispatch(fetchCurrentUserPlaylists(token));

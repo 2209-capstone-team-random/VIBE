@@ -3,7 +3,6 @@ import { supabase } from "../supabaseClient";
 import axios from "axios";
 import AUTH_URL from "./Auth_Url";
 import TopArtists from "../components/Home/TopArtists";
-import TopTracks from "../components/Home/TopTracks";
 import Player from "../components/Home/Player";
 
 export default function Auth() {
@@ -87,7 +86,6 @@ export default function Auth() {
           </div>
           <div>
             <TopArtists token={token} />
-            {/* <TopTracks token={token} />; */}
             <Player token={token} />
           </div>
         </div>
