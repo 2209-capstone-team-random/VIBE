@@ -3,10 +3,7 @@ import { supabase } from "../supabaseClient";
 import axios from "axios";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  fetchUserArtists,
-  fetchUserTracks,
-} from "../redux/Spotify/userTopItems";
+
 import { fetchCurrentUserProfile } from "../redux/Spotify/userProfile";
 import { fetchPlaybackState } from "../redux/Spotify/player";
 import AUTH_URL from "./Auth_Url";

@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import userTopItemsReducer from "./Spotify/userTopItems";
+import userTopArtistsReducer from "./Spotify/userTopArtists";
+import userTopTracksReducer from "./Spotify/userTopTracks";
 import userProfileReducer from "./Spotify/userProfile";
 import playerReducer from "./Spotify/player";
 
 const appReducer = combineReducers({
-  userTopItems: userTopItemsReducer,
+  userTopArtists: userTopArtistsReducer,
+  userTopTracks: userTopTracksReducer,
   userProfile: userProfileReducer,
   player: playerReducer,
 });

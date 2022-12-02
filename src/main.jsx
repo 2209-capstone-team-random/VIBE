@@ -9,7 +9,13 @@ import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route>
+            <Route path="/*" element={<App />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

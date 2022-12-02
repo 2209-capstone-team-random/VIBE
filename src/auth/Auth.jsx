@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
 import AUTH_URL from "./Auth_Url";
-import Home from "../components/Home/Home";
-
+import TopArtists from "../components/Home/TopArtists";
+import TopTracks from "../components/Home/TopTracks";
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Auth() {
       let urlParams = new URLSearchParams(hash.replace("#", "?"));
       token = urlParams.get("access_token");
 
-      // window.location.hash = "";
+      window.location.hash = "";
       window.localStorage.setItem("token", token);
     }
     setToken(token);
@@ -69,9 +69,27 @@ export default function Auth() {
         )}
       </div> */}
       <h1 className="flex justify-center items-center font-medium text-6xl">
-        Vibe
+        Navbar placeholder
       </h1>
-      {!token ? (
+      {token ? (
+        <div className="">
+          <div className="flex space-x-2 justify-end">
+            <button
+              className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+              onClick={logout}
+            >
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                Logout
+              </span>
+            </button>
+          </div>
+          {/* <h1 className="flex justify-center items-center font-medium text-3xl">
+            Welcome
+          </h1> */}
+          <TopArtists token={token} />
+          <TopTracks token={token} />
+        </div>
+      ) : (
         <a
           className="flex justify-center items-center h-screen p-20"
           href={AUTH_URL}
@@ -83,18 +101,6 @@ export default function Auth() {
             Login
           </button>
         </a>
-      ) : (
-        <div>
-          <div className="flex space-x-2 justify-center">
-            <button
-              className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-              onClick={logout}
-            >
-              Logout
-            </button>
-          </div>
-          <Home />
-        </div>
       )}
     </div>
   );
