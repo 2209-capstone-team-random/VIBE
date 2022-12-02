@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
 import { fetchTopTracks, fetchUserGenre } from "../redux/discover";
 import { useDispatch, useSelector } from "react-redux";
 import SongCard from "./SongCard";
 import UserCard from "./UserCard";
-import { list } from "postcss";
 
 const Discover = () => {
   const [genre, setGenre] = useState(null);
   const dispatch = useDispatch();
 
   let token = window.localStorage.getItem("token");
+
   useEffect(() => {
     dispatch(fetchUserGenre(genre));
     dispatch(fetchTopTracks(genre, token));
@@ -18,14 +17,13 @@ const Discover = () => {
 
   const { list } = useSelector((state) => state.discover);
   const { users } = useSelector((state) => state.discover);
-  console.log(users);
+
   const genres = [
     "hip-hop",
     "pop",
     "rock",
     "country",
     "latin",
-    "r&b",
     "indie",
     "edm",
     "jazz",
@@ -47,8 +45,8 @@ const Discover = () => {
       </div>
       <div className="flex flex-wrap justify-center m-4 gap-8 ">
         {users
-          ? users.map((user) => {
-              return <UserCard user={user} />;
+          ? users.map((user, i) => {
+              return <UserCard key={i} user={user} />;
             })
           : ""}
       </div>

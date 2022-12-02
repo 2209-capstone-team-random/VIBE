@@ -34,21 +34,23 @@ export const fetchUserGenre = (genre) => {
 export const fetchTopTracks = (genre, token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        "https://api.spotify.com/v1/recommendations/",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          params: {
-            seed_genres: genre,
-            target_popularity: 100,
-            limit: 20,
-          },
-        }
-      );
-      dispatch(getTopTracks(data));
+      if (genre) {
+        const { data } = await axios.get(
+          "https://api.spotify.com/v1/recommendations/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            params: {
+              seed_genres: genre,
+              target_popularity: 100,
+              limit: 10,
+            },
+          }
+        );
+        dispatch(getTopTracks(data));
+      }
     } catch (error) {
       console.log(error);
     }
