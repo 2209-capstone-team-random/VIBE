@@ -2,7 +2,7 @@ import "./styles/index.css";
 import React, { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Auth from "./auth/Auth";
-import Account from "./auth/Accounts";
+// import Account from "./auth/Accounts";
 
 // import * as dotenv from 'dotenv';
 // dotenv.config();

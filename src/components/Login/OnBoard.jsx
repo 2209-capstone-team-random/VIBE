@@ -1,10 +1,9 @@
 import React from "react";
 import Bee from "../../assets/bee.png";
 import CatCard from "../Cards/CatCard";
-import video from "../../assets/connect2.mp4";
 import { motion } from "framer-motion";
-
-const FirstLogin = () => {
+import video from "../../assets/connect2.mp4"
+const OnBoard = () => {
   const bounceTransition = {
     y: {
       duration: 1,
@@ -13,14 +12,14 @@ const FirstLogin = () => {
     },
   };
   return (
-    <div className="w-full h-full relative">
-      <video
-        className="bg-cover w-full h-full object-cover"
-        src={video}
-        autoPlay
-        loop
-        muted
-      />
+    <div className="w-full h-screen relative">
+    <video
+      className="bg-cover w-full h-full object-cover"
+      src={video}
+      autoPlay
+      loop
+      muted
+    />
       <div className="absolute top-0 w-full h-full flex flex-col justify-center text-center text-white p-4 bg-gray-900/30">
         <div className="absolute inset-x-0 top-0">
           <motion.span
@@ -38,8 +37,8 @@ const FirstLogin = () => {
           <CatCard />
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
-export default FirstLogin;
+export default OnBoard;

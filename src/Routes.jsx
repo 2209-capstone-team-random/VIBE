@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store";
 import App from "./App";
-import LoginPage from "./components/Login/LoginPage"
 import Landing from "./components/Login/Landing"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -14,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<App />} />
-          <Route path='/intake' element={<LoginPage/>} />
+          <Route path='/signIn' element={<Landing/>} />
         </Routes>
       </BrowserRouter>
     </Provider>

@@ -1,6 +1,8 @@
 import React from 'react'
 import AUTH_URL from "../../auth/Auth_Url";
+
 const LoginButton = () => {
+
   return (
     <div className="p-7">
           <a href={AUTH_URL}>

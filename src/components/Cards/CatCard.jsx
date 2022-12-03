@@ -1,50 +1,28 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 const CatCard = () => {
 
+  const color = ['bg-red-700', 'bg-green-700', 'bg-blue-800', 'bg-yellow-800', 'bg-pink-600', 'bg-gray-600 ', 'bg-gray-800','bg-orange-800']
+  const categories = ['ROCK', 'POP', 'EDM', 'HIP HOP', 'LATIN', 'INDIE', 'COUNTRY', 'R&B']
+  // const image =[]
+  const cat = categories.map((el, idx) =>
+    <div key = {`cat${idx}`} className={`hover:shadow delay-50 duration-100 ${color[idx]} p-5 rounded-lg w-40 group`} href="">
+  <img src="https://picsum.photos/250/250" className="w-full rounded shadow" />
+      <h3 className="text-gray-200 font-bold mt-5">{ el }</h3>
+    </div>)
+
+const [catePicked,setCatePicked] = useState(0)
+console.log(catePicked)
+
+const clickHandler = ()=>{
+ if(catePicked<3){
+  setCatePicked(catePicked+1)
+ }
+}
+
   return (
-
-    <div class="flex items-center justify-center absolute space-x-4 flex-wrap ">
-      
-  <div class="hover:bg-black delay-50 duration-100 bg-red-700 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> ROCK</h3>
-      </div>
-      
-      <div class="hover:bg-black delay-50 duration-100 bg-green-700 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> POP</h3>
-      </div>
-
-      <div class="hover:bg-black delay-50 duration-100 bg-blue-800 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> EDM</h3>
-      </div>
-      
-      <div class="hover:bg-black delay-50 duration-100 bg-yellow-800 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> HIP HOP</h3>
-      </div>
-
-      <div class="hover:bg-black delay-50 duration-100 bg-pink-600 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> LATIN </h3>
-      </div>
-
-      <div class="hover:bg-black delay-50 duration-100 bg-gray-600 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> INDIE</h3>
-      </div>
-
-      <div class="hover:bg-black delay-50 duration-100 bg-gray-800 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> COUNTRY</h3>
-      </div>
-
-      <div class="hover:bg-black delay-50 duration-100 bg-orange-800 p-5 rounded-lg w-40 group" href="">
-    <img src="https://picsum.photos/250/250" class="w-full rounded shadow" />
-    <h3 class="text-gray-200 font-bold mt-5"> R&B</h3>
-      </div>
+    <div className="flex items-center justify-center absolute space-x-4 space-4 flex-wrap " onClick = {()=>clickHandler()}>
+      {cat}
 </div>
   )
 }
