@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
 import AUTH_URL from "./Auth_Url";
+import CurrentUserProfile from "../components/Home/currentUserProfile";
 import TopArtists from "../components/Home/TopArtists";
 import Player from "../components/Home/Player";
 
@@ -74,19 +75,13 @@ export default function Auth() {
       </h1>
       {token ? (
         <div>
-          <div className="flex space-x-2 justify-end">
-            <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
-              onClick={logout}
-            >
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                Logout
-              </span>
+          <div className="flex space-x-2 justify-end mr-24">
+            <button className="btn btn-sm btn-accent mb-4" onClick={logout}>
+              Logout
             </button>
           </div>
-          <div>
-            <TopArtists token={token} />
-            <Player token={token} />
+          <div className="flex justify-center">
+            <CurrentUserProfile token={token} />
           </div>
         </div>
       ) : (
@@ -94,10 +89,7 @@ export default function Auth() {
           className="flex justify-center items-center h-screen p-20"
           href={AUTH_URL}
         >
-          <button
-            className="bg-teal-500 hover:bg-teal-700 h-10 w-40 active:ring"
-            type="submit"
-          >
+          <button className="btn btn-sm btn-accent" type="submit">
             Login
           </button>
         </a>

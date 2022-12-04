@@ -31,6 +31,9 @@ export default function TopTracks(props) {
             {items.map((item) => {
               return (
                 <SwiperSlide key={item.id}>
+                  <h1 className="text-center text-lg font-semibold mt-2">
+                    Top Tracks
+                  </h1>
                   <img src={item.album.images[0].url} className="p-4" />
                   <p className="text-center font-semibold mt-4">{item.name}</p>
                   <p className="text-center">{item.artists[0].name}</p>

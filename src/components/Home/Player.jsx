@@ -17,7 +17,7 @@ export default function Player(props) {
   }, []);
   if (items) {
     return (
-      <div className="mt-10 sticky z-50">
+      <div className="sticky z-50 mt-10">
         <SpotifyPlayer token={token} uris={[`${items[0].uri}`]} />;
       </div>
     );
