@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Drawer from '../../Drawer';
 
 export default function NavBar(props) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar bg-neutral-100 mb-8">
       <div className="navbar-start">
@@ -96,25 +98,12 @@ export default function NavBar(props) {
       <div className="navbar-end"></div>
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
+          <div onClick={() => setIsOpen(!isOpen)} className="w-10 rounded-full">
             <img src="https://i.pinimg.com/564x/67/e5/bb/67e5bba8b7e5d23c035bb7b0595581d0.jpg" />
           </div>
         </label>
-        <ul
-          tabIndex={0}
-          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-        >
-          <li>
-            <a className="justify-between">Edit Profile</a>
-          </li>
-          <li>
-            <a>Friends List</a>
-          </li>
-          <li>
-            <a>Dark Mode</a>
-          </li>
-        </ul>
       </div>
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen}></Drawer>
     </div>
   );
 }
