@@ -23,7 +23,7 @@ export const fetchUserTracks = (token) => {
             "Content-Type": "application/json",
           },
           params: {
-            limit: "5",
+            limit: "10",
             time_range: "short_term",
           },
         }

@@ -10,6 +10,8 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import "../../styles/index.css";
 import TopTracks from "./TopTracks";
+import TopGenres from "./TopGenres";
+import WallPosts from "./WallPosts";
 
 export default function TopArtists(props) {
   const dispatch = useDispatch();
@@ -23,8 +25,9 @@ export default function TopArtists(props) {
 
   if (items) {
     return (
-      <div className="">
-        <div className="mt-10">
+      <div className="flex">
+        <WallPosts />
+        <div>
           <Swiper
             navigation={true}
             modules={[Navigation]}
@@ -34,6 +37,9 @@ export default function TopArtists(props) {
               {items.map((item) => {
                 return (
                   <SwiperSlide className="" key={item.id}>
+                    <h1 className="text-center text-lg font-semibold mt-2">
+                      Top Artists
+                    </h1>
                     <img
                       src={item.images[0].url}
                       className="rounded-full resize h-60 w-60 p-4"
@@ -44,8 +50,9 @@ export default function TopArtists(props) {
               })}
             </div>
           </Swiper>
+          <TopTracks token={token} />
+          <TopGenres />
         </div>
-        <TopTracks token={token} />
       </div>
     );
   }
