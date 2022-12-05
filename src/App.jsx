@@ -7,7 +7,7 @@ import CurrentUserProfile from "./components/Home/CurrentUserProfile";
 import OnBoard from "./components/Login/OnBoard";
 import Landing from "./components/Login/Landing";
 import NotFound from "./components/NotFound";
-import Edit from "./components/Profile/Edit";
+import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
 
 const App = () => {
@@ -50,7 +50,7 @@ const App = () => {
       />
       <Route
         path="/editProfile"
-        element={<Edit token={token} session={session} />}
+        element={<EditProfile token={token} session={session} />}
       />
       <Route path="*" element={<NotFound token={token} session={session} />} />
     </Routes>
