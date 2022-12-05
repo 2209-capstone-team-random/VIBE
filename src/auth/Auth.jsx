@@ -1,38 +1,60 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Landing from "../components/Login/Landing";
+import { getUser } from "../redux/dbQueryThunks/user";
+import OnBoard from "../components/Login/OnBoard";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
 import AUTH_URL from "./Auth_Url";
 import CurrentUserProfile from "../components/Home/currentUserProfile";
-import TopArtists from "../components/Home/TopArtists";
-import Player from "../components/Home/Player";
 import NavBar from "../components/Home/Navbar";
 
 export default function Auth() {
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
+  const [isFirstTime, setIsFirstTime] = useState(true);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state);
 
-  useEffect(() => {
-    // Set Token and store in Local Storage
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
-
-    if (!token && hash) {
-      let urlParams = new URLSearchParams(hash.replace("#", "?"));
-      token = urlParams.get("access_token");
-
-      window.location.hash = "";
-      window.localStorage.setItem("token", token);
+  //check user status if NOT firsttime user,firsttime false renders home component.
+  // const [isFirstTime, setIsFirstTime] = useState(true);
+  // const { user } = useSelector((state) => state)
+  const checkUserState = () => {
+    if (user[0].isFirstTimeUser === false) {
+      setIsFirstTime(false);
     }
-    setToken(token);
-  }, []);
-
-  // Remove Token from Local Storage
-  const logout = () => {
-    setToken("");
-    window.localStorage.removeItem("token");
   };
 
+  //load user info on pageload and run checkUserStat
+  useEffect(() => {
+    dispatch(getUser(10));
+  }, []);
+
+  useEffect(() => {
+    if (user !== null) {
+      checkUserState();
+    }
+  }, [user]);
+
+  // useEffect(() => {
+  //   // Set Token and store in Local Storage
+  //   const hash = window.location.hash;
+  //   let token = window.localStorage.getItem("token");
+
+  //   if (!token && hash) {
+  //     let urlParams = new URLSearchParams(hash.replace("#", "?"));
+  //     token = urlParams.get("access_token");
+  //     window.location.hash = "";
+  //     window.localStorage.setItem("token", token);
+  //   }
+  //   setToken(token);
+  // }, []);
+
+  // //need user Id
+
+  // // Remove Token from Local Storage
+  // const logout = () => {
+  //   setToken("");
+  //   window.localStorage.removeItem("token");
   // const handleLogin = async (e) => {
   //   e.preventDefault();
 
@@ -50,6 +72,12 @@ export default function Auth() {
 
   return (
     <div>
+      {token && isFirstTime ? (
+        <OnBoard />
+      ) : token && !isFirstTime ? (
+        <Home logout={logout} token={token} />
+      ) : (
+        <Landing />
       {/* <div className="col-6 form-widget" aria-live="polite">
         <h1 className="header">Supabase + React</h1>
         {loading ? (

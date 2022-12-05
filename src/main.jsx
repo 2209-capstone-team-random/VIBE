@@ -6,14 +6,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store";
 import App from "./App";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
+      <App/>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
-);
+  /* </React.StrictMode> */
+
+); 
