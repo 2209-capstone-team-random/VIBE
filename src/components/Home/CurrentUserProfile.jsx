@@ -13,6 +13,7 @@ import SpotifyPlayer from "react-spotify-web-playback";
 import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 import NameBio from "./NameBio";
 import WallPosts from "./WallPosts";
+import NavBar from "./Navbar";
 
 export default function CurrentUserProfile(props) {
   const token = props.token;
@@ -28,7 +29,8 @@ export default function CurrentUserProfile(props) {
   console.log(uris);
   if (items) {
     return (
-      <div>
+      <div className="grid justify-items-center">
+        <NavBar />
         <NameBio />
         <TopArtists token={token} />
         <div className="sticky z-50 bottom-0 mt-10">
