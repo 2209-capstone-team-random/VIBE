@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation, EffectFade } from "swiper";
-import "../../styles/index.css";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchUserTracks } from '../../redux/Spotify/userTopTracks';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation, EffectFade } from 'swiper';
+import '../../styles/index.css';
 
 export default function TopTracks(props) {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function TopTracks(props) {
 
   useEffect(() => {
     dispatch(fetchUserTracks(token));
-  }, []);
+  }, [token]);
   if (items) {
     return (
       <div className="mt-4">
