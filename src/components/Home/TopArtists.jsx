@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper";
-import "../../styles/index.css";
-import TopTracks from "./TopTracks";
-import TopGenres from "./TopGenres";
-import WallPosts from "./WallPosts";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchUserArtists } from '../../redux/Spotify/userTopArtists';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation } from 'swiper';
+import '../../styles/index.css';
+import TopTracks from './TopTracks';
+import TopGenres from './TopGenres';
+import WallPosts from './WallPosts';
 
 export default function TopArtists(props) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function TopArtists(props) {
 
   useEffect(() => {
     dispatch(fetchUserArtists(token));
-  }, []);
+  }, [token]);
 
   if (items) {
     return (
