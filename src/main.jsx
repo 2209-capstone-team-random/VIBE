@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import store from './store';
 import App from './App';
-import DrawerHolder from './DrawerHolder';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -13,7 +12,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<App />} />
-          <Route path="/dh" element={<DrawerHolder />} />
         </Routes>
       </BrowserRouter>
     </Provider>
