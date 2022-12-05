@@ -1,7 +1,7 @@
 const clientInfo = {
   AUTH_ENDPOINT: "https://accounts.spotify.com/authorize",
   CLIENT_ID: "f66d801286b24df78db5be66cb18b8e4",
-  REDIRECT_URI: "http://localhost:5173/",
+  REDIRECT_URI: "http://localhost:5173/onboard",
   RESPONSE_TYPE: "token",
   scope: `ugc-image-upload
     user-modify-playback-state

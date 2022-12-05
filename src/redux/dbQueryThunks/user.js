@@ -1,31 +1,32 @@
 import { supabase } from "../../supabaseClient";
+
 //ACTION TYPE
-const GET_USER = 'GET_USER'
+const GET_USER = "GET_USER";
 //ACTION CREATOR
 const _getUser = (user) => ({
   type: GET_USER,
-  user
-})
+  user,
+});
 //THUNK
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {
-      let { data: User, error } = await supabase
+      let { data: user, error } = await supabase
         .from("User")
         .select("*")
-        .eq("id", userId)
-      dispatch(_getUser(User))
+        .eq("id", userId);
+      dispatch(_getUser(user));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
 //REDUCER
-export default (state={},action) => {
+export default (state = null, action) => {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return action.user;
     default:
       return state;
   }
-}
+};

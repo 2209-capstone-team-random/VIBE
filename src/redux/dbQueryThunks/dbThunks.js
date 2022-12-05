@@ -3,8 +3,8 @@ import { supabase } from "../../supabaseClient";
 //done with vibe
 //adding a vibe, mutual still false
 
-//check if user exist in DB
-export const onBoarding = async (id) => {
+//get User from DB
+export const getUser = async (id) => {
   try {
     let { data: User, error } = (await supabase
       .from("User")
@@ -19,11 +19,11 @@ export const onBoarding = async (id) => {
   }
 };
 
-export const vibe = async () => {
+export const vibe = async (friendId,userId) => {
   try {
     const { data, error } = await supabase
       .from("Vibe")
-      .insert([{ friendId: 10, userId: 6 }]);
+      .insert([{ friendId, userId }]);
   } catch (error) {
     console.log(error);
   }
@@ -35,7 +35,8 @@ export const deleteVibe = async (userId, friendId) => {
     const { data, error } = await supabase
       .from("Vibe")
       .delete()
-      .match({ userId: userId, friendId: friendId });
+      //shorthand - userId : userId, friendId: friendId  
+      .match({ userId, friendId });
     let { data: deleteMutual } = await supabase
       .from("Vibe")
       .update({ mutual: "false" })
@@ -46,12 +47,12 @@ export const deleteVibe = async (userId, friendId) => {
 };
 
 // fetching user's friends
-export const getFriend = async () => {
+export const getFriend = async (userId) => {
   try {
     let { data: friends, error } = await supabase
       .from("Vibe")
       .select("friendId")
-      .eq("userId", 6);
+      .eq("userId", userId);
     console.log("before map", friends);
 
     let users = await Promise.all(
@@ -106,7 +107,7 @@ export const checkMutual = async () => {
 };
 
 //change status to true on both user rows
-export const setMutual = async () => {
+export const setMutual = async (userId,friendId) => {
   //update mutual status of one user, if one is false, will need to update the other one
   try {
     let { data: setMutualA } = await supabase
@@ -137,7 +138,7 @@ export const setMutual = async () => {
 
 //WALL POSTS
 //(posterId)userID_ONE writes on (userId)userID_TWO's wall.
-export const postOnWall = async () => {
+export const postOnWall = async (userId,posterId) => {
   try {
     const { data: wallpost, error } = await supabase.from("Wall_Post").insert([
       {
@@ -154,7 +155,7 @@ export const postOnWall = async () => {
 };
 
 //GET WALL POSTS
-const getWallPost = async () => {
+export const getWallPost = async (userId) => {
   try {
     const { data: wallpost, error } = await supabase
       .from("Wall_Post")
@@ -167,8 +168,8 @@ const getWallPost = async () => {
 };
 
 //GET POSTER POSTING THE WALL POST
-//in the works
-const getPoster = async () => {
+// -----T O D O  NOT TESTED YET----------
+export const getPoster = async (userId) => {
   try {
     const { data: poster, error } = await supabase
       .from("Wall_Post")
@@ -182,7 +183,7 @@ const getPoster = async () => {
 
 // adding user into db, insert
 
-const insertUser = async (url, spotifyId, display_name) => {
+export const insertUser = async (url, spotifyId, display_name) => {
   try {
     const { data, error } = await supabase
       .from("User")
@@ -193,3 +194,17 @@ const insertUser = async (url, spotifyId, display_name) => {
 };
 
 //after submit top cat, genre, onsubmit will trigger this setFirsttimeuser to false
+//Need testing
+export const onBoarding = async (userId) => {
+  try {
+    const { data:status, error } = await supabase
+      .from('User')
+      .update('isFirstTimeUser',false)
+      .eq("userId", userId)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+

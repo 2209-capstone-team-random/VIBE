@@ -26,6 +26,7 @@ const Landing = () => {
             backSpeed={80}
             loop
           />
+          
           <LoginButton />
         </div>
     </div>
