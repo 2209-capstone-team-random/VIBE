@@ -1,35 +1,34 @@
 import axios from "axios";
 
 // Action Type
-const SET_USER_ARTISTS = "SET_USER_ARTISTS";
+const SET_CURRENT_USER_PLAYLISTS = "SET_CURRENT_USER_PLAYLISTS";
 
 // Action Creator
-export const setUserArtists = (artists) => {
+export const setCurrentUserPlaylists = (playlists) => {
   return {
-    type: SET_USER_ARTISTS,
-    artists,
+    type: SET_CURRENT_USER_PLAYLISTS,
+    playlists,
   };
 };
 
 // Thunk Creator
-export const fetchUserArtists = (token) => {
+export const fetchCurrentUserPlaylists = (token) => {
   return async (dispatch) => {
     try {
       const { data: items } = await axios.get(
-        "https://api.spotify.com/v1/me/top/artists",
+        "https://api.spotify.com/v1/me/playlists",
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           params: {
-            limit: "10",
-            time_range: "short_term",
+            limit: "5",
           },
         }
       );
-      // console.log("CURRENT USER TOP ARTISTS", items);
-      dispatch(setUserArtists(items));
+      // console.log("CURRENT USER TOP PLAYLISTS", items);
+      dispatch(setCurrentUserPlaylists(items));
     } catch (err) {
       console.log(err);
     }
@@ -40,10 +39,10 @@ export const fetchUserArtists = (token) => {
 const initialState = [];
 
 // Reducer
-export default function userTopArtistsReducer(state = initialState, action) {
+export default function userPlaylistsReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_USER_ARTISTS: {
-      return action.artists;
+    case SET_CURRENT_USER_PLAYLISTS: {
+      return action.playlists;
     }
 
     default:

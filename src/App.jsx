@@ -10,19 +10,9 @@ import NotFound from "./components/NotFound";
 import Edit from "./components/Profile/Edit"
 // import Account from "./auth/Accounts";
 
-// import * as dotenv from 'dotenv';
-// dotenv.config();
 
 
-  // return (
-  //   <div>
-  //     {!session ? (
-  //       <Auth />
-  //     ) : (
-  //       <Account key={session.user.id} session={session} />
-  //     )}
-  //   </div>
-  // );
+ 
 
 
 const App = () => {

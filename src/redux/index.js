@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import userTopArtistsReducer from "./Spotify/userTopArtists";
 import userTopTracksReducer from "./Spotify/userTopTracks";
 import userProfileReducer from "./Spotify/userProfile";
+import userPlaylistsReducer from "./Spotify/userPlaylists";
 import playerReducer from "./Spotify/player";
 import user from "./dbQueryThunks/user"
 
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   userTopArtists: userTopArtistsReducer,
   userTopTracks: userTopTracksReducer,
   userProfile: userProfileReducer,
+  userPlaylists: userPlaylistsReducer,
   player: playerReducer,
   user : user
 });
