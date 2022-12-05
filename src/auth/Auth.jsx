@@ -5,6 +5,7 @@ import AUTH_URL from "./Auth_Url";
 import CurrentUserProfile from "../components/Home/currentUserProfile";
 import TopArtists from "../components/Home/TopArtists";
 import Player from "../components/Home/Player";
+import NavBar from "../components/Home/Navbar";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -32,20 +33,20 @@ export default function Auth() {
     window.localStorage.removeItem("token");
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({ email });
-      if (error) throw error;
-      alert("Check your email for the login link!");
-    } catch (error) {
-      alert(error.error_description || error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     setLoading(true);
+  //     const { error } = await supabase.auth.signInWithOtp({ email });
+  //     if (error) throw error;
+  //     alert("Check your email for the login link!");
+  //   } catch (error) {
+  //     alert(error.error_description || error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div>
@@ -70,15 +71,18 @@ export default function Auth() {
           </form>
         )}
       </div> */}
-      <h1 className="flex justify-center items-center font-medium text-6xl">
+      {/* <h1 className="flex justify-center items-center font-medium text-6xl">
         Navbar placeholder
-      </h1>
+      </h1> */}
       {token ? (
         <div>
-          <div className="flex space-x-2 justify-end mr-24">
-            <button className="btn btn-sm btn-accent mb-4" onClick={logout}>
-              Logout
-            </button>
+          <div>
+            <NavBar />
+            <div className="flex space-x-2 justify-end mr-24">
+              <button className="absolute btn btn-sm top-4" onClick={logout}>
+                Logout
+              </button>
+            </div>
           </div>
           <div className="flex justify-center">
             <CurrentUserProfile token={token} />
@@ -89,7 +93,7 @@ export default function Auth() {
           className="flex justify-center items-center h-screen p-20"
           href={AUTH_URL}
         >
-          <button className="btn btn-sm btn-accent" type="submit">
+          <button className="btn" type="submit">
             Login
           </button>
         </a>

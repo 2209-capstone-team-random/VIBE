@@ -15,11 +15,6 @@ export default function NameBio() {
       <div className="flex-column ml-20">
         <p className="mb-4">Name</p>
         <p className="mb-4">Bio</p>
-
-        {/* <textarea
-          className="textarea textarea-info"
-          placeholder="Bio"
-        ></textarea> */}
       </div>
     </div>
   );
