@@ -1,14 +1,14 @@
-import './styles/index.css';
-import React, { useState, useEffect } from 'react';
-import { supabase } from './supabaseClient';
-import Auth from './auth/Auth';
-import { Route, Routes } from 'react-router-dom';
-import CurrentUserProfile from './components/Home/CurrentUserProfile';
-import OnBoard from './components/Login/OnBoard';
-import Landing from './components/Login/Landing';
-import NotFound from './components/NotFound';
-import Edit from './components/Profile/Edit';
-import { useNavigate } from 'react-router-dom';
+import "./styles/index.css";
+import React, { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
+import Auth from "./auth/Auth";
+import { Route, Routes } from "react-router-dom";
+import CurrentUserProfile from "./components/Home/CurrentUserProfile";
+import OnBoard from "./components/Login/OnBoard";
+import Landing from "./components/Login/Landing";
+import NotFound from "./components/NotFound";
+import Edit from "./components/Profile/Edit";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     const spotifyToken = JSON.parse(
-      window.localStorage.getItem('sb-llxcoxktsyswmxmrwjsr-auth-token')
+      window.localStorage.getItem("sb-llxcoxktsyswmxmrwjsr-auth-token")
     )?.provider_token;
     setToken(spotifyToken);
   }, [token]);
