@@ -6,15 +6,14 @@ import CurrentUserProfile from "./components/Home/CurrentUserProfile";
 import OnBoard from "./components/Login/OnBoard";
 import Landing from "./components/Login/Landing";
 import NotFound from "./components/NotFound";
-import Edit from "./components/Profile/Edit";
+import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [session, setSession] = useState(null);
   const [token,setToken] = useState(null)
   const navigate = useNavigate();
-  // //spotify token
-  // let [token, setToken] = useState(null);
+
 
   // useEffect(() => {
   //   const spotifyToken = JSON.parse(
@@ -22,11 +21,6 @@ const App = () => {
   //   )?.provider_token;
   //   setToken(spotifyToken);
   // }, [token]);
-
-  // useEffect(() => {
-  //   supabase.auth.getSession().then(({ data: { session } }) => {
-  //     setSession(session);
-  //   });
 
   //   supabase.auth.onAuthStateChange((_event, session) => {
   //     setSession(session);
@@ -59,7 +53,7 @@ const App = () => {
       <Route exact path="/" element={<Landing />} />
       <Route path="/onboard" element={<OnBoard session={session} token={token} />} />
       <Route path="/profile" element={<CurrentUserProfile session={session} token={token} />} />
-      <Route path="/editProfile" element={<Edit session={session} token={token} />} />
+      <Route path="/editProfile" element={<EditProfile session={session} token={token} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
