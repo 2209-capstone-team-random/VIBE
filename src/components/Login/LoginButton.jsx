@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { supabase } from '../../supabaseClient';
+import React, { useState } from "react";
+import { supabase } from "../../supabaseClient";
 
 const LoginButton = () => {
-  let [token, setToken] = useState('');
+  let [token, setToken] = useState("");
   async function signInWithSpotify() {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'spotify',
+        provider: "spotify",
         options: {
           scopes: `ugc-image-upload
     user-modify-playback-state
@@ -33,8 +33,7 @@ const LoginButton = () => {
     } catch (error) {
       console.err(error);
     }
-  } 
- 
+  }
 
   return (
     <div className="p-7">

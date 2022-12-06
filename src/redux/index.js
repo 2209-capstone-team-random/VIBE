@@ -6,8 +6,8 @@ import userTopArtistsReducer from "./Spotify/userTopArtists";
 import userTopTracksReducer from "./Spotify/userTopTracks";
 import userProfileReducer from "./Spotify/userProfile";
 import userPlaylistsReducer from "./Spotify/userPlaylists";
-import user from "./dbQueryThunks/user"
-
+import user from "./dbQueryThunks/user";
+import discover from "./Spotify/discover";
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -18,7 +18,8 @@ const appReducer = combineReducers({
   userTopTracks: userTopTracksReducer,
   userProfile: userProfileReducer,
   userPlaylists: userPlaylistsReducer,
-  user : user
+  discover,
+  user: user,
 });
 
 const store = createStore(appReducer, middleware);

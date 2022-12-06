@@ -5,7 +5,7 @@ import Bee from "../../assets/bee.png";
 import LoginButton from "./LoginButton";
 
 const Landing = () => {
-  let [token, setToken] = useState('');
+  let [token, setToken] = useState("");
   return (
     <div className="w-full h-screen relative">
       <video
