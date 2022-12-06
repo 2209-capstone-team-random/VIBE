@@ -5,6 +5,9 @@ import taylor from "../../assets/taylor.jpeg"
 import snoop from "../../assets/snoop.jpeg"
 import latin from "../../assets/latin.jpeg"
 import starboy from "../../assets/starboy.jpeg"
+import { getCount } from "../../redux/dbQueryThunks/user";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const categories = [
   { id: 1, cat: "ROCK", color: "bg-blue-500",img:Nirvana },
@@ -20,6 +23,15 @@ const categories = [
 const Card = () => {
   const [catePicked, setCatePicked] = useState(0);
   const [genre, setGenre] = useState([]);
+  const dispatch = useDispatch()
+
+ 
+  useEffect(() => {
+    dispatch(getCount(catePicked))
+    console.log(catePicked)
+  }, [catePicked])
+  
+  
 
   const pickThreeCate = (event) => {
     if (catePicked < 3) {

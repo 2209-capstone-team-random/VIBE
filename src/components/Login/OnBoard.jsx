@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
 import video from "../../assets/connect2.mp4";
 import CategoryButton from "./CategoryButton";
+
 const OnBoard = () => {
   const bounceTransition = {
     y: {
@@ -13,7 +15,9 @@ const OnBoard = () => {
     },
   };
 
-
+ 
+  const count  = useSelector(state => (state))
+  console.log(count.user)
 
   return (
     <div className="w-full h-screen relative">
@@ -38,10 +42,10 @@ const OnBoard = () => {
           </h1>
         </div>
         <div className="flex justify-center">
-          <Card/>
+          <Card />
         </div>
-        <div className='absolute inset-x-0 bottom-5 '>
-          <CategoryButton />
+        <div className={count.user!==3 ? "hidden" : "absolute inset-x-0 bottom-5"}>
+          <CategoryButton  />
         </div>
       </div>
     </div>
