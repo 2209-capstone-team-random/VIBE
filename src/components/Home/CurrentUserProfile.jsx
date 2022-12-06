@@ -15,11 +15,9 @@ import NameBio from "./NameBio";
 import WallPosts from "./WallPosts";
 import NavBar from "./Navbar";
 
-export default function CurrentUserProfile(props) {
-  const token = props.token;
+export default function CurrentUserProfile({token}) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopTracks);
-  console.log("Top Tracks", token);
 
   useEffect(() => {
     dispatch(fetchUserTracks(token));

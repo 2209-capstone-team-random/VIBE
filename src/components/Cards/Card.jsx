@@ -55,7 +55,6 @@ const Card = () => {
         {categories.map((el, idx) => (
           <div
             key={el.id}
-            // style={{backgroundColor:"tomato"}}
             className={
               genre.includes(el.cat)
                 ? `scale-125 ${el.color} p-5 rounded-lg w-40 group `

@@ -10,10 +10,9 @@ import 'swiper/css/navigation';
 import { Navigation, EffectFade } from 'swiper';
 import '../../styles/index.css';
 
-export default function TopTracks(props) {
+export default function TopTracks({token}) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopTracks);
-  const token = props.token;
   // console.log("Top Tracks", items);
 
   useEffect(() => {

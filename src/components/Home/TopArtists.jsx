@@ -13,10 +13,10 @@ import TopTracks from './TopTracks';
 import TopGenres from './TopGenres';
 import WallPosts from './WallPosts';
 
-export default function TopArtists(props) {
+export default function TopArtists({token}) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopArtists);
-  const token = props.token;
+
   // console.log("TopArtists", items);
 
   useEffect(() => {
