@@ -9,7 +9,9 @@ import { supabase } from '../../supabaseClient';
 const Landing = ({ token }) => {
   async function handleClick() {
     let { data: User, error } = await supabase.from('User').select('*');
-
+    if (error) {
+      console.error(error);
+    }
     console.log(User);
   }
   // const navigate = useNavigate();
@@ -29,8 +31,8 @@ const Landing = ({ token }) => {
   // if (spotifyToken) {
   //   setToken(spotifyToken);
   //   navigate('/profile');
-
-  console.log(token);
+  // }
+  // console.log(token);
   return (
     <div className="w-full h-screen relative">
       <video
