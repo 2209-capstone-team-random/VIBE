@@ -34,13 +34,13 @@ const Discover = ({ token }) => {
       <h2 className="font-semibold text-3xl justify-center flex text-black text-left">
         Discover
       </h2>
-      <div className="w-full p-8 flex flex-wrap justify-center items-center sm:flex-row flex-col m-3 ">
+      <div className="w-full shadow-xl bg-white p-10 flex flex-wrap justify-center items-center sm:flex-row flex-col m-3 ">
         {genres.map((genre, i) => {
           return (
             <div
               key={i}
               onClick={() => setGenre(genre)}
-              className="mask mask-hexagon w-[130px] p-8 h-[130px] bg-blue-400 hover:bg-blue-300"
+              className="mask mask-squircle w-[130px] p-8 h-[130px] bg-blue-400 hover:bg-blue-300"
             >
               <div className=" "> {genre}</div>
             </div>
@@ -53,7 +53,7 @@ const Discover = ({ token }) => {
         {users
           ? users.map((user, i) => {
               return (
-                <div>
+                <div key={i}>
                   <UserCard
                     className=" flex justify-center px-4 py-16 bg-base-200"
                     key={i}

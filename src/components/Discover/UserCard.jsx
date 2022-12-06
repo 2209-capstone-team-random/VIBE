@@ -13,7 +13,6 @@ const UserCard = ({ user }) => {
         .select("url")
         .eq("userSpotify", `${user.userSpotify}`);
       setpic(data[0].url);
-      console.log(data[0].url);
     };
     getImage();
   }, []);
@@ -21,7 +20,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="shadow-xl flex p-4 m-4 flex-col w-[200px] h-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer bg-black/10">
       <div className="flex flex-wrap justify-center">
-        <Link to={`/${""}`}>
+        <Link to={`/${user.id}`}>
           <img
             className="shadow p-2 w-auto rounded-full h-auto  border-none"
             src={pic}
