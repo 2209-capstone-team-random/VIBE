@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { fetchCurrentUserPlaylists } from "../../redux/Spotify/userPlaylists";
 
-export default function Player(props) {
+export default function Player({token}) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
-  const token = props.token;
+ 
   // console.log("User Playlists", items);
 
   useEffect(() => {

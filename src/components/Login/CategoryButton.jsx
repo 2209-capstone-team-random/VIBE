@@ -1,10 +1,11 @@
 import React,{useState} from "react";
 import { useSelector } from "react-redux";
 import { supabase } from "../../supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const CategoryButton = () => {
+  const navigate = useNavigate()
   const { user } = useSelector((state) => state);
-  const [status, setStatus] = useState(true)
   
   const onBoarding = async (id) => {
     const { data, error } = await supabase
@@ -17,16 +18,27 @@ const CategoryButton = () => {
     }
   };
 
+  const addCategories = async (userId, catA, catB, catC) => {
+    try {
+      let { data: user, error } = await supabase
+        .from("User_Top_Cat")
+        .insert([{ userId, catA, catB, catC }]);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   const clickHandler = () => {
     //set user status to false
-    console.log("clicked");
     onBoarding(10);
-    console.log("afterclick");
+    addCategories(6,'rock','edm','indie')
+    navigate("/profile")
   };  
 
   return (
     <button
-      className="m-2 h-12 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
+      className= "m-2 h-12 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
       onClick={clickHandler}
     >
       LET'S VIBE

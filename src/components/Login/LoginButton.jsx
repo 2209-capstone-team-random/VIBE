@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import AUTH_URL from '../../auth/Auth_Url';
 import { supabase } from '../../supabaseClient';
 
 const LoginButton = () => {
@@ -31,24 +30,20 @@ const LoginButton = () => {
         },
       });
       setToken(data);
-      console.log(token);
     } catch (error) {
       console.err(error);
     }
-
-    // const oAuthToken = data.session.provider_token
-  } // use to access provider API
+  } 
+ 
 
   return (
     <div className="p-7">
-      {/* <a href={AUTH_URL}> */}
       <button
         className="m-2 h-12 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
         onClick={signInWithSpotify}
       >
         Login with Spotify
       </button>
-      {/* </a> */}
     </div>
   );
 };
