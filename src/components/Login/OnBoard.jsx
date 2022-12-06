@@ -1,6 +1,6 @@
 import React from "react";
 import Bee from "../../assets/bee.png";
-import CatCard from "../Cards/CatCard";
+import Card from "../Cards/Card";
 import { motion } from "framer-motion";
 import video from "../../assets/connect2.mp4";
 import CategoryButton from "./CategoryButton";
@@ -38,7 +38,7 @@ const OnBoard = () => {
           </h1>
         </div>
         <div className="flex justify-center">
-          <CatCard />
+          <Card/>
         </div>
         <div className='absolute inset-x-0 bottom-5 '>
           <CategoryButton />

@@ -19,9 +19,21 @@ const CategoryButton = () => {
     }
   };
 
+  const addCategories = async (userId, catA, catB, catC) => {
+    try {
+      let { data: user, error } = await supabase
+        .from("User_Top_Cat")
+        .insert([{ userId, catA, catB, catC }]);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   const clickHandler = () => {
     //set user status to false
     onBoarding(10);
+    addCategories(6,'rock','edm','indie')
     navigate("/profile")
   };  
 
