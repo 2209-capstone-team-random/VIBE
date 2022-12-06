@@ -24,9 +24,9 @@ export default function CurrentUserProfile(props) {
   console.log('Top Tracks', token);
 
   useEffect(() => {
-    if (!props.session) {
-      navigate('/');
-    }
+    // if (!props.session) {
+    //   navigate('/');
+    // }
     dispatch(fetchUserTracks(token));
   }, [token]);
 
