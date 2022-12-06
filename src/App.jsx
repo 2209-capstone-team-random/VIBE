@@ -41,9 +41,9 @@ const App = () => {
   //if session and fisrtime user
   //if session 
   useEffect(() => {
-    if (session?.provider_token) {
-      navigate("/onboard");
-    }
+    // if (session?.provider_token) {
+    //   navigate("/onboard");
+    // }
   }, [session]);
   console.log('session', session)
   console.log('token',token)
