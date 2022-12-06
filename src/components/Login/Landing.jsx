@@ -4,8 +4,14 @@ import Typed from 'react-typed';
 import Bee from '../../assets/bee.png';
 import LoginButton from './LoginButton';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
 
 const Landing = ({ token }) => {
+  async function handleClick() {
+    let { data: User, error } = await supabase.from('User').select('*');
+
+    console.log(User);
+  }
   // const navigate = useNavigate();
   // //spotify token
   // let [token, setToken] = useState(null);
@@ -47,6 +53,7 @@ const Landing = ({ token }) => {
           loop
         />
         <LoginButton token={token} />
+        <button onClick={handleClick}>test</button>
       </div>
     </div>
   );
