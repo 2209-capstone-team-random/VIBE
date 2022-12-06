@@ -4,8 +4,38 @@ import Typed from 'react-typed';
 import Bee from '../../assets/bee.png';
 import LoginButton from './LoginButton';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
 
-const Landing = ({ token }) => {
+const Landing = ({ token, session }) => {
+  async function handleClick() {
+    // let { data: User, error } = await supabase.from('User').select('*');
+    const guy = await supabase.auth.getUser();
+    //update wall post
+    // const { data, error } = await supabase
+    //   .from('Wall_Post')
+    //   .update({ body: 'updated' })
+    //   .match({ userSpotify: 'jerryhwu', posterSpotify: 'henrycard' });
+    //insert user top cat
+    const { data, error } = await supabase.from('User_Top_Cat').insert([
+      {
+        catA: 'someValue',
+        catB: 'otherValue',
+        catC: 'test value',
+        userSpotify: 'henrycard',
+      },
+    ]);
+    //upload file
+    // [image, setImage] = useState(null)
+    // file input on change e=> setImage (e.target.files[0])
+    // form onSubmit
+    //if image
+    // const {data} = await supabase.storage.from('profile-images').upload(`userSpotify-profile-image`, image)
+
+    // if (error) {
+    // console.log(data);
+    // }
+    // console.log(guy.data.user.id);
+  }
   // const navigate = useNavigate();
   // //spotify token
   // let [token, setToken] = useState(null);
@@ -23,8 +53,8 @@ const Landing = ({ token }) => {
   // if (spotifyToken) {
   //   setToken(spotifyToken);
   //   navigate('/profile');
-
-  console.log(token);
+  // }
+  // console.log(token);
   return (
     <div className="w-full h-screen relative">
       <video
@@ -47,6 +77,7 @@ const Landing = ({ token }) => {
           loop
         />
         <LoginButton token={token} />
+        <button onClick={handleClick}>test</button>
       </div>
     </div>
   );
