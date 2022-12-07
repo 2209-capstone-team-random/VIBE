@@ -1,45 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation, EffectFade } from 'swiper';
-import '../../styles/index.css';
-import TopArtists from './TopArtists';
-import SpotifyPlayer from 'react-spotify-web-playback';
-import { fetchUserTracks } from '../../redux/Spotify/userTopTracks';
-import NameBio from './NameBio';
-import WallPosts from './WallPosts';
-import NavBar from './Navbar';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import TopPlaylists from "./TopPlaylists";
+import SpotifyPlayer from "react-spotify-web-playback";
+import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
+import { fetchUserByIdPlaylists } from "../../redux/Spotify/userPlaylists";
+import NameBio from "./NameBio";
+import WallPosts from "./WallPosts";
+import NavBar from "./Navbar";
+import { useNavigate, useParams } from "react-router-dom";
 
+export default function CurrentUserProfile({ token, session }) {
+  const dispatch = useDispatch();
+  // const { items } = useSelector((store) => store.userTopTracks);
+  const { items } = useSelector((store) => store.userPlaylists);
+  const { userId } = useParams();
 
-  export default function CurrentUserProfile({ token }) {
-    const dispatch = useDispatch();
-    const { items } = useSelector((store) => store.userTopTracks);
-    useEffect(() => {
-      // if (!props.session) {
-      //   navigate('/');
-      // }
-      dispatch(fetchUserTracks(token));
-    }, [token]);
-
-    let uris = items ? items.map((item) => item.uri) : 'sorry';
-    console.log(uris);
-    if (items) {
-      return (
-        <div className="grid justify-items-center">
-          <NavBar />
-          <NameBio />
-          <TopArtists token={token} />
-          <div className="sticky z-50 bottom-0 mt-10">
-            <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
-          </div>
+  useEffect(() => {
+    dispatch(fetchUserTracks(token));
+    dispatch(fetchUserByIdPlaylists(userId, token));
+  }, [token]);
+  if (items) {
+    return (
+      <div className="grid justify-items-center">
+        <NavBar />
+        <NameBio session={session} userId={userId} />
+        <TopPlaylists session={session} token={token} />
+        <div className="sticky z-50 bottom-0 mt-10 w-full">
+          <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
         </div>
-      );
-    }
+      </div>
+    );
   }
-
+  console.log("Sorry, we could not load your profile.");
+}

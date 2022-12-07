@@ -1,20 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { getUser } from "../../redux/dbQueryThunks/user";
 
-export default function NameBio() {
+export default function NameBio({ session, userId }) {
+  const dispatch = useDispatch();
+  const display_name = session?.user.user_metadata.name;
+  const [userData, setUserData] = useState("");
+  const [userImg, setUserImg] = useState("");
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase
+        .from("User")
+        .select("*")
+        .eq("spotifyId", userId);
+      setUserData(data);
+    };
+    getUser();
+
+    const getImg = async () => {
+      const { data, error } = await supabase
+        .from("Profile_Image")
+        .select("url")
+        .eq("userSpotify", userId);
+      setUserImg(data);
+    };
+    getImg();
+  }, []);
+
   return (
     <div className="flex flex-row mb-10 mr-60">
       <div className="avatar online h-20">
         <div className="rounded-full">
-          <img src="https://i.pinimg.com/564x/67/e5/bb/67e5bba8b7e5d23c035bb7b0595581d0.jpg" />
+          <img src={userImg[0]?.url} />
         </div>
       </div>
       <div className="flex-column ml-20">
-        <p className="mb-4">Name</p>
-        <p className="mb-4">Bio</p>
+        <p className="bold mb-4">{userData[0]?.display_name}</p>
+        <p className="mb-4">{userData[0]?.bio}</p>
       </div>
     </div>
   );
