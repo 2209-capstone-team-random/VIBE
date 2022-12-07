@@ -33,11 +33,19 @@ export default function WallPosts({ session }) {
       const { data: Wall_Post, error } = await supabase
         .from("Wall_Post")
         .select("*")
-        .eq("userSpotify", userId);
+        .eq("userSpotify", spotifyId);
       setPosts(Wall_Post);
     };
     getUserPosts();
   }, []);
+  // const wallPosts = posts.length
+  //   ? posts.map((post) => post.body)
+  //   : "Sorry, there are no posts.";
+  // console.log("POSTS", posts);
+  // if (!wallPosts) {
+  //   wallPosts = [];
+  // }
+  console.log("POSTS", posts);
   if (posts) {
     return (
       <div className=" w-60">
@@ -54,7 +62,7 @@ export default function WallPosts({ session }) {
         {posts.map((post) => {
           if (post.posterSpotify !== userId) {
             return (
-              <div className="flex flex-col chat chat-start">
+              <div key={post.id} className="flex flex-col chat chat-start">
                 <div className="chat-bubble chat-bubble-primary mt-4 mb-4">
                   {post.body}
                 </div>
@@ -62,7 +70,7 @@ export default function WallPosts({ session }) {
             );
           } else {
             return (
-              <div className="chat chat-end">
+              <div key={post.id} className="chat chat-end">
                 <div className="chat-bubble chat-bubble-success">
                   {post.body}
                 </div>
