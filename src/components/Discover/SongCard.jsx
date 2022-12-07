@@ -2,9 +2,34 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUri } from "../../redux/Spotify/discover";
 import { FaPlayCircle, FaHeadphonesAlt } from "react-icons/fa";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { data } from "autoprefixer";
+import AddFav from "./AddFav";
 
-const SongCard = ({ track, token }) => {
+const SongCard = ({ track, token, user }) => {
   const [activeSong, setactiveSong] = useState(null);
+  const [added, setAdded] = useState(null);
+  // const [songdata, setsongdata] = useState(null);
+
+  // useEffect(() => {
+  //   const getTrack = async () => {
+  //     const { data } = await supabase
+  //       .from("User_Favorites")
+  //       .select()
+  //       .match({ userSpotify: `${user}`, favorite_list: `${track.uri}` });
+  //     if (data) {
+  //       setsongdata(data.favorite_list);
+  //       setAdded(true);
+  //     }
+  //   };
+  //   getTrack();
+  // }, [added]);
+  // useEffect(() => {
+  //   console.log(added);
+  // }, [added]);
+
   const handlePlayClick = (track) => {
     dispatch(fetchUri(track.uri));
     setactiveSong(track.name);
@@ -40,6 +65,9 @@ const SongCard = ({ track, token }) => {
         <p className="test-sm truncate text-black-300 mt-1">
           {track.artists[0].name}
         </p>
+        <div>
+          <AddFav uri={track.uri} user={user} />
+        </div>
       </div>
     </div>
   );

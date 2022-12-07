@@ -17,7 +17,7 @@ export default function WallPosts({ session }) {
     if (e.target.post.value) postForm.post = e.target.post.value;
 
     const updatePost = async () => {
-      const { data, error } = await supabase.from("Wall_Post").insert([
+      await supabase.from("Wall_Post").insert([
         {
           userSpotify: userId,
           posterSpotify: spotifyId,

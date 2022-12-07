@@ -41,7 +41,7 @@ export default function TopPlaylists({ token, session }) {
                       Top Playlists
                     </h1>
                     <img
-                      src={item.images[0].url}
+                      src={item.images.url}
                       className="rounded-full resize h-60 w-60 p-4"
                     />
                     <p className="text-center font-semibold p-4">{item.name}</p>

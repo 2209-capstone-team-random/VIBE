@@ -9,57 +9,77 @@ import NotFound from "./components/NotFound";
 import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
 import Discover from "./components/Discover/Discover";
+import { set } from "zod";
 
 const App = () => {
   const [session, setSession] = useState(null);
   const [token, setToken] = useState(null);
+  const [firstVisit, setFirstVisit] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const spotifyToken = JSON.parse(
-  //     window.localStorage.getItem("sb-llxcoxktsyswmxmrwjsr-auth-token")
-  //   )?.provider_token;
-  //   setToken(spotifyToken);
-  // }, [token]);
+  // const getUserStatus = async (userId) => {
+  //   try {
+  //     let { data, error } = await supabase
+  //       .from("User")
+  //       .select("isFirstTimeUser")
+  //       .eq("id", userId);
+  //     setFirstVisit(data[0].isFirstTimeUser);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  //   supabase.auth.onAuthStateChange((_event, session) => {
-  //     setSession(session);
-  //   });
-  // }, []);
+  const click = () => {
+    setFirstVisit(false);
+  };
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setToken(session?.provider_token);
-    }, []);
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setToken(session?.provider_token);
-    });
+    const fetchSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        setSession(session);
+        setToken(session.provider_token);
+      } else {
+        navigate("/");
+        supabase.auth.onAuthStateChange((event, session) => {
+          if (event == "SIGNED_OUT") {
+            setSession(null);
+            setToken(session.provider_token);
+          }
+        });
+      }
+    };
+    fetchSession();
   }, []);
 
   //if session and fisrtime user
   //if session
-  useEffect(() => {
-    // if (session?.provider_token) {
-    //   navigate("/onboard");
-    // }
-  }, [session]);
-  console.log("session", session);
-  console.log("token", token);
-  // console.log('sessionspotifytoken',session.provider_token)
+  // useEffect(() => {
+  // if (session?.provider_token) {
+  //   navigate("/onboard");
+  // }
+  // }, [session]);
+
   return (
     <Routes>
-      <Route exact path="/" element={<Landing />} />
+      <Route
+        exact
+        path="/"
+        element={<Landing session={session} click={click} visit={firstVisit} />}
+      />
       <Route
         path="/onboard"
-        element={<OnBoard session={session} token={token} />}
+        element={<OnBoard click={click} token={token} />}
       />
       <Route
         path="/discover"
         element={<Discover session={session} token={token} />}
       />
       <Route
-        path="/profile/:userId"
+        path="/profile"
         element={<CurrentUserProfile session={session} token={token} />}
       />
       <Route

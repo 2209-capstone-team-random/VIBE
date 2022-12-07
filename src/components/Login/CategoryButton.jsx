@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const CategoryButton = () => {
+const CategoryButton = ({ click }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state);
-
+  // useEffect(()=>{},[])
   const onBoarding = async (id) => {
     const { data, error } = await supabase
       .from("User")
@@ -34,6 +35,7 @@ const CategoryButton = () => {
     //set user status to false
     onBoarding(10);
     addCategories(6, "rock", "edm", "indie");
+    click();
     navigate("/profile");
   };
 

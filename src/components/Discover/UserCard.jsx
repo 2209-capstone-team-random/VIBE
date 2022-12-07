@@ -16,11 +16,12 @@ const UserCard = ({ user }) => {
     };
     getImage();
   }, []);
+  console.log(user);
 
   return (
     <div className="shadow-xl flex p-4 m-4 flex-col w-[200px] h-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer bg-black/10">
       <div className="flex flex-wrap justify-center">
-        <Link to={`/${user.id}`}>
+        <Link to={`/profile/${user.userSpotify}`}>
           <img
             className="shadow p-2 w-auto rounded-full h-auto  border-none"
             src={pic}
