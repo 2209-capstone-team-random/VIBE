@@ -33,7 +33,7 @@ export default function WallPosts({ session }) {
       const { data: Wall_Post, error } = await supabase
         .from("Wall_Post")
         .select("*")
-        .eq("userSpotify", spotifyId);
+        .eq("userSpotify", userId);
       setPosts(Wall_Post);
     };
     getUserPosts();
