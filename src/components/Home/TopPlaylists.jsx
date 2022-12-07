@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
+import { fetchUserByIdPlaylists } from "../../redux/Spotify/userPlaylists";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,13 +10,17 @@ import "../../styles/index.css";
 import TopTracks from "./TopTracks";
 import TopGenres from "./TopGenres";
 import WallPosts from "./WallPosts";
+import { useParams } from "react-router-dom";
 
-export default function TopArtists({ token, session }) {
+export default function TopPlaylists({ token, session }) {
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.userTopArtists);
-
+  // const { items } = useSelector((store) => store.userTopArtists);
+  const { userId } = useParams();
+  const { items } = useSelector((store) => store.userPlaylists);
+  console.log("Playlists", items);
   useEffect(() => {
     dispatch(fetchUserArtists(token));
+    dispatch(fetchUserByIdPlaylists(userId, token));
   }, [token]);
 
   if (items) {
@@ -34,7 +38,7 @@ export default function TopArtists({ token, session }) {
                 return (
                   <SwiperSlide className="" key={item.id}>
                     <h1 className="text-center text-lg font-semibold mt-2">
-                      Top Artists
+                      Top Playlists
                     </h1>
                     <img
                       src={item.images[0].url}
@@ -46,7 +50,7 @@ export default function TopArtists({ token, session }) {
               })}
             </div>
           </Swiper>
-          <TopTracks token={token} />
+          {/* <TopTracks token={token} /> */}
         </div>
       </div>
     );

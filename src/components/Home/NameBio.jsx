@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { getUser } from "../../redux/dbQueryThunks/user";
 
 export default function NameBio({ session, userId }) {

@@ -21,7 +21,7 @@ export default function WallPosts({ session }) {
         {
           userSpotify: userId,
           posterSpotify: spotifyId,
-          body: postForm,
+          body: postForm.post,
         },
       ]);
     };
@@ -33,19 +33,11 @@ export default function WallPosts({ session }) {
       const { data: Wall_Post, error } = await supabase
         .from("Wall_Post")
         .select("*")
-        .eq("userSpotify", spotifyId);
+        .eq("userSpotify", userId);
       setPosts(Wall_Post);
     };
     getUserPosts();
   }, []);
-  // const wallPosts = posts.length
-  //   ? posts.map((post) => post.body)
-  //   : "Sorry, there are no posts.";
-  // console.log("POSTS", posts);
-  // if (!wallPosts) {
-  //   wallPosts = [];
-  // }
-  console.log("POSTS", posts);
   if (posts) {
     return (
       <div className=" w-60">
