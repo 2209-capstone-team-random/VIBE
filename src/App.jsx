@@ -19,7 +19,6 @@ const App = () => {
   // if (session) {
   //   const userId = session?.user.identities[0].user_id;
   // }
-  console.log("session", session);
   const getUserStatus = async (userId) => {
     try {
       let { data: User, error } = await supabase

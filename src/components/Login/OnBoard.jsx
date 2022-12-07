@@ -5,7 +5,6 @@ import Card from "../Cards/Card";
 import { motion } from "framer-motion";
 import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
 
 const OnBoard = ({ session }) => {
   const video =
@@ -21,7 +20,7 @@ const OnBoard = ({ session }) => {
   };
 
   const count = useSelector((state) => state);
-
+  console.log("count", count);
   return (
     <div className="w-full h-screen relative">
       <video
@@ -50,10 +49,10 @@ const OnBoard = ({ session }) => {
 
         <div
           className={
-            count.user !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
+            count.count !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
-          <CategoryButton />
+          <CategoryButton session={session} />
         </div>
       </div>
     </div>
