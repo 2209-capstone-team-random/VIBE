@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { getCount } from '../../redux/dbQueryThunks/user';
 import { useDispatch } from 'react-redux';
@@ -27,18 +28,23 @@ const Card = () => {
     }
   }, [catePicked, categories]);
 
+
   const pickThreeCate = (event) => {
-    if (catePicked < 3) {
-      setCatePicked(catePicked + 1);
-      setGenre([...genre, event.currentTarget.innerText]);
-      if (genre.includes(event.currentTarget.innerText)) {
-        setGenre(genre.filter((el) => el !== event.currentTarget.innerText));
-        setCatePicked(catePicked - 1);
+    if (categoryPicked < 3) {
+      setCategoryPicked(categoryPicked + 1);
+      setGenres([...genres, event.currentTarget.innerText]);
+      if (genres.includes(event.currentTarget.innerText)) {
+        setGenres(
+          genres.filter((genre) => genre !== event.currentTarget.innerText)
+        );
+        setCategoryPicked(categoryPicked - 1);
       }
     } else {
-      if (genre.includes(event.currentTarget.innerText)) {
-        setGenre(genre.filter((el) => el !== event.currentTarget.innerText));
-        setCatePicked(catePicked - 1);
+      if (genres.includes(event.currentTarget.innerText)) {
+        setGenres(
+          genres.filter((genre) => genre !== event.currentTarget.innerText)
+        );
+        setCategoryPicked(categoryPicked - 1);
       }
     }
   };
@@ -47,18 +53,20 @@ const Card = () => {
     <>
       <div className=" flex items-center justify-center absolute space-x-5 flex-wrap ">
         {categories.map((el) => (
+
           <div
-            key={el.id}
+            key={category.id}
             className={
-              genre.includes(el.cat)
-                ? `scale-125 ${el.color} p-5 rounded-lg w-40 group `
-                : `transition ease-in-out delay-0 ${el.color} hover:scale-105 duration-300 p-5 rounded-lg w-40 group `
+              genres.includes(category.name)
+                ? `scale-125 ${category.color} p-5 rounded-lg w-40 group `
+                : `transition ease-in-out dcategoryay-0 ${category.color} hover:scale-105 duration-300 p-5 rounded-lg w-40 group `
             }
             onClick={pickThreeCate}
           >
-            <img src={el.img} className="w-full rounded shadow" />
+
+            <img src={category.img} className="w-full rounded shadow" />
             <h3 id="name" className="text-gray-200 font-bold mt-5">
-              {el.cat}
+              {category.name}
             </h3>
           </div>
         ))}

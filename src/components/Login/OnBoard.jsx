@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 
 const OnBoard = ({ session }) => {
-  const userId = session?.user?.identities[0].user_id;
+
   const navigate = useNavigate();
   const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
-
+  console.log("SESSION", session);
   const bounceTransition = {
     y: {
       duration: 1,
@@ -21,36 +21,8 @@ const OnBoard = ({ session }) => {
     },
   };
 
-  const getUserStatus = async (userId) => {
-    try {
-      let { data: User, error } = await supabase
-        .from("User")
-        .select("isFirstTimeUser")
-        .eq("id", userId);
-      setIsFirstTimeUser(User[0].isFirstTimeUser)
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-//   const userStatus = async (userId) => { 
-//     const stat = await getUserStatus("36031b70-8739-4393-bcd3-ef082aebdfed"
-//       )
-//     console.log('stat',stat)
-// }
-
-  useEffect(() => {
-    async()=> await getUserStatus(userId)
-  }, [isFirstTimeUser])
-  
-  useEffect(() => {
-    // if (!isFirstTimeUser) {
-    //   navigate("/profile");
-    // }
-  }, []);
 
   const count = useSelector((state) => state);
-
 
   return (
     <div className="w-full h-screen relative">
@@ -77,14 +49,13 @@ const OnBoard = ({ session }) => {
         <div className="flex justify-center">
           <Card />
         </div>
-        
+
         <div
           className={
             count.user !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
           <CategoryButton />
-        
         </div>
       </div>
       {/* <button onClick={userStatus}>test</button> */}
