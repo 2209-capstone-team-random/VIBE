@@ -1,11 +1,11 @@
-import React from "react";
-import { supabase } from "../../supabaseClient";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React from 'react';
+import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const EditProfile = ({ token, session }) => {
-  const spotifyId = session.user.user_metadata.name;
-
+  const spotifyId = session?.user.user_metadata.sub;
+  console.log(spotifyId);
   const handleSubmit = (e) => {
     e.preventDefault();
     const nameForm = {};
@@ -18,9 +18,16 @@ const EditProfile = ({ token, session }) => {
 
     const updateForm = async () => {
       const { data, error } = await supabase
-        .from("User")
-        .upsert([...submitForm], { upsert: true })
-        .match({ spotifyId: spotifyId });
+        .from('User')
+        .update({ bio: bioForm.bio })
+        .match({ spotifyId: spotifyId })
+        .select();
+
+      // const { data, error } = await supabase
+      //   .from('User')
+      //   .upsert([...submitForm], { upsert: true })
+      //   .match({ spotifyId: spotifyId });
+      console.log(data);
     };
     updateForm();
   };
