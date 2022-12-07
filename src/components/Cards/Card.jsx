@@ -28,7 +28,6 @@ const Card = () => {
  
   useEffect(() => {
     dispatch(getCount(catePicked))
-    console.log(catePicked)
   }, [catePicked])
   
   

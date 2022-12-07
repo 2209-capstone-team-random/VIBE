@@ -13,43 +13,51 @@ import Discover from "./components/Discover/Discover";
 const App = () => {
   const [session, setSession] = useState(null);
   const [token, setToken] = useState(null);
+  const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const spotifyToken = JSON.parse(
-  //     window.localStorage.getItem("sb-llxcoxktsyswmxmrwjsr-auth-token")
-  //   )?.provider_token;
-  //   setToken(spotifyToken);
-  // }, [token]);
+  // if (session) {
+  //   const userId = session?.user.identities[0].user_id;
+  // }
 
-  //   supabase.auth.onAuthStateChange((_event, session) => {
-  //     setSession(session);
-  //   });
-  // }, []);
+  const getUserStatus = async (userId) => {
+    try {
+      let { data: User, error } = await supabase
+        .from("User")
+        .select("isFirstTimeUser")
+        .eq("id", userId);
+      setIsFirstTimeUser(User[0].isFirstTimeUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setToken(session?.provider_token);
-    }, []);
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setToken(session?.provider_token);
+      if (session) {
+        setSession(session);
+        setToken(session.provider_token);
+        let userId = session.user.identities[0].user_id;
+        getUserStatus(userId);
+      } else {
+        supabase.auth.onAuthStateChange((event, session) => {
+          if (event == "SIGNED_OUT") {
+            setSession(null);
+          }
+        });
+      }
     });
   }, []);
 
-  //if session and fisrtime user
-  //if session
-  useEffect(() => {
-    // if (session?.provider_token) {
-    //   navigate("/onboard");
-    // }
-  }, [session]);
-  console.log("session", session);
-  console.log("token", token);
-  // console.log('sessionspotifytoken',session.provider_token)
   return (
     <Routes>
-      <Route exact path="/" element={<Landing />} />
+      <Route
+        exact
+        path="/"
+        element={
+          <Landing isFirstTimeUser={isFirstTimeUser} session={session} />
+        }
+      />
       <Route
         path="/onboard"
         element={<OnBoard session={session} token={token} />}
