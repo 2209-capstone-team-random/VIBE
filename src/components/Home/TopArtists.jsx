@@ -11,7 +11,7 @@ import TopTracks from "./TopTracks";
 import TopGenres from "./TopGenres";
 import WallPosts from "./WallPosts";
 
-export default function TopArtists({ token }) {
+export default function TopArtists({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopArtists);
 
@@ -22,7 +22,7 @@ export default function TopArtists({ token }) {
   if (items) {
     return (
       <div className="flex">
-        <WallPosts />
+        <WallPosts session={session} />
         <div>
           <Swiper
             navigation={true}
@@ -51,4 +51,5 @@ export default function TopArtists({ token }) {
       </div>
     );
   }
+  console.log("Sorry, there are no artists");
 }

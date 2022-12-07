@@ -1,16 +1,23 @@
-import React from 'react';
-import { supabase } from '../../supabaseClient';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import React from "react";
+import { supabase } from "../../supabaseClient";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
-  console.log(spotifyId);
-  const handleSubmit = (e) => {
+  const [image, setImage] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const nameForm = {};
     const bioForm = {};
     const submitForm = [nameForm, bioForm];
+
+    if (image) {
+      const { data, err } = await supabase.storage
+        .from("profile-images")
+        .upload(`/${spotifyId}-avatar`, image);
+    }
 
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
@@ -18,16 +25,10 @@ const EditProfile = ({ token, session }) => {
 
     const updateForm = async () => {
       const { data, error } = await supabase
-        .from('User')
+        .from("User")
         .update({ bio: bioForm.bio })
         .match({ spotifyId: spotifyId })
         .select();
-
-      // const { data, error } = await supabase
-      //   .from('User')
-      //   .upsert([...submitForm], { upsert: true })
-      //   .match({ spotifyId: spotifyId });
-      console.log(data);
     };
     updateForm();
   };
@@ -67,6 +68,9 @@ const EditProfile = ({ token, session }) => {
             <label className="input-group input-group-vertical">
               <input
                 type="file"
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                }}
                 className="file-input file-input-bordered file-input-md w-full max-w-xs"
               />
             </label>
