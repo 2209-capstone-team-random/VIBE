@@ -25,7 +25,7 @@ export default function CurrentUserProfile({ token, session }) {
       <div className="grid justify-items-center">
         <NavBar />
         <NameBio session={session} userId={userId} />
-        <TopArtists token={token} />
+        <TopArtists session={session} token={token} />
         <div className="sticky z-50 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
         </div>
