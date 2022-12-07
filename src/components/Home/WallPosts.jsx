@@ -21,7 +21,7 @@ export default function WallPosts({ session }) {
         {
           userSpotify: userId,
           posterSpotify: spotifyId,
-          body: postForm,
+          body: postForm.post,
         },
       ]);
     };
@@ -38,14 +38,6 @@ export default function WallPosts({ session }) {
     };
     getUserPosts();
   }, []);
-  // const wallPosts = posts.length
-  //   ? posts.map((post) => post.body)
-  //   : "Sorry, there are no posts.";
-  // console.log("POSTS", posts);
-  // if (!wallPosts) {
-  //   wallPosts = [];
-  // }
-  console.log("POSTS", posts);
   if (posts) {
     return (
       <div className=" w-60">

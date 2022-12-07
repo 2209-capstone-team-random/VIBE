@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SpotifyPlayer from "react-spotify-web-playback";

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,7 +10,6 @@ import "../../styles/index.css";
 export default function TopTracks({ token }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopTracks);
-  // console.log("Top Tracks", items);
 
   useEffect(() => {
     dispatch(fetchUserTracks(token));
@@ -43,4 +40,5 @@ export default function TopTracks({ token }) {
       </div>
     );
   }
+  console.log("Sorry, there are no tracks");
 }
