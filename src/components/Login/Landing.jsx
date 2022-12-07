@@ -9,7 +9,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 const Landing = ({ isFirstTimeUser, session }) => {
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
-  let [token, setToken] = useState("");
+  let spotifyId = session?.user.user_metadata.name;
+  let userId = session?.user.id;
+  console.log("session", spotifyId);
+
   const navigate = useNavigate();
   async function signInWithSpotify() {
     try {
@@ -37,17 +40,27 @@ const Landing = ({ isFirstTimeUser, session }) => {
     playlist-modify-private`,
         },
       });
-      setToken(data);
     } catch (error) {
       console.log(error);
     }
   }
+  const insertUser = async (id, spotifyId, display_name) => {
+    try {
+      const { data: user } = await supabase
+        .from("User")
+        .insert([{ spotifyId, display_name }])
+        .eq("id", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    console.log("isfirst", isFirstTimeUser);
+    insertUser(userId, spotifyId, spotifyId);
     if (isFirstTimeUser && session) {
       navigate("/onboard");
     } else if (!isFirstTimeUser && session) {
-      navigate("/profile");
+      navigate(`/profile/${spotifyId}`);
     }
   }, [isFirstTimeUser]);
 
