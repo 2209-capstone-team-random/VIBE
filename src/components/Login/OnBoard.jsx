@@ -20,16 +20,7 @@ const OnBoard = ({ session }) => {
     },
   };
 
-//   const userStatus = async (userId) => { 
-//     const stat = await getUserStatus("36031b70-8739-4393-bcd3-ef082aebdfed"
-//       )
-//     console.log('stat',stat)
-// }
-
-
-
   const count = useSelector((state) => state);
-
 
   return (
     <div className="w-full h-screen relative">
@@ -56,14 +47,13 @@ const OnBoard = ({ session }) => {
         <div className="flex justify-center">
           <Card />
         </div>
-        
+
         <div
           className={
             count.user !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
           <CategoryButton />
-        
         </div>
       </div>
       {/* <button onClick={userStatus}>test</button> */}
