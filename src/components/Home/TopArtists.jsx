@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchUserArtists } from '../../redux/Spotify/userTopArtists';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation } from 'swiper';
-import '../../styles/index.css';
-import TopTracks from './TopTracks';
-import TopGenres from './TopGenres';
-import WallPosts from './WallPosts';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper";
+import "../../styles/index.css";
+import TopTracks from "./TopTracks";
+import TopGenres from "./TopGenres";
+import WallPosts from "./WallPosts";
 
-export default function TopArtists({token}) {
+export default function TopArtists({ token }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopArtists);
-
-  // console.log("TopArtists", items);
 
   useEffect(() => {
     dispatch(fetchUserArtists(token));
@@ -51,7 +47,6 @@ export default function TopArtists({token}) {
             </div>
           </Swiper>
           <TopTracks token={token} />
-          <TopGenres />
         </div>
       </div>
     );
