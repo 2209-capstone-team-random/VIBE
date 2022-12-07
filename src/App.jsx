@@ -8,6 +8,7 @@ import Landing from "./components/Login/Landing";
 import NotFound from "./components/NotFound";
 import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
+import Discover from "./components/Discover/Discover";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -52,6 +53,10 @@ const App = () => {
       <Route
         path="/onboard"
         element={<OnBoard session={session} token={token} />}
+      />
+      <Route
+        path="/discover"
+        element={<Discover session={session} token={token} />}
       />
       <Route
         path="/profile/:userId"

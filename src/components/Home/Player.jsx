@@ -6,20 +6,27 @@ import { Link } from "react-router-dom";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { fetchCurrentUserPlaylists } from "../../redux/Spotify/userPlaylists";
 
-export default function Player({token}) {
+export default function Player({ token }) {
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.userPlaylists);
- 
-  // console.log("User Playlists", items);
+  const discover = useSelector((store) => store.discover);
 
+  const [play, setplay] = useState(false);
   useEffect(() => {
     dispatch(fetchCurrentUserPlaylists(token));
-  }, []);
-  if (items) {
-    return (
-      <div className="sticky z-50 mt-10">
-        <SpotifyPlayer token={token} uris={[`${items[0].uri}`]} />;
-      </div>
-    );
-  }
+    setplay(true);
+  }, [discover.uri]);
+
+  return (
+    <div className="m-1 sticky z-50">
+      <SpotifyPlayer
+        className=" sticky"
+        token={token}
+        callback={(state) => {
+          if (!state.isPlaying) setplay(false);
+        }}
+        play={play}
+        uris={discover.uri.length ? [`${discover.uri}`] : []}
+      />
+    </div>
+  );
 }
