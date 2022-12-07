@@ -1,11 +1,12 @@
-import React, { useState, useEffect, createContext } from "react";
-import video from "../../assets/connect2.mp4";
-import Typed from "react-typed";
-import Bee from "../../assets/bee.png";
-import LoginButton from "./LoginButton";
-
+import React, { useState, useEffect, createContext } from 'react';
+import video from '../../assets/connect2.mp4';
+import Typed from 'react-typed';
+import Bee from '../../assets/bee.png';
+import LoginButton from './LoginButton';
+import { supabase } from '../../supabaseClient';
 const Landing = () => {
-  let [token, setToken] = useState("");
+  let [token, setToken] = useState('');
+
   return (
     <div className="w-full h-screen relative">
       <video
@@ -22,7 +23,7 @@ const Landing = () => {
         <h1 className="text-8xl ">V I B E</h1>
         <Typed
           className="text-4xl md:text-4xl font-bold"
-          strings={["Discover.", "Listen.", "Connect."]}
+          strings={['Discover.', 'Listen.', 'Connect.']}
           typeSpeed={80}
           backSpeed={80}
           loop
