@@ -11,9 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [session, setSession] = useState(null);
-  const [token,setToken] = useState(null)
+  const [token, setToken] = useState(null);
   const navigate = useNavigate();
-
 
   // useEffect(() => {
   //   const spotifyToken = JSON.parse(
@@ -29,31 +28,39 @@ const App = () => {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      setToken(session?.provider_token)
+      setToken(session?.provider_token);
     }, []);
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setToken(session?.provider_token)
+      setToken(session?.provider_token);
     });
   }, []);
 
-
   //if session and fisrtime user
-  //if session 
+  //if session
   useEffect(() => {
     // if (session?.provider_token) {
     //   navigate("/onboard");
     // }
   }, [session]);
-  console.log('session', session)
-  console.log('token',token)
+  console.log("session", session);
+  console.log("token", token);
   // console.log('sessionspotifytoken',session.provider_token)
   return (
     <Routes>
       <Route exact path="/" element={<Landing />} />
-      <Route path="/onboard" element={<OnBoard session={session} token={token} />} />
-      <Route path="/profile" element={<CurrentUserProfile session={session} token={token} />} />
-      <Route path="/editProfile" element={<EditProfile session={session} token={token} />} />
+      <Route
+        path="/onboard"
+        element={<OnBoard session={session} token={token} />}
+      />
+      <Route
+        path="/profile/:userId"
+        element={<CurrentUserProfile session={session} token={token} />}
+      />
+      <Route
+        path="/editProfile"
+        element={<EditProfile session={session} token={token} />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

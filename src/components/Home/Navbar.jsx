@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Drawer from '../../Drawer';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Drawer from "../../Drawer";
 
-export default function NavBar(props) {
+export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar bg-neutral-100 mb-8">

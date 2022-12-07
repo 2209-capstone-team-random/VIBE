@@ -1,17 +1,10 @@
 import axios from "axios";
 
 // Action Type
-const SET_CURRENT_USER_PROFILE = "SET_CURRENT_USER_PROFILE";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_USER_BY_ID_PROFILE = "SET_USER_BY_ID_PROFILE";
 
 // Action Creator
-export const setCurrentUserProfile = (currentUser) => {
-  return {
-    type: SET_CURRENT_USER_PROFILE,
-    currentUser,
-  };
-};
-
 export const setUserProfile = (user) => {
   return {
     type: SET_USER_PROFILE,
@@ -19,8 +12,15 @@ export const setUserProfile = (user) => {
   };
 };
 
+export const setUserByIdProfile = (user) => {
+  return {
+    type: SET_USER_BY_ID_PROFILE,
+    user,
+  };
+};
+
 // Thunk Creator
-export const fetchCurrentUserProfile = (token) => {
+export const fetchUserProfile = (token) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("https://api.spotify.com/v1/me", {
@@ -30,14 +30,14 @@ export const fetchCurrentUserProfile = (token) => {
         },
       });
       console.log("CURRENT USER PROFILE", data);
-      dispatch(setCurrentUserProfile(data));
+      dispatch(setUserProfile(data));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const fetchUserProfile = (token, userId) => {
+export const fetchUserByIdProfile = (token, userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
@@ -50,7 +50,7 @@ export const fetchUserProfile = (token, userId) => {
         }
       );
       console.log("USER BY ID PROFILE", data);
-      dispatch(setCurrentUserProfile(data));
+      dispatch(setUserByIdProfile(data));
     } catch (err) {
       console.log(err);
     }
@@ -63,10 +63,10 @@ const initialState = {};
 // Reducer
 export default function userProfileReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_CURRENT_USER_PROFILE: {
-      return action.currentUser;
-    }
     case SET_USER_PROFILE: {
+      return action.user;
+    }
+    case SET_USER_BY_ID_PROFILE: {
       return action.user;
     }
 
