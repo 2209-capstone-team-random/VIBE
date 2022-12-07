@@ -3,16 +3,15 @@ import { useSelector } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
-import video from "../../assets/connect2.mp4";
 import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 
 const OnBoard = ({ session }) => {
-
+  const video =
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
   const navigate = useNavigate();
-  const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
-  console.log("SESSION", session);
+
   const bounceTransition = {
     y: {
       duration: 1,
@@ -20,7 +19,6 @@ const OnBoard = ({ session }) => {
       ease: "easeOut",
     },
   };
-
 
   const count = useSelector((state) => state);
 
@@ -58,7 +56,6 @@ const OnBoard = ({ session }) => {
           <CategoryButton />
         </div>
       </div>
-      {/* <button onClick={userStatus}>test</button> */}
     </div>
   );
 };

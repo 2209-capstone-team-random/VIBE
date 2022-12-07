@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-import video from "../../assets/connect2.mp4";
 import Typed from "react-typed";
 import Bee from "../../assets/bee.png";
 import { supabase } from "../../supabaseClient";
@@ -9,6 +7,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 // import LoginButton from "./LoginButton";
 
 const Landing = ({ isFirstTimeUser, session }) => {
+  const video =
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
   let [token, setToken] = useState("");
   const navigate = useNavigate();
   async function signInWithSpotify() {
@@ -51,7 +51,6 @@ const Landing = ({ isFirstTimeUser, session }) => {
     }
   }, [isFirstTimeUser]);
 
-
   return (
     <div className="w-full h-screen relative">
       <video
@@ -68,7 +67,7 @@ const Landing = ({ isFirstTimeUser, session }) => {
         <h1 className="text-8xl ">V I B E</h1>
         <Typed
           className="text-4xl md:text-4xl font-bold"
-          strings={['Discover.', 'Listen.', 'Connect.']}
+          strings={["Discover.", "Listen.", "Connect."]}
           typeSpeed={80}
           backSpeed={80}
           loop
