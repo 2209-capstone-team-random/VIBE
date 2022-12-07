@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 
 const OnBoard = ({ session }) => {
+
   const navigate = useNavigate();
   const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
-
+  console.log("SESSION", session);
   const bounceTransition = {
     y: {
       duration: 1,
@@ -19,6 +20,7 @@ const OnBoard = ({ session }) => {
       ease: "easeOut",
     },
   };
+
 
   const count = useSelector((state) => state);
 
