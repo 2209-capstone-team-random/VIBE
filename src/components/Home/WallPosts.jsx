@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function WallPosts({ session }) {
   const spotifyId = session?.user.user_metadata.sub;
-  const [posts, setPosts] = useState("");
+  const [posts, setPosts] = useState('');
 
   const { userId } = useParams();
 
@@ -17,13 +17,17 @@ export default function WallPosts({ session }) {
     if (e.target.post.value) postForm.post = e.target.post.value;
 
     const updatePost = async () => {
-      const { data, error } = await supabase.from("Wall_Post").insert([
-        {
-          userSpotify: userId,
-          posterSpotify: spotifyId,
-          body: postForm.post,
-        },
-      ]);
+      const { data, error } = await supabase
+        .from('Wall_Post')
+        .insert([
+          {
+            userSpotify: userId,
+            posterSpotify: spotifyId,
+            body: postForm.post,
+          },
+        ])
+        .select();
+      console.log(data);
     };
     updatePost();
   };
@@ -31,13 +35,21 @@ export default function WallPosts({ session }) {
   useEffect(() => {
     const getUserPosts = async () => {
       const { data: Wall_Post, error } = await supabase
-        .from("Wall_Post")
-        .select("*")
-        .eq("userSpotify", userId);
+        .from('Wall_Post')
+        .select('*')
+        .eq('userSpotify', userId);
       setPosts(Wall_Post);
     };
     getUserPosts();
   }, []);
+  // const wallPosts = posts.length
+  //   ? posts.map((post) => post.body)
+  //   : "Sorry, there are no posts.";
+  // console.log("POSTS", posts);
+  // if (!wallPosts) {
+  //   wallPosts = [];
+  // }
+  console.log('POSTS', posts);
   if (posts) {
     return (
       <div className=" w-60">
@@ -73,5 +85,5 @@ export default function WallPosts({ session }) {
       </div>
     );
   }
-  console.log("Error rendering posts");
+  console.log('Error rendering posts');
 }
