@@ -15,7 +15,7 @@ export default function Player({ token }) {
   }, [discover.uri]);
 
   return (
-    <div className="m-1 sticky z-50">
+    <div className="fixed z-10 bottom-0 mt-10 w-full">
       <SpotifyPlayer
         className=" sticky"
         token={token}

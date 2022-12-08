@@ -6,15 +6,36 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, EffectFade } from "swiper";
 import "../../styles/index.css";
+import { supabase } from "../../supabaseClient";
+import { useParams } from "react-router-dom";
 
 export default function TopTracks({ token }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userTopTracks);
+  const { userId } = useParams();
+
+  const [tracks, setTracks] = useState([]);
+
+  const fetchTracks = async () => {
+    const { data, error } = await supabase
+      .from("User_Top_Lists")
+      .select("topTracks")
+      .eq("userSpotify", userId);
+    console.log("DATA", data);
+    const parsedTracks = data[0].topTracks.map((trackInfo) => {
+      return JSON.parse(trackInfo);
+    });
+    setTracks(parsedTracks);
+  };
+  useEffect(() => {
+    fetchTracks();
+  }, []);
+  console.log("TRACKS", tracks);
 
   useEffect(() => {
     dispatch(fetchUserTracks(token));
   }, [token]);
-  if (items) {
+  if (tracks) {
     return (
       <div className="mt-4">
         <Swiper
@@ -23,7 +44,7 @@ export default function TopTracks({ token }) {
           className="container left-96 block p-6 rounded-lg shadow-lg w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
         >
           <div>
-            {items.map((item) => {
+            {tracks.map((item) => {
               return (
                 <SwiperSlide key={item.id}>
                   <h1 className="text-center text-lg font-semibold mt-2">

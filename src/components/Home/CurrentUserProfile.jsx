@@ -9,6 +9,7 @@ import NameBio from "./NameBio";
 import WallPosts from "./WallPosts";
 import NavBar from "./Navbar";
 import { useNavigate, useParams } from "react-router-dom";
+import TopTracks from "./TopTracks";
 
 export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
@@ -22,11 +23,13 @@ export default function CurrentUserProfile({ token, session }) {
   }, [token]);
   if (items) {
     return (
-      <div className="grid justify-items-center">
+      <div className="flex flex-col justify-center items-center">
         <NavBar />
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
-        <div className="sticky z-50 bottom-0 mt-10 w-full">
+        <TopTracks session={session} token={token} />
+        <WallPosts session={session} />
+        <div className="fixed z-10 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
         </div>
       </div>
