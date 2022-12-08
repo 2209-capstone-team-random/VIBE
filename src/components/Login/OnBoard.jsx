@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
-// import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
@@ -12,20 +11,17 @@ import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 const OnBoard = ({ session, token }) => {
   const dispatch = useDispatch();
   const { genre } = useSelector((state) => state);
-  const { user } = useSelector((state) => state);
+  // const { user } = useSelector((state) => state);
   const count = useSelector((state) => state);
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
 
   let userId = session?.user.id;
   let spotifyId = session?.user.user_metadata.name;
-  let spotifyName = session?.user.user_metadata.name;
 
   const navigate = useNavigate();
   const allTracks = useSelector((store) => store.userTopTracks.items);
   const allArtists = useSelector((store) => store.userTopArtists.items);
-  console.log("allArtist", allArtists);
-  console.log("allTracks", allTracks);
 
   const bounceTransition = {
     y: {
@@ -103,8 +99,8 @@ const OnBoard = ({ session, token }) => {
     //adding cat to first time user
     addCategories(spotifyId, genre[0], genre[1], genre[2]);
     //rerouting
-    navigate(`/profile/${spotifyName}`);
-
+    navigate(`/profile/${spotifyId}`);
+    //insert spotify data into DB
     insertTop(spotifyId, allArtists, allTracks);
   };
   return (
