@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUri } from "../../redux/Spotify/discover";
 import { FaPlayCircle, FaHeadphonesAlt } from "react-icons/fa";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { data } from "autoprefixer";
 import AddFav from "./AddFav";
 import { useEffect } from "react";
 
@@ -33,14 +32,14 @@ const SongCard = ({ track, token, user }) => {
           }`}
         >
           {activeSong === track.name && track.uri === discover.uri ? (
-            <div className="p-[200px]" onClick={handlePause}>
+            <div className="p-[10px]">
               <FaHeadphonesAlt
                 size={25}
                 className="text-gray-300 animate-bounce"
               />
             </div>
           ) : (
-            <div className="p-[200px] " onClick={() => handlePlayClick(track)}>
+            <div className="p-[90px] " onClick={() => handlePlayClick(track)}>
               <FaPlayCircle size={30} className="text-gray-300" />
             </div>
           )}

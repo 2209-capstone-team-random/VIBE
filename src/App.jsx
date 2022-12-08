@@ -68,7 +68,7 @@ const App = () => {
         element={<Discover session={session} token={token} />}
       />
       <Route
-        path="/profile"
+        path="/profile/:userId"
         element={<CurrentUserProfile session={session} token={token} />}
       />
       <Route

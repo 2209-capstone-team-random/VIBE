@@ -121,7 +121,9 @@ const Discover = ({ token, session }) => {
             })
           : ""}
       </div>{" "}
-      <Player className="sticky bottom-0 z-99" token={token} />
+      <div className="sticky bottom-0 z-11">
+        <Player token={token} />
+      </div>
     </div>
   );
 };
