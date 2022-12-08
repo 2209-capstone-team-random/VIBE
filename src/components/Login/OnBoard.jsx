@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
 import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
+import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 
-const OnBoard = ({ session }) => {
+const OnBoard = ({ session, token }) => {
+  const count = useSelector((state) => state);
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
+  let userId = session?.user.id;
+
+  console.log("userId", userId);
+  let spotifyId = session?.user.user_metadata.name;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const allTracks = useSelector((store) => store.userTopTracks.items);
+  const allArtists = useSelector((store) => store.userTopArtists.items);
+  console.log("allArtist", allArtists);
+  console.log("allTracks", allTracks);
 
   const bounceTransition = {
     y: {
@@ -19,8 +32,46 @@ const OnBoard = ({ session }) => {
     },
   };
 
-  const count = useSelector((state) => state);
-  console.log("count", count);
+  const updateUser = async (id, spotifyId, display_name) => {
+    try {
+      const { data: user } = await supabase
+        .from("User")
+        .update({ spotifyId, display_name })
+        .eq("id", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const insertTop = async (userSpotify, topArtists, topTracks) => {
+    console.log("I AM HERE BEFORE TRY");
+    try {
+      const { data, error } = await supabase
+        .from("User_Top_Lists")
+        .insert([{ userSpotify, topArtists, topTracks }]);
+      console.log("I AM EXECUTED");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      updateUser(userId, spotifyId, spotifyId);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    dispatch(fetchUserArtists(token));
+    dispatch(fetchUserTracks(token));
+  }, [token]);
+
+  useEffect(() => {
+    if (allArtists?.length > 0 || allTracks?.length > 0) {
+      insertTop(spotifyId, allArtists, allTracks);
+    }
+  }, [allTracks]);
+
   return (
     <div className="w-full h-screen relative">
       <video

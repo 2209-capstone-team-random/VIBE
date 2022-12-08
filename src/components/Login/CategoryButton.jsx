@@ -8,11 +8,11 @@ const CategoryButton = ({ session }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { genre } = useSelector((state) => state);
-  console.log("genre", genre);
   const { user } = useSelector((state) => state);
 
   let spotifyId = session?.user.user_metadata.sub;
   let spotifyName = session?.user.user_metadata.name;
+
   const userId = session?.user.id;
   const onBoarding = async (id) => {
     const { data, error } = await supabase
