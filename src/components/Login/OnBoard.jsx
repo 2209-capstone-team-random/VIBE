@@ -14,11 +14,16 @@ const OnBoard = ({ session, token }) => {
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
   let userId = session?.user.id;
+
+  console.log("userId", userId);
   let spotifyId = session?.user.user_metadata.name;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tracks } = useSelector((store) => store.userTopTracks);
-  const { artists } = useSelector((store) => store.userTopArtists);
+  const allTracks = useSelector((store) => store.userTopTracks.items);
+  const allArtists = useSelector((store) => store.userTopArtists.items);
+  console.log("allArtist", allArtists);
+  console.log("allTracks", allTracks);
+
   const bounceTransition = {
     y: {
       duration: 1,
@@ -26,22 +31,6 @@ const OnBoard = ({ session, token }) => {
       ease: "easeOut",
     },
   };
-
-  useEffect(() => {
-    if (userId) {
-      updateUser(userId, spotifyId, spotifyId);
-    }
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchUserArtists(token));
-    console.log("top artist", tracks);
-  }, [token]);
-
-  useEffect(() => {
-    dispatch(fetchUserTracks(token));
-    console.log("top artist", artists);
-  }, [token]);
 
   const updateUser = async (id, spotifyId, display_name) => {
     try {
@@ -53,6 +42,35 @@ const OnBoard = ({ session, token }) => {
       console.log(error);
     }
   };
+
+  const insertTop = async (userSpotify, topArtists, topTracks) => {
+    console.log("I AM HERE BEFORE TRY");
+    try {
+      const { data, error } = await supabase
+        .from("User_Top_Lists")
+        .insert([{ userSpotify, topArtists, topTracks }]);
+      console.log("I AM EXECUTED");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      updateUser(userId, spotifyId, spotifyId);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    dispatch(fetchUserArtists(token));
+    dispatch(fetchUserTracks(token));
+  }, [token]);
+
+  useEffect(() => {
+    if (allArtists?.length > 0 || allTracks?.length > 0) {
+      insertTop(spotifyId, allArtists, allTracks);
+    }
+  }, [allTracks]);
 
   return (
     <div className="w-full h-screen relative">
