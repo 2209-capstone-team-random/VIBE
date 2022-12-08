@@ -18,7 +18,7 @@ const OnBoard = ({ session, token }) => {
 
   let userId = session?.user.id;
   let spotifyId = session?.user.user_metadata.name;
-
+  console.log("session", session);
   const navigate = useNavigate();
   const allTracks = useSelector((store) => store.userTopTracks.items);
   const allArtists = useSelector((store) => store.userTopArtists.items);
@@ -98,10 +98,10 @@ const OnBoard = ({ session, token }) => {
     onBoarding(userId);
     //adding cat to first time user
     addCategories(spotifyId, genre[0], genre[1], genre[2]);
-    //rerouting
-    navigate(`/profile/${spotifyId}`);
     //insert spotify data into DB
     insertTop(spotifyId, allArtists, allTracks);
+    //rerouting
+    navigate(`/profile/${spotifyId}`);
   };
   return (
     <div className="w-full h-screen relative">
