@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { map, set } from "zod";
 
-const AddFav = ({ user, uri }) => {
+const AddFav = ({ user, uri, song }) => {
   const [added, setAdded] = useState(null);
-  const [song, setsong] = useState(null);
+  const [ii, setii] = useState(null);
 
   const handleClickLike = async () => {
     await supabase.from("User_Favorites").insert([
@@ -16,7 +17,17 @@ const AddFav = ({ user, uri }) => {
       },
     ]);
     setAdded(true);
+    setii(uri);
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem(`${uri}`);
+    if (data !== null) setAdded(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(ii, JSON.stringify(added));
+  }, [added, ii]);
 
   const handleDelete = async () => {
     await supabase
@@ -25,11 +36,10 @@ const AddFav = ({ user, uri }) => {
       .match({ userSpotify: `${user}`, favorite_list: `${uri}` });
     setAdded(false);
   };
-  useEffect(() => {}, [added, song]);
-  console.log(song, added);
+
   return (
     <div>
-      {added && song ? (
+      {added ? (
         <AiFillHeart onClick={handleDelete} size={23} />
       ) : (
         <AiOutlineHeart onClick={handleClickLike} size={23} />

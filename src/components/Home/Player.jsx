@@ -17,13 +17,12 @@ export default function Player({ token }) {
   return (
     <div className="sticky bottom-0 z-50">
       <SpotifyPlayer
-        className=" sticky"
         token={token}
         callback={(state) => {
-          if (!state.isPlaying) setplay(false);
+          if (!state.isPlaying || discover.uri) setplay(false);
         }}
         play={play}
-        uris={discover.uri.length ? [`${discover.uri}`] : []}
+        uris={discover.uri ? [`${discover.uri}`] : []}
       />
     </div>
   );
