@@ -49,9 +49,11 @@ const Discover = ({ token }) => {
           );
         })}
       </div>
-
+      <h1 className="flex justify-center m-6 font-semibold text-lg">
+        Future Vibes
+      </h1>
       <div className="flex flex-wrap justify-center m-10 p-10 rounded-2xl gap-8 ">
-        {users.length ? <h2>Future Vibes</h2> : ""}
+        {/* {users.length ? <h2 className="">Future Vibes</h2> : ""} */}
         {users
           ? users.map((user, i) => {
               return (
@@ -66,7 +68,7 @@ const Discover = ({ token }) => {
             })
           : ""}
       </div>
-      <h2 className="p-3 m-3 text-3xl">{genre}</h2>
+      <h2 className="flex justify-center p-3 m-3 text-3xl">{genre}</h2>
       <div className="flex flex-wrap justify-center m-10 p-10 rounded-2xl gap-8 ">
         {list.tracks
           ? list.tracks.map((track, i) => {
@@ -75,7 +77,6 @@ const Discover = ({ token }) => {
           : ""}
       </div>
       <div className=" bg-black/30">
-        {" "}
         <Player token={token} />
       </div>
     </div>

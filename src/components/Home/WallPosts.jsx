@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function WallPosts({ session }) {
   const spotifyId = session?.user.user_metadata.sub;
@@ -17,7 +17,7 @@ export default function WallPosts({ session }) {
     if (e.target.post.value) postForm.post = e.target.post.value;
 
     const addPost = async () => {
-      const { data, error } = await supabase.from('Wall_Post').insert([
+      const { data, error } = await supabase.from("Wall_Post").insert([
         {
           userSpotify: userId,
           posterSpotify: spotifyId,
@@ -31,10 +31,10 @@ export default function WallPosts({ session }) {
 
   useEffect(() => {
     const channel = supabase
-      .channel('wall')
+      .channel("wall")
       .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'Wall_Post' },
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "Wall_Post" },
         (payload) =>
           setPosts((prev) => {
             console.log(payload, prev);
@@ -59,42 +59,59 @@ export default function WallPosts({ session }) {
 
   if (posts) {
     return (
-      <div className=" w-60">
+      <div>
         <form id="postForm" onSubmit={handleSubmit}>
           <textarea
             name="post"
-            className="textarea textarea-primary w-96"
+            className="flex flex-col textarea textarea-primary w-96 mt-6 mb-2"
             placeholder="Write a post"
           ></textarea>
-          <button form="postForm" className="btn btn-sm btn-secondary">
+          <button form="postForm" className="btn btn-sm btn-secondary mb-20">
             Submit
           </button>
         </form>
-        {posts.map((post, id) => {
-          if (post.posterSpotify !== userId) {
-            return (
+        <div className="flex flex-col-reverse overflow-y-auto mt-4">
+          {posts.map((post, id) => {
+            if (post.posterSpotify !== userId) {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-start text-accent-focus"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50">
+                      {Date(post.created_at).slice(0, 15)}
+                    </time>
 
-              <div key={post.id} className="flex flex-col chat chat-start">
-
-                <div className="chat-bubble chat-bubble-primary mt-4 mb-4">
-                  {post.body}
+                    <div className="chat-bubble chat-bubble-primary mb-4">
+                      {post.body}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          } else {
-            return (
-
-              <div key={post.id} className="chat chat-end">
-
-                <div className="chat-bubble chat-bubble-success">
-                  {post.body}
+              );
+            } else {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-end text-secondary-focus"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50">
+                      {Date(post.created_at).slice(0, 15)}
+                    </time>
+                    <div className="chat-bubble chat-bubble-success">
+                      {post.body}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          }
-        })}
+              );
+            }
+          })}
+        </div>
       </div>
     );
   }
-  console.log('Error rendering posts');
+  console.log("Error rendering posts");
 }
