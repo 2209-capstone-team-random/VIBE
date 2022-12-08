@@ -1,11 +1,69 @@
-import React, { useState, useEffect, createContext } from "react";
-import video from "../../assets/connect2.mp4";
+import React, { useState, useEffect } from "react";
 import Typed from "react-typed";
 import Bee from "../../assets/bee.png";
-import LoginButton from "./LoginButton";
+import { supabase } from "../../supabaseClient";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const Landing = () => {
-  let [token, setToken] = useState("");
+// import LoginButton from "./LoginButton";
+
+const Landing = ({ isFirstTimeUser, session }) => {
+  const video =
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
+  let spotifyId = session?.user.user_metadata.name;
+  let userId = session?.user.id;
+  console.log("session", spotifyId);
+
+  const navigate = useNavigate();
+  async function signInWithSpotify() {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "spotify",
+        options: {
+          scopes: `ugc-image-upload
+    user-modify-playback-state
+    user-read-playback-state
+    user-read-currently-playing
+    streaming
+    app-remote-control
+    user-library-modify
+    user-library-read
+    user-top-read
+    user-read-email
+    user-read-private
+    user-read-playback-position
+    user-read-recently-played
+    user-follow-read
+    user-follow-modify
+    playlist-read-private
+    playlist-read-collaborative
+    playlist-modify-public
+    playlist-modify-private`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const insertUser = async (id, spotifyId, display_name) => {
+    try {
+      const { data: user } = await supabase
+        .from("User")
+        .insert([{ spotifyId, display_name }])
+        .eq("id", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    insertUser(userId, spotifyId, spotifyId);
+    if (isFirstTimeUser && session) {
+      navigate("/onboard");
+    } else if (!isFirstTimeUser && session) {
+      navigate(`/profile/${spotifyId}`);
+    }
+  }, [isFirstTimeUser]);
+
   return (
     <div className="w-full h-screen relative">
       <video
@@ -27,7 +85,14 @@ const Landing = () => {
           backSpeed={80}
           loop
         />
-        <LoginButton />
+        <div className="p-7">
+          <button
+            className="m-2 h-12 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
+            onClick={signInWithSpotify}
+          >
+            Login with Spotify
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,42 +1,50 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const CategoryButton = ({ click }) => {
+const CategoryButton = ({ session }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { genre } = useSelector((state) => state);
+  console.log("genre", genre);
   const { user } = useSelector((state) => state);
-  // useEffect(()=>{},[])
+
+  let spotifyId = session?.user.user_metadata.sub;
+  let spotifyName = session?.user.user_metadata.name;
+  const userId = session?.user.id;
   const onBoarding = async (id) => {
     const { data, error } = await supabase
       .from("User")
       .update({ isFirstTimeUser: false })
-      .match({ id })
-      .select();
-    console.log("data", data);
+      .match({ id });
     if (error) {
       console.log(error);
     }
   };
+  console.log(spotifyId);
+  console.log(spotifyName);
 
-  const addCategories = async (userId, catA, catB, catC) => {
+  const addCategories = async (userSpotify, catA, catB, catC) => {
     try {
-      let { data: user, error } = await supabase
+      let { data, error } = await supabase
         .from("User_Top_Cat")
-        .insert([{ userId, catA, catB, catC }]);
-      console.log(user);
+        .insert([{ userSpotify, catA, catB, catC }])
+        .select();
+      console.log("data", data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const clickHandler = () => {
-    //set user status to false
-    onBoarding(10);
-    addCategories(6, "rock", "edm", "indie");
-    click();
-    navigate("/profile");
+    //set first time user status to false
+    onBoarding(userId);
+    //adding cat to first time user
+    addCategories(spotifyId, genre[0], genre[1], genre[2]);
+    //rerouting
+    navigate(`/profile/${spotifyName}`);
   };
 
   return (

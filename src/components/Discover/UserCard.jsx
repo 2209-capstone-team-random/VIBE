@@ -17,7 +17,7 @@ const UserCard = ({ user }) => {
         .from("Profile_Image")
         .select("url")
         .eq("userSpotify", `${user.userSpotify}`);
-      setpic(data[0].url);
+      setpic(data);
     };
     getImage();
   }, []);
@@ -35,6 +35,7 @@ const UserCard = ({ user }) => {
         </div>
         <div className="mt-4 flex flex-col ">
           <p className="font-semibold text-2xl truncate">{user.userSpotify}</p>
+
           <p className="test-sm truncate text-black-300 mt-1">
             {user.catA}.{user.catB}.{user.catC}
           </p>

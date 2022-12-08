@@ -10,6 +10,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import NavBar from "../Home/Navbar";
 
 const Discover = ({ token, session }) => {
   const user = session?.user?.user_metadata?.name;
@@ -43,6 +44,7 @@ const Discover = ({ token, session }) => {
 
   return (
     <div className="flex flex-col bg-white  ">
+      <NavBar />
       <h2 className="font-semibold text-3xl justify-center flex m-3 p-3 text-black text-left">
         Discover
       </h2>
@@ -92,7 +94,7 @@ const Discover = ({ token, session }) => {
               return (
                 <div key={i}>
                   <UserCard
-                    className=" flex justify-center px-4 py-16 bg-base-200"
+                    className="flex justify-center px-4 py-16 bg-base-200"
                     key={i}
                     user={user}
                   />

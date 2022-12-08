@@ -3,15 +3,13 @@ import { useSelector } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
-import video from "../../assets/connect2.mp4";
 import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
 
 const OnBoard = ({ session }) => {
-  const userId = session?.user?.identities[0].user_id;
+  const video =
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
   const navigate = useNavigate();
-  const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
 
   const bounceTransition = {
     y: {
@@ -21,37 +19,8 @@ const OnBoard = ({ session }) => {
     },
   };
 
-  const getUserStatus = async (userId) => {
-    try {
-      let { data: User, error } = await supabase
-        .from("User")
-        .select("isFirstTimeUser")
-        .eq("id", userId);
-      setIsFirstTimeUser(User[0].isFirstTimeUser)
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-//   const userStatus = async (userId) => { 
-//     const stat = await getUserStatus("36031b70-8739-4393-bcd3-ef082aebdfed"
-//       )
-//     console.log('stat',stat)
-// }
-
-  useEffect(() => {
-    async()=> await getUserStatus(userId)
-  }, [isFirstTimeUser])
-  
-  useEffect(() => {
-    // if (!isFirstTimeUser) {
-    //   navigate("/profile");
-    // }
-  }, []);
-
   const count = useSelector((state) => state);
-
-
+  console.log("count", count);
   return (
     <div className="w-full h-screen relative">
       <video
@@ -77,17 +46,15 @@ const OnBoard = ({ session }) => {
         <div className="flex justify-center">
           <Card />
         </div>
-        
+
         <div
           className={
-            count.user !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
+            count.count !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
-          <CategoryButton />
-        
+          <CategoryButton session={session} />
         </div>
       </div>
-      {/* <button onClick={userStatus}>test</button> */}
     </div>
   );
 };

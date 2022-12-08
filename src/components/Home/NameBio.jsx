@@ -37,7 +37,9 @@ export default function NameBio({ session, userId }) {
         </div>
       </div>
       <div className="flex-column ml-20">
-        <p className="bold mb-4">{userData[0]?.display_name}</p>
+        <p className="font-semibold text-lg mb-4">
+          {userData[0]?.display_name}
+        </p>
         <p className="mb-4">{userData[0]?.bio}</p>
       </div>
     </div>
