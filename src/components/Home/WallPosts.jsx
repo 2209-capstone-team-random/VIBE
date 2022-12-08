@@ -47,9 +47,11 @@ export default function WallPosts({ session }) {
   useEffect(() => {
     const getUserPosts = async () => {
       const { data: Wall_Post, error } = await supabase
+
         .from('Wall_Post')
         .select('*')
         .eq('userSpotify', userId);
+
       setPosts(Wall_Post);
     };
     getUserPosts();
@@ -61,7 +63,7 @@ export default function WallPosts({ session }) {
   // if (!wallPosts) {
   //   wallPosts = [];
   // }
-  console.log('POSTS', posts);
+
   if (posts) {
     return (
       <div className=" w-60">
@@ -78,7 +80,9 @@ export default function WallPosts({ session }) {
         {posts.map((post, id) => {
           if (post.posterSpotify !== userId) {
             return (
-              <div key={id} className="flex flex-col chat chat-start">
+
+              <div key={post.id} className="flex flex-col chat chat-start">
+
                 <div className="chat-bubble chat-bubble-primary mt-4 mb-4">
                   {post.body}
                 </div>
@@ -86,7 +90,9 @@ export default function WallPosts({ session }) {
             );
           } else {
             return (
-              <div key={id} className="chat chat-end">
+
+              <div key={post.id} className="chat chat-end">
+
                 <div className="chat-bubble chat-bubble-success">
                   {post.body}
                 </div>

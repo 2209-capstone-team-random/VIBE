@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { getCount } from "../../redux/dbQueryThunks/user";
+import { getCount } from "../../redux/dbQueryThunks/count";
+import { getGenre } from "../../redux/dbQueryThunks/genre";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { supabase } from "../../supabaseClient";
@@ -9,6 +10,7 @@ const Card = () => {
   const [genres, setGenres] = useState([]);
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
+
   const colors = [
     "bg-blue-500",
     "bg-pink-400",
@@ -19,6 +21,7 @@ const Card = () => {
     "bg-red-500",
     "bg-blue-700",
   ];
+
   const getCards = async () => {
     try {
       let { data } = await supabase.from("Categories").select("*");
@@ -30,6 +33,7 @@ const Card = () => {
 
   useEffect(() => {
     dispatch(getCount(categoryPicked));
+    dispatch(getGenre(genres));
     if (categories.length < 1) {
       getCards();
     }
