@@ -3,22 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
-import CategoryButton from "./CategoryButton";
+// import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
 import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 
 const OnBoard = ({ session, token }) => {
+  const dispatch = useDispatch();
+  const { genre } = useSelector((state) => state);
+  const { user } = useSelector((state) => state);
   const count = useSelector((state) => state);
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
-  let userId = session?.user.id;
 
-  console.log("userId", userId);
+  let userId = session?.user.id;
   let spotifyId = session?.user.user_metadata.name;
+  let spotifyName = session?.user.user_metadata.name;
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const allTracks = useSelector((store) => store.userTopTracks.items);
   const allArtists = useSelector((store) => store.userTopArtists.items);
   console.log("allArtist", allArtists);
@@ -55,6 +58,28 @@ const OnBoard = ({ session, token }) => {
     }
   };
 
+  const addCategories = async (userSpotify, catA, catB, catC) => {
+    try {
+      let { data, error } = await supabase
+        .from("User_Top_Cat")
+        .insert([{ userSpotify, catA, catB, catC }])
+        .select();
+      console.log("data", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onBoarding = async (id) => {
+    const { data, error } = await supabase
+      .from("User")
+      .update({ isFirstTimeUser: false })
+      .match({ id });
+    if (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (userId) {
       updateUser(userId, spotifyId, spotifyId);
@@ -66,12 +91,22 @@ const OnBoard = ({ session, token }) => {
     dispatch(fetchUserTracks(token));
   }, [token]);
 
-  useEffect(() => {
-    if (allArtists?.length > 0 || allTracks?.length > 0) {
-      insertTop(spotifyId, allArtists, allTracks);
-    }
-  }, [allTracks]);
+  // useEffect(() => {
+  //   if (allArtists?.length > 0 || allTracks?.length > 0) {
+  //     insertTop(spotifyId, allArtists, allTracks);
+  //   }
+  // }, [allTracks]);
 
+  const clickHandler = () => {
+    //set first time user status to false
+    onBoarding(userId);
+    //adding cat to first time user
+    addCategories(spotifyId, genre[0], genre[1], genre[2]);
+    //rerouting
+    navigate(`/profile/${spotifyName}`);
+
+    insertTop(spotifyId, allArtists, allTracks);
+  };
   return (
     <div className="w-full h-screen relative">
       <video
@@ -103,7 +138,12 @@ const OnBoard = ({ session, token }) => {
             count.count !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
-          <CategoryButton session={session} />
+          <button
+            className="m-2 h-12 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
+            onClick={clickHandler}
+          >
+            LET'S VIBE
+          </button>
         </div>
       </div>
     </div>
