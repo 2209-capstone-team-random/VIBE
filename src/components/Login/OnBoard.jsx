@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Bee from "../../assets/bee.png";
 import Card from "../Cards/Card";
 import { motion } from "framer-motion";
 import CategoryButton from "./CategoryButton";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
+import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 
-const OnBoard = ({ session }) => {
+const OnBoard = ({ session, token }) => {
+  const count = useSelector((state) => state);
   const video =
     "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
+  let userId = session?.user.id;
+  let spotifyId = session?.user.user_metadata.name;
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const { tracks } = useSelector((store) => store.userTopTracks);
+  const { artists } = useSelector((store) => store.userTopArtists);
   const bounceTransition = {
     y: {
       duration: 1,
@@ -19,8 +27,33 @@ const OnBoard = ({ session }) => {
     },
   };
 
-  const count = useSelector((state) => state);
-  console.log("count", count);
+  useEffect(() => {
+    if (userId) {
+      updateUser(userId, spotifyId, spotifyId);
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchUserArtists(token));
+    console.log("top artist", tracks);
+  }, [token]);
+
+  useEffect(() => {
+    dispatch(fetchUserTracks(token));
+    console.log("top artist", artists);
+  }, [token]);
+
+  const updateUser = async (id, spotifyId, display_name) => {
+    try {
+      const { data: user } = await supabase
+        .from("User")
+        .update({ spotifyId, display_name })
+        .eq("id", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full h-screen relative">
       <video
