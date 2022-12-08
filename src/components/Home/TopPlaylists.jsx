@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
-import { fetchUserByIdPlaylists } from "../../redux/Spotify/userPlaylists";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper";
-import "../../styles/index.css";
-import TopTracks from "./TopTracks";
-import TopGenres from "./TopGenres";
-import WallPosts from "./WallPosts";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserArtists } from '../../redux/Spotify/userTopArtists';
+import { fetchUserByIdPlaylists } from '../../redux/Spotify/userPlaylists';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation } from 'swiper';
+import '../../styles/index.css';
+import TopTracks from './TopTracks';
+import TopGenres from './TopGenres';
+import WallPosts from './WallPosts';
+import { useParams } from 'react-router-dom';
 
 export default function TopPlaylists({ token, session }) {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export default function TopPlaylists({ token, session }) {
                       Top Playlists
                     </h1>
                     <img
-                      src={item.images[0].url}
+                      src={item.images[0]?.url}
                       className="rounded-full resize h-60 w-60 p-4"
                     />
                     <p className="text-center font-semibold p-4">{item.name}</p>
@@ -52,5 +52,5 @@ export default function TopPlaylists({ token, session }) {
       </div>
     );
   }
-  console.log("Sorry, there are no artists");
+  console.log('Sorry, there are no artists');
 }
