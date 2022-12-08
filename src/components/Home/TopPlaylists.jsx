@@ -14,10 +14,8 @@ import { useParams } from 'react-router-dom';
 
 export default function TopPlaylists({ token, session }) {
   const dispatch = useDispatch();
-  // const { items } = useSelector((store) => store.userTopArtists);
   const { userId } = useParams();
   const { items } = useSelector((store) => store.userPlaylists);
-  console.log('Playlists', items);
   useEffect(() => {
     dispatch(fetchUserArtists(token));
     dispatch(fetchUserByIdPlaylists(userId, token));
@@ -50,7 +48,6 @@ export default function TopPlaylists({ token, session }) {
               })}
             </div>
           </Swiper>
-          {/* <TopTracks token={token} /> */}
         </div>
       </div>
     );

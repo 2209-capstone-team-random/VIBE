@@ -48,21 +48,14 @@ export default function WallPosts({ session }) {
     const getUserPosts = async () => {
       const { data: Wall_Post, error } = await supabase
 
-        .from('Wall_Post')
-        .select('*')
-        .eq('userSpotify', userId);
+        .from("Wall_Post")
+        .select("*")
+        .eq("userSpotify", userId);
 
       setPosts(Wall_Post);
     };
     getUserPosts();
   }, []);
-  // const wallPosts = posts.length
-  //   ? posts.map((post) => post.body)
-  //   : "Sorry, there are no posts.";
-  // console.log("POSTS", posts);
-  // if (!wallPosts) {
-  //   wallPosts = [];
-  // }
 
   if (posts) {
     return (
