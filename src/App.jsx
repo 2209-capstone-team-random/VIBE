@@ -25,7 +25,6 @@ const App = () => {
         .from("User")
         .select("isFirstTimeUser")
         .eq("id", userId);
-      console.log("USERID", userId);
       setIsFirstTimeUser(User[0].isFirstTimeUser);
     } catch (error) {
       console.log(error);
