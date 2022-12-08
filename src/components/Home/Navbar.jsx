@@ -3,6 +3,7 @@ import { supabase } from "../../supabaseClient";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Drawer from "../../Drawer";
+import Discover from "../Discover/Discover";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,11 +46,13 @@ export default function NavBar() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
           <li>
-            <a className="font-bold">Discover</a>
+            <Link to="/discover">
+              <a className="font-bold">Discover</a>
+            </Link>
           </li>
-          <li>
+          {/* <li>
             <a className="font-bold">Vibe Hive</a>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="navbar-end"></div>
