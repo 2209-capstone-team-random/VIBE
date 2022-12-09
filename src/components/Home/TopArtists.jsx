@@ -16,10 +16,17 @@ export default function TopArtists({ token }) {
 
   const fetchArtists = async () => {
     const { data, error } = await supabase
+<<<<<<< HEAD
       .from('User_Top_Lists')
       .select('topArtists')
       .eq('userSpotify', 'anq90wy056xea5rp2tbmh7ce3');
     // console.log("DATA", data);
+=======
+      .from("User_Top_Lists")
+      .select("topArtists")
+      .eq("userSpotify", userId);
+    console.log("DATA", data);
+>>>>>>> main
     const parsedArtists = data[0].topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
     });
@@ -28,7 +35,10 @@ export default function TopArtists({ token }) {
   useEffect(() => {
     fetchArtists();
   }, []);
+<<<<<<< HEAD
   // console.log("ARTISTS", artists);
+=======
+>>>>>>> main
 
   if (artists) {
     return (
@@ -45,7 +55,7 @@ export default function TopArtists({ token }) {
                   <h1 className="text-center text-lg font-semibold mt-2">
                     Top Artists
                   </h1>
-                  <img src={item.images[0].url} className="p-4" />
+                  <img src={item.images[0].url} className="p-4 h-60 w-60" />
                   <p className="text-center font-semibold mt-4">{item.name}</p>
                 </SwiperSlide>
               );
