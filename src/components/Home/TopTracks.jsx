@@ -18,7 +18,7 @@ export default function TopTracks({ token }) {
     const { data, error } = await supabase
       .from("User_Top_Lists")
       .select("topTracks")
-      .eq("userSpotify", "anq90wy056xea5rp2tbmh7ce3");
+      .eq("userSpotify", userId);
     console.log("DATA", data);
     const parsedTracks = data[0].topTracks.map((trackInfo) => {
       return JSON.parse(trackInfo);
