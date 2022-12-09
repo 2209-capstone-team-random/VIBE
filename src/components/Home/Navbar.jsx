@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Drawer from "../../Drawer";
-import Discover from "../Discover/Discover";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Drawer from '../../Drawer';
+import Discover from '../Discover/Discover';
 
-export default function NavBar() {
+export default function NavBar({ userId }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar bg-neutral-100 mb-8">
@@ -57,7 +57,7 @@ export default function NavBar() {
           </div>
         </label>
       </div>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen}></Drawer>
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} userId={userId}></Drawer>
     </div>
   );
 }

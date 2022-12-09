@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation, EffectFade } from "swiper";
-import "../../styles/index.css";
-import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation, EffectFade } from 'swiper';
+import '../../styles/index.css';
+import { supabase } from '../../supabaseClient';
+import { useParams } from 'react-router-dom';
 
 export default function TopArtists({ token }) {
   const dispatch = useDispatch();
@@ -16,10 +16,10 @@ export default function TopArtists({ token }) {
 
   const fetchArtists = async () => {
     const { data, error } = await supabase
-      .from("User_Top_Lists")
-      .select("topArtists")
-      .eq("userSpotify", "anq90wy056xea5rp2tbmh7ce3");
-    console.log("DATA", data);
+      .from('User_Top_Lists')
+      .select('topArtists')
+      .eq('userSpotify', 'anq90wy056xea5rp2tbmh7ce3');
+    // console.log("DATA", data);
     const parsedArtists = data[0].topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
     });
@@ -28,7 +28,7 @@ export default function TopArtists({ token }) {
   useEffect(() => {
     fetchArtists();
   }, []);
-  console.log("ARTISTS", artists);
+  // console.log("ARTISTS", artists);
 
   if (artists) {
     return (
@@ -55,5 +55,5 @@ export default function TopArtists({ token }) {
       </div>
     );
   }
-  console.log("Sorry, there are no artists");
+  console.log('Sorry, there are no artists');
 }
