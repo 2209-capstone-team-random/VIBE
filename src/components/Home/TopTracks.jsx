@@ -19,7 +19,8 @@ export default function TopTracks({ token }) {
       .from("User_Top_Lists")
       .select("topTracks")
       .eq("userSpotify", userId);
-    const parsedTracks = data[0]?.topTracks.map((trackInfo) => {
+    console.log("DATA", data);
+    const parsedTracks = data[0].topTracks.map((trackInfo) => {
       return JSON.parse(trackInfo);
     });
     setTracks(parsedTracks);

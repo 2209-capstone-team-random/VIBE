@@ -81,7 +81,7 @@ export default function WallPosts({ session }) {
                   >
                     {post.posterSpotify}
                     <time className="text-xs opacity-50">
-                      {Date(post.created_at).slice(0, 15)}
+                      {String(post.created_at).slice(0, 10)}
                     </time>
 
                     <div className="chat-bubble chat-bubble-primary mb-4">
@@ -99,7 +99,7 @@ export default function WallPosts({ session }) {
                   >
                     {post.posterSpotify}
                     <time className="text-xs opacity-50">
-                      {Date(post.created_at).slice(0, 15)}
+                      {String(post.created_at).slice(0, 10)}
                     </time>
                     <div className="chat-bubble chat-bubble-success">
                       {post.body}

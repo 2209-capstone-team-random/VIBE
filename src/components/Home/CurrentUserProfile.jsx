@@ -21,10 +21,6 @@ export default function CurrentUserProfile({ token, session }) {
     if (mutual === false && vibe === false) {
       setVibeTrue(mySpotifySub, userId);
       setVibe(true);
-      // if (mutual === true) {
-      //   setMutualStatus(mySpotifySub, userId);
-      //   setMutual(true);
-      // }
     } else if (mutual === false && vibe === true) {
       setMutualStatus(mySpotifySub, userId);
     } else if (mutual === true && vibe === true) {
@@ -121,10 +117,6 @@ export default function CurrentUserProfile({ token, session }) {
         <div>
           <button onClick={buttontest}>test</button>
           <br></br>
-          <br></br>
-
-          <br></br>
-
           <br></br>
         </div>
         {userId !== mySpotifySub ? (
