@@ -16,18 +16,25 @@ export default function CurrentUserProfile({ token, session }) {
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
   const [vibe, setVibe] = useState(false);
+  const mySpotifySub = session?.user.user_metadata.sub;
   console.log("session", session);
+
   const vibeHandler = () => {
     console.log("clicked");
+    setVibe(!vibe);
   };
 
-  useEffect(() => {
-    // let { data: Vibe, error } = await supabase
-    //   .from("Vibe")
-    //   .select("mutual")
-    //   // .match({ userSpotify:userId, vibeSpotify
-    //   //  });
-  }, []);
+  const checkMutual = async (userSpotify, vibeSpotify) => {
+    try {
+      const { data: vibe, error } = await supabase
+        .from("Vibe")
+        .select("mutual")
+        .match({ userSpotify, vibeSpotify });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {}, []);
 
   useEffect(() => {
     dispatch(fetchUserByIdPlaylists(userId, token));
@@ -36,7 +43,25 @@ export default function CurrentUserProfile({ token, session }) {
     return (
       <div className="flex flex-col justify-center items-center">
         <NavBar />
-        <button onClick={vibeHandler}>V I B E</button>
+        {userId !== mySpotifySub ? (
+          !vibe ? (
+            <button
+              className="m-2 h-8 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-blue-500 via-sky-300 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              onClick={vibeHandler}
+            >
+              V I B E
+            </button>
+          ) : (
+            <button
+              className="m-2 h-8 px-5 stext-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              onClick={vibeHandler}
+            >
+              V I B E D
+            </button>
+          )
+        ) : (
+          <></>
+        )}
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
         <TopTracks session={session} token={token} />
