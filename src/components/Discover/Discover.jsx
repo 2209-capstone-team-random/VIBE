@@ -46,7 +46,7 @@ const Discover = ({ token, session }) => {
     <div className="flex flex-col  ">
       <NavBar />
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
-        Vibe Hibe
+        Vibe Hive
       </h2>
       <div className=" sticky shadow-xl mb-10 flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0   bg-blur">
         {categories.map((genre, i) => {
