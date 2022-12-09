@@ -15,9 +15,9 @@ export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
+
   const [vibe, setVibe] = useState(false);
   const mySpotifySub = session?.user.user_metadata.sub;
-  console.log("session", session);
 
   const vibeHandler = () => {
     console.log("clicked");
@@ -64,8 +64,8 @@ export default function CurrentUserProfile({ token, session }) {
         )}
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
-        <TopTracks session={session} token={token} />
-        <TopArtists session={session} token={token} />
+        {/* <TopTracks session={session} token={token} />
+        <TopArtists session={session} token={token} /> */}
         <WallPosts session={session} />
         <div className="fixed z-10 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />

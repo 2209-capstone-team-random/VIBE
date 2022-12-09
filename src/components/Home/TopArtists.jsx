@@ -19,8 +19,7 @@ export default function TopArtists({ token }) {
       .from("User_Top_Lists")
       .select("topArtists")
       .eq("userSpotify", userId);
-    console.log("DATA", data);
-    const parsedArtists = data[0].topArtists.map((artistInfo) => {
+    const parsedArtists = data[0]?.topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
     });
     setArtists(parsedArtists);
@@ -32,11 +31,11 @@ export default function TopArtists({ token }) {
 
   if (artists) {
     return (
-      <div className="mt-4">
+      <div className="p-2">
         <Swiper
           navigation={true}
           modules={[Navigation]}
-          className="container left-96 block p-6 rounded-lg shadow-lg w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
+          className="container p-6 rounded-lg shadow-lg h-96 w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
         >
           <div>
             {artists.map((item) => {
@@ -45,7 +44,7 @@ export default function TopArtists({ token }) {
                   <h1 className="text-center text-lg font-semibold mt-2">
                     Top Artists
                   </h1>
-                  <img src={item.images[0].url} className="p-4" />
+                  <img src={item.images[0].url} className="p-4 h-60 w-60" />
                   <p className="text-center font-semibold mt-4">{item.name}</p>
                 </SwiperSlide>
               );
