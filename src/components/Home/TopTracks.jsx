@@ -18,7 +18,7 @@ export default function TopTracks({ token }) {
     const { data, error } = await supabase
       .from("User_Top_Lists")
       .select("topTracks")
-      .eq("userSpotify", userId);
+      .eq("userSpotify", "anq90wy056xea5rp2tbmh7ce3");
     console.log("DATA", data);
     const parsedTracks = data[0].topTracks.map((trackInfo) => {
       return JSON.parse(trackInfo);
@@ -32,11 +32,11 @@ export default function TopTracks({ token }) {
 
   if (tracks) {
     return (
-      <div className="mt-4">
+      <div className="p-2">
         <Swiper
           navigation={true}
           modules={[Navigation]}
-          className="container left-96 block p-6 rounded-lg shadow-lg w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
+          className="container p-6 rounded-lg shadow-lg h-96 w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
         >
           <div>
             {tracks.map((item) => {

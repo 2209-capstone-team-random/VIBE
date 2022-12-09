@@ -7,10 +7,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import "../../styles/index.css";
-import TopTracks from "./TopTracks";
-import TopGenres from "./TopGenres";
-import WallPosts from "./WallPosts";
 import { useParams } from "react-router-dom";
+import TopArtists from "./TopArtists";
+import TopTracks from "./TopTracks";
 
 export default function TopPlaylists({ token, session }) {
   const dispatch = useDispatch();
@@ -23,14 +22,13 @@ export default function TopPlaylists({ token, session }) {
 
   if (items) {
     return (
-      <div>
-        <div className="flex mb-20">
-          {/* <WallPosts session={session} /> */}
-          <div>
+      <div className="flex">
+        <div className="flex justify-center flex-wrap mb-20">
+          <div className="p-2">
             <Swiper
               navigation={true}
               modules={[Navigation]}
-              className="container block p-6 rounded-lg shadow-lg w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
+              className="container p-6 rounded-lg shadow-lg h-96 w-60 bg-gradient-to-r from-blue-200 to-cyan-200"
             >
               <div className="">
                 {items.map((item) => {
@@ -52,6 +50,8 @@ export default function TopPlaylists({ token, session }) {
               </div>
             </Swiper>
           </div>
+          <TopArtists />
+          <TopTracks />
         </div>
       </div>
     );

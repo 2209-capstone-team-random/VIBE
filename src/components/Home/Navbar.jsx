@@ -34,9 +34,6 @@ export default function NavBar() {
             <li>
               <a>Discover</a>
             </li>
-            <li>
-              <a>Vibe Hive</a>
-            </li>
           </ul>
         </div>
         <Link to="/">
@@ -50,9 +47,6 @@ export default function NavBar() {
               <a className="font-bold">Discover</a>
             </Link>
           </li>
-          {/* <li>
-            <a className="font-bold">Vibe Hive</a>
-          </li> */}
         </ul>
       </div>
       <div className="navbar-end"></div>
