@@ -43,12 +43,12 @@ const Discover = ({ token, session }) => {
   const { users } = useSelector((state) => state.discover);
 
   return (
-    <div className="flex flex-col bg-white  ">
+    <div className="flex flex-col  ">
       <NavBar />
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hibe
       </h2>
-      <div className=" sticky shadow-xl flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0   bg-blur">
+      <div className=" sticky shadow-xl mb-10 flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0   bg-blur">
         {categories.map((genre, i) => {
           return (
             <div
@@ -70,7 +70,7 @@ const Discover = ({ token, session }) => {
         })}
       </div>
       {users.length ? (
-        <h2 className="p-3 animate-bounce m-10 text-5xl text-center font-bold">
+        <h2 className="p-3 animate-bounce mb-5 mt-11 text-5xl text-center font-bold">
           Future Vibees
         </h2>
       ) : (
@@ -87,7 +87,7 @@ const Discover = ({ token, session }) => {
           className={
             !users.length
               ? "flex m-10  p-3 mySwiper w-[80%]  rounded-2xl overflow-x-auto"
-              : "flex m-10 p-3 w-[80%]  mySwiper  rounded-2xl shadow-xl bg-gray-100 overflow-x-auto"
+              : "flex m-10 p-3 w-[80%]  mySwiper rounded-2xl shadow-xl bg-gray-100 overflow-x-auto"
           }
         >
           {users
@@ -105,7 +105,7 @@ const Discover = ({ token, session }) => {
             : ""}
         </Swiper>
       </div>
-      <h2 className="animate-bounce mt-10 text-5xl text-center font-bold">
+      <h2 className="animate-bounce mt-11 text-5xl text-center font-bold">
         {displayName}
       </h2>
       <div
