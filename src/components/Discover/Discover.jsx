@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { fetchTopTracks, fetchUserGenre } from "../../redux/Spotify/discover";
-import { useDispatch, useSelector } from "react-redux";
-import SongCard from "./SongCard";
-import UserCard from "./UserCard";
-import Player from "../Home/Player";
-import NavBar from "../Home/Navbar";
+import React, { useState, useEffect } from 'react';
+import { fetchTopTracks, fetchUserGenre } from '../../redux/Spotify/discover';
+import { useDispatch, useSelector } from 'react-redux';
+import SongCard from './SongCard';
+import UserCard from './UserCard';
+import Player from '../Home/Player';
+import NavBar from '../Home/Navbar';
 
-const Discover = ({ token }) => {
+const Discover = ({ token, session }) => {
   const dispatch = useDispatch();
 
   const [genre, setGenre] = useState(null);
@@ -20,19 +20,19 @@ const Discover = ({ token }) => {
   const { users } = useSelector((state) => state.discover);
 
   const genres = [
-    "hip-hop",
-    "pop",
-    "rock",
-    "country",
-    "latin",
-    "indie",
-    "edm",
-    "r-n-b",
+    'hip-hop',
+    'pop',
+    'rock',
+    'country',
+    'latin',
+    'indie',
+    'edm',
+    'r-n-b',
   ];
 
   return (
     <div className="flex flex-col bg-blu ">
-      <NavBar />
+      <NavBar session={session} />
       <h2 className="font-semibold text-3xl justify-center flex text-black text-left">
         Discover
       </h2>
@@ -66,7 +66,7 @@ const Discover = ({ token }) => {
                 </div>
               );
             })
-          : ""}
+          : ''}
       </div>
       <h2 className="flex justify-center p-3 m-3 text-3xl">{genre}</h2>
       <div className="flex flex-wrap justify-center m-10 p-10 rounded-2xl gap-8 ">
@@ -74,7 +74,7 @@ const Discover = ({ token }) => {
           ? list.tracks.map((track, i) => {
               return <SongCard token={token} key={i} track={track} />;
             })
-          : ""}
+          : ''}
       </div>
       <div className=" bg-black/30">
         <Player token={token} />

@@ -16,17 +16,10 @@ export default function TopTracks({ token }) {
 
   const fetchTracks = async () => {
     const { data, error } = await supabase
-<<<<<<< HEAD
       .from('User_Top_Lists')
       .select('topTracks')
-      .eq('userSpotify', 'anq90wy056xea5rp2tbmh7ce3');
-    // console.log("DATA", data);
-=======
-      .from("User_Top_Lists")
-      .select("topTracks")
-      .eq("userSpotify", userId);
-    console.log("DATA", data);
->>>>>>> main
+      .eq('userSpotify', userId);
+    console.log('DATA', data);
     const parsedTracks = data[0].topTracks.map((trackInfo) => {
       return JSON.parse(trackInfo);
     });
@@ -35,10 +28,6 @@ export default function TopTracks({ token }) {
   useEffect(() => {
     fetchTracks();
   }, []);
-<<<<<<< HEAD
-  // console.log("TRACKS", tracks);
-=======
->>>>>>> main
 
   if (tracks) {
     return (

@@ -16,17 +16,10 @@ export default function TopArtists({ token }) {
 
   const fetchArtists = async () => {
     const { data, error } = await supabase
-<<<<<<< HEAD
       .from('User_Top_Lists')
       .select('topArtists')
-      .eq('userSpotify', 'anq90wy056xea5rp2tbmh7ce3');
-    // console.log("DATA", data);
-=======
-      .from("User_Top_Lists")
-      .select("topArtists")
-      .eq("userSpotify", userId);
-    console.log("DATA", data);
->>>>>>> main
+      .eq('userSpotify', userId);
+    console.log('DATA', data);
     const parsedArtists = data[0].topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
     });
@@ -35,10 +28,6 @@ export default function TopArtists({ token }) {
   useEffect(() => {
     fetchArtists();
   }, []);
-<<<<<<< HEAD
-  // console.log("ARTISTS", artists);
-=======
->>>>>>> main
 
   if (artists) {
     return (

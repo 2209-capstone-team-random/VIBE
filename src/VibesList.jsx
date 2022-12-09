@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const VibesList = ({ vibes }) => {
-  // console.log(vibes);
+const VibesList = ({ vibes, ownId }) => {
+  const navigate = useNavigate();
   return (
-    <ul>
-      <li>test</li>
-      {vibes.map((vibe) => {
-        return (
-          <Link key={vibe.id} to={`../profile/${vibe.vibeSpotify}`}>
-            {vibe.vibeSpotify}
-          </Link>
-        );
-      })}
-    </ul>
+    <>
+      <h2 className="grid ml-2">VIBEES!</h2>
+      <ul className="menu bg-base-100 w-56">
+        <li key={'homelink'}>
+          <a href={`../profile/${ownId}`}>Home</a>
+        </li>
+        {vibes.map((vibe) => {
+          return (
+            <li key={vibe.id}>
+              <a href={`../profile/${vibe.vibeSpotify}`}>{vibe.vibeSpotify}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 
