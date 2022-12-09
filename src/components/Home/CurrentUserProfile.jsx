@@ -15,7 +15,7 @@ export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
-
+  console.log(session);
   useEffect(() => {
     dispatch(fetchUserByIdPlaylists(userId, token));
   }, [token]);
@@ -25,8 +25,8 @@ export default function CurrentUserProfile({ token, session }) {
         <NavBar userId={userId} />
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
-        <TopTracks session={session} token={token} />
-        <TopArtists session={session} token={token} />
+        {/* <TopTracks session={session} token={token} />
+        <TopArtists session={session} token={token} /> */}
         <WallPosts session={session} />
         <div className="fixed z-10 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
