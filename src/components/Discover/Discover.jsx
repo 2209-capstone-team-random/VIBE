@@ -6,10 +6,10 @@ import UserCard from "./UserCard";
 import Player from "../Home/Player";
 import { supabase } from "../../supabaseClient";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import NavBar from "../Home/Navbar";
 
 const Discover = ({ token, session }) => {
@@ -27,7 +27,7 @@ const Discover = ({ token, session }) => {
       setCategories(data);
     };
 
-    dispatch(fetchUserGenre(pickedGenre));
+    dispatch(fetchUserGenre(displayName));
     dispatch(fetchTopTracks(pickedGenre, token));
     fetchCatagories();
   }, [pickedGenre]);
@@ -45,10 +45,10 @@ const Discover = ({ token, session }) => {
   return (
     <div className="flex flex-col bg-white  ">
       <NavBar />
-      <h2 className="font-semibold text-3xl justify-center flex m-3 p-3 text-black text-left">
-        Discover
+      <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
+        Vibe Hibe
       </h2>
-      <div className=" sticky shadow-xl flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0 z-30  bg-blur">
+      <div className=" sticky shadow-xl flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0   bg-blur">
         {categories.map((genre, i) => {
           return (
             <div
@@ -70,47 +70,49 @@ const Discover = ({ token, session }) => {
         })}
       </div>
       {users.length ? (
-        <h2 className="p-3 animate-bounce mt-6 text-5xl text-center font-bold">
+        <h2 className="p-3 animate-bounce m-10 text-5xl text-center font-bold">
           Future Vibees
         </h2>
       ) : (
         ""
       )}
-      <Swiper
-        spaceBetween={1}
-        slidesPerView={1}
-        navigation
-        scrollbar={{ draggable: true }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
-        className={
-          !users.length
-            ? "flex flex-wrap w-full m-10 p-10 rounded-2xl gap-8"
-            : "flex flex-wrap w-[95%] justify-center m-10 p-10 rounded-2xl gap-8 shadow-xl bg-gray-100"
-        }
-      >
-        {users
-          ? users.map((user, i) => {
-              return (
-                <div key={i}>
-                  <UserCard
-                    className="flex justify-center px-4 py-16 bg-base-200"
-                    key={i}
-                    user={user}
-                  />
-                </div>
-              );
-            })
-          : ""}
-      </Swiper>
-      <h2 className="p-3 animate-bounce m-3 text-5xl text-center font-bold">
+      <div className={" overflow-hidden z-0"}>
+        <Swiper
+          slidesPerView={5}
+          spaceBetween={10}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination, Navigation]}
+          className={
+            !users.length
+              ? "flex m-10  p-3 mySwiper w-[80%]  rounded-2xl overflow-x-auto"
+              : "flex m-10 p-3 w-[80%]  mySwiper  rounded-2xl shadow-xl bg-gray-100 overflow-x-auto"
+          }
+        >
+          {users
+            ? users.map((user, i) => {
+                return (
+                  <SwiperSlide key={i}>
+                    <UserCard
+                      className="flex px-4 py-16 bg-base-200"
+                      key={i}
+                      user={user}
+                    />
+                  </SwiperSlide>
+                );
+              })
+            : ""}
+        </Swiper>
+      </div>
+      <h2 className="animate-bounce mt-10 text-5xl text-center font-bold">
         {displayName}
       </h2>
       <div
         className={
           !list.tracks
-            ? "flex flex-wrap justify-center m-10 p-10 rounded-2xl gap-8"
-            : "flex flex-wrap justify-center m-10 p-10 rounded-2xl gap-8 bg-blue-100 shadow-2xl"
+            ? "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8"
+            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 bg-blue-100 shadow-2xl"
         }
       >
         {list.tracks
@@ -121,7 +123,7 @@ const Discover = ({ token, session }) => {
             })
           : ""}
       </div>{" "}
-      <div className="sticky bottom-0 z-11">
+      <div className="fixed w-full bottom-0 z-11 bg-blur text-white">
         <Player token={token} />
       </div>
     </div>

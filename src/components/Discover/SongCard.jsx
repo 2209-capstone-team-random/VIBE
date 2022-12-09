@@ -13,10 +13,6 @@ const SongCard = ({ track, token, user }) => {
     dispatch(fetchUri(track.uri));
     setactiveSong(track.name);
   };
-  const handlePause = () => {
-    dispatch(fetchUri(null));
-    setactiveSong(null);
-  };
 
   const dispatch = useDispatch();
   const discover = useSelector((state) => state.discover);

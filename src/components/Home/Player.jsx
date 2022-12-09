@@ -15,7 +15,15 @@ export default function Player({ token }) {
 
   return (
     <SpotifyPlayer
-      className="sticky bottom-0 z-99"
+      styles={{
+        activeColor: "#FFFFF",
+        bgColor: "#333",
+        color: "#FFFFFF",
+        loaderColor: "#FFFFF",
+        sliderColor: "#FFFFF",
+        trackArtistColor: "#FFFFFF",
+        trackNameColor: "#FFFFFF",
+      }}
       token={token}
       callback={(state) => {
         if (!state.isPlaying) setplay(false);
