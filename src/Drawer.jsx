@@ -30,7 +30,7 @@ export default function Drawer({
       const { data } = await supabase
         .from("Vibe")
         .select("*")
-        .match({ userSpotify: session?.user.user_metadata.sub, mutual: true });
+        .match({ userSpotify: session?.user?.user_metadata.sub, mutual: true });
       console.log("vibes", data);
       if (vibes.length < 1) {
         setVibes(data);
@@ -63,7 +63,7 @@ export default function Drawer({
           <VibesList
             userId={userId}
             vibes={vibes}
-            ownId={session.user.user_metadata.sub}
+            ownId={session?.user.user_metadata.sub}
           />
           <button onClick={signOut}>Sign Out</button>
         </article>

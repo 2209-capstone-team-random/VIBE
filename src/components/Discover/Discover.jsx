@@ -48,7 +48,7 @@ const Discover = ({ token, session }) => {
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hive
       </h2>
-      <div className="w-full shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col m-3 font-semibold">
+      <div className="gap-5 shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col rounded-xl font-semibold">
         {categories.map((genre, i) => {
           return (
             <div
@@ -111,8 +111,8 @@ const Discover = ({ token, session }) => {
       <div
         className={
           !list.tracks
-            ? "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8"
-            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 bg-blue-100 shadow-2xl"
+            ? "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 "
+            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8  dark:bg-gray-600 bg-blue-100 shadow-2xl"
         }
       >
         {list.tracks
