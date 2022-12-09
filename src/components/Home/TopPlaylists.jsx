@@ -34,14 +34,14 @@ export default function TopPlaylists({ token, session }) {
                 {items.map((item) => {
                   return (
                     <SwiperSlide className="" key={item.id}>
-                      <h1 className="text-center text-lg font-semibold mt-2">
+                      <h1 className="dark:text-black text-center text-lg font-semibold mt-2">
                         Top Playlists
                       </h1>
                       <img
                         src={item.images[0]?.url}
                         className="rounded-full resize h-60 w-60 p-4"
                       />
-                      <p className="text-center font-semibold p-4">
+                      <p className="dark:text-black text-center font-semibold p-4">
                         {item.name}
                       </p>
                     </SwiperSlide>

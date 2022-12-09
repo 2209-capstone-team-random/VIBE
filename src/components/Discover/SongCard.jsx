@@ -14,7 +14,7 @@ const SongCard = ({ track, token }) => {
   const discover = useSelector((state) => state.discover);
 
   return (
-    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-black/10">
+    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-black/10 dark:bg-white/20">
       <div className="relative w-full h-56 group">
         <div
           onClick={() => handlePlayClick(track)}

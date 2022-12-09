@@ -36,7 +36,7 @@ const Discover = ({ token }) => {
       <h2 className="font-semibold text-3xl justify-center flex text-black text-left">
         Discover
       </h2>
-      <div className="w-full shadow-xl bg-white p-10 flex flex-wrap justify-center sm:flex-row flex-col m-3 font-semibold">
+      <div className="w-full shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col m-3 font-semibold">
         {genres.map((genre, i) => {
           return (
             <div
