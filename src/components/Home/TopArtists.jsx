@@ -18,7 +18,7 @@ export default function TopArtists({ token }) {
     const { data, error } = await supabase
       .from("User_Top_Lists")
       .select("topArtists")
-      .eq("userSpotify", "anq90wy056xea5rp2tbmh7ce3");
+      .eq("userSpotify", userId);
     console.log("DATA", data);
     const parsedArtists = data[0].topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
