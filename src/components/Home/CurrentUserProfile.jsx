@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import TopPlaylists from "./TopPlaylists";
-import SpotifyPlayer from "react-spotify-web-playback";
-import { fetchUserByIdPlaylists } from "../../redux/Spotify/userPlaylists";
-import NameBio from "./NameBio";
-import WallPosts from "./WallPosts";
-import NavBar from "./Navbar";
-import { useParams } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import TopPlaylists from './TopPlaylists';
+import SpotifyPlayer from 'react-spotify-web-playback';
+import { fetchUserByIdPlaylists } from '../../redux/Spotify/userPlaylists';
+import NameBio from './NameBio';
+import WallPosts from './WallPosts';
+import NavBar from './Navbar';
+import { useParams } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
 
 export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function CurrentUserProfile({ token, session }) {
   const buttontest = () => {
     setMutualStatus(mySpotifySub, userId);
     setMutualStatus(userId, mySpotifySub);
-    console.log("clicked");
+    console.log('clicked');
   };
 
   //first case - 1 way they did not vibe with u, then add row
@@ -39,7 +39,7 @@ export default function CurrentUserProfile({ token, session }) {
   const setVibeTrue = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
+        .from('Vibe')
         .insert([{ userSpotify, vibeSpotify, mutual: false }]);
     } catch (error) {
       console.log(error);
@@ -50,8 +50,8 @@ export default function CurrentUserProfile({ token, session }) {
   const setMutualStatus = async (userSpotify, vibeSpotify) => {
     try {
       let { data: userA } = await supabase
-        .from("Vibe")
-        .update({ mutual: "true" })
+        .from('Vibe')
+        .update({ mutual: 'true' })
         .match({ userSpotify, vibeSpotify });
       // let { data: userB } = await supabase
       //   .from("Vibe")
@@ -67,7 +67,7 @@ export default function CurrentUserProfile({ token, session }) {
   const removeVibe = async (mySpotifySub, userId) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
+        .from('Vibe')
         .delete()
         .match({ mySpotifySub, userId });
     } catch (error) {
@@ -79,8 +79,8 @@ export default function CurrentUserProfile({ token, session }) {
   const removeMutual = async (mySpotifySub, userId) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
-        .update({ mutual: "false" })
+        .from('Vibe')
+        .update({ mutual: 'false' })
         .match({ mySpotifySub: userId, userId: mySpotifySub });
     } catch (error) {}
   };
@@ -88,8 +88,8 @@ export default function CurrentUserProfile({ token, session }) {
   const checkVibeTable = async (userSpotify, vibeSpotify) => {
     try {
       const { data: vibe, error } = await supabase
-        .from("Vibe")
-        .select("*")
+        .from('Vibe')
+        .select('*')
         .match({ userSpotify, vibeSpotify });
       if (vibe.length === 0) {
         setVibe(false);
@@ -113,7 +113,7 @@ export default function CurrentUserProfile({ token, session }) {
   if (items) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <NavBar session={session} />
+        <NavBar userId={userId} session={session} />
         <div>
           <button onClick={buttontest}>test</button>
           <br></br>
@@ -156,5 +156,5 @@ export default function CurrentUserProfile({ token, session }) {
       </div>
     );
   }
-  console.log("Sorry, we could not load your profile.");
+  console.log('Sorry, we could not load your profile.');
 }
