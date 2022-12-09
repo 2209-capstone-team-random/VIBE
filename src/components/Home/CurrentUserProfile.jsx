@@ -18,22 +18,18 @@ export default function CurrentUserProfile({ token, session }) {
   const mySpotifySub = session?.user.user_metadata.sub;
 
   const vibeHandler = () => {
-    if (mutual === false && vibe === false) {
+    if (vibe === false) {
       setVibeTrue(mySpotifySub, userId);
-      setVibe(true);
-    } else if (mutual === false && vibe === true) {
-      setMutualStatus(mySpotifySub, userId);
-    } else if (mutual === true && vibe === true) {
+    } else if (vibe === true && mutual === false) {
+      removeVibe(mySpotifySub, userId);
+      setVibe(false);
+    } else if (vibe === true && mutual === true) {
       removeVibe(mySpotifySub, userId);
       removeMutual(userId, mySpotifySub);
+      setVibe(false);
+      setMutual(false);
     }
   };
-  const buttontest = () => {
-    setMutualStatus(mySpotifySub, userId);
-    setMutualStatus(userId, mySpotifySub);
-    console.log("clicked");
-  };
-
   //first case - 1 way they did not vibe with u, then add row
 
   const setVibeTrue = async (userSpotify, vibeSpotify) => {
@@ -41,6 +37,7 @@ export default function CurrentUserProfile({ token, session }) {
       const { data, error } = await supabase
         .from("Vibe")
         .insert([{ userSpotify, vibeSpotify, mutual: false }]);
+      checkMyVibe(userSpotify, vibeSpotify);
     } catch (error) {
       console.log(error);
     }
@@ -53,10 +50,10 @@ export default function CurrentUserProfile({ token, session }) {
         .from("Vibe")
         .update({ mutual: "true" })
         .match({ userSpotify, vibeSpotify });
-      // let { data: userB } = await supabase
-      //   .from("Vibe")
-      //   .update({ mutual: "true" })
-      //   .match({ vibeSpotify, userSpotify });
+      let { data: userB } = await supabase
+        .from("Vibe")
+        .update({ mutual: "true" })
+        .match({ userSpotify: vibeSpotify, vibeSpotify: userSpotify });
     } catch (error) {
       console.log(error);
     }
@@ -64,38 +61,53 @@ export default function CurrentUserProfile({ token, session }) {
 
   //third case - remove vibe, remove row if no mutual, remove row
 
-  const removeVibe = async (mySpotifySub, userId) => {
+  const removeVibe = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
         .from("Vibe")
         .delete()
-        .match({ mySpotifySub, userId });
+        .match({ userSpotify, vibeSpotify });
     } catch (error) {
       console.log(error);
     }
   };
 
   //forth case - remove vibe, if mutual, set other mutual to false and remove row
-  const removeMutual = async (mySpotifySub, userId) => {
+  const removeMutual = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
         .from("Vibe")
-        .update({ mutual: "false" })
-        .match({ mySpotifySub: userId, userId: mySpotifySub });
-    } catch (error) {}
+        .update({ mutual: false })
+        .match({ userSpotify, vibeSpotify })
+        .select();
+      if (data) {
+        console.log(data);
+      }
+      if (error) {
+        console.log(error);
+      }
+      console.log("testing");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const checkVibeTable = async (userSpotify, vibeSpotify) => {
+  const checkMyVibe = async (userSpotify, vibeSpotify) => {
     try {
       const { data: vibe, error } = await supabase
         .from("Vibe")
         .select("*")
         .match({ userSpotify, vibeSpotify });
-      if (vibe.length === 0) {
-        setVibe(false);
-      } else if (vibe.length > 0) {
+      const { data: theirVibe } = await supabase
+        .from("Vibe")
+        .select("*")
+        .match({ userSpotify: vibeSpotify, vibeSpotify: userSpotify });
+      if (vibe.length > 0) {
         setVibe(true);
-        setMutual(vibe[0].mutual);
+        if (theirVibe.length > 0) {
+          setMutual(true);
+          setMutualStatus(userSpotify, vibeSpotify);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -103,8 +115,8 @@ export default function CurrentUserProfile({ token, session }) {
   };
 
   useEffect(() => {
-    checkVibeTable(mySpotifySub, userId);
-  }, [vibe]);
+    checkMyVibe(mySpotifySub, userId);
+  }, [mySpotifySub]);
 
   useEffect(() => {
     dispatch(fetchUserByIdPlaylists(userId, token));
@@ -114,11 +126,7 @@ export default function CurrentUserProfile({ token, session }) {
     return (
       <div className="flex flex-col justify-center items-center">
         <NavBar session={session} />
-        <div>
-          <button onClick={buttontest}>test</button>
-          <br></br>
-          <br></br>
-        </div>
+        <div></div>
         {userId !== mySpotifySub ? (
           mutual ? (
             <button
@@ -147,8 +155,6 @@ export default function CurrentUserProfile({ token, session }) {
         )}
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
-        {/* <TopTracks session={session} token={token} />
-        <TopArtists session={session} token={token} /> */}
         <WallPosts session={session} />
         <div className="fixed z-10 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />

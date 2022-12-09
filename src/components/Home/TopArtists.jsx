@@ -19,7 +19,6 @@ export default function TopArtists({ token }) {
       .from("User_Top_Lists")
       .select("topArtists")
       .eq("userSpotify", userId);
-    console.log("DATA", data);
     const parsedArtists = data[0].topArtists.map((artistInfo) => {
       return JSON.parse(artistInfo);
     });
