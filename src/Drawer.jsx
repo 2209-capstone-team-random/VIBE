@@ -4,19 +4,33 @@ import VibesList from './VibesList.jsx';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
-export default function Drawer({ children, isOpen, setIsOpen, userId }) {
+export default function Drawer({
+  children,
+  isOpen,
+  setIsOpen,
+  userId,
+  session,
+}) {
   const nav = useNavigate();
   const [vibes, setVibes] = useState([]);
+  const [status, setStatus] = useState(false);
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    nav('./');
+    setStatus(true);
   };
+
+  useEffect(() => {
+    if (status) {
+      nav('/');
+    }
+  }, [status]);
+
   useEffect(() => {
     const getVibes = async () => {
       const { data } = await supabase
         .from('Vibe')
-        .select('vibeSpotify')
-        .match({ userSpotify: userId, mutual: true });
+        .select('*')
+        .match({ userSpotify: session.user.user_metadata.sub, mutual: true });
       console.log('vibes', data);
       if (vibes.length < 1) {
         setVibes(data);
@@ -46,7 +60,7 @@ export default function Drawer({ children, isOpen, setIsOpen, userId }) {
           <Link to="/editProfile">
             <p className="justify-between p-4">Edit Profile</p>
           </Link>
-          <VibesList userId={userId} />
+          <VibesList userId={userId} vibes={vibes} />
           <button onClick={signOut}>Sign Out</button>
         </article>
       </section>

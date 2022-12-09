@@ -15,14 +15,13 @@ export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
-  // console.log(session);
   useEffect(() => {
     dispatch(fetchUserByIdPlaylists(userId, token));
   }, [token]);
   if (items) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <NavBar userId={userId} />
+        <NavBar userId={userId} session={session} />
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
         {/* <TopTracks session={session} token={token} />
