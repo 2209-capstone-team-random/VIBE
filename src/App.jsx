@@ -9,10 +9,12 @@ import NotFound from "./components/NotFound";
 import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
 import Discover from "./components/Discover/Discover";
+import { set } from "zod";
 
 const App = () => {
   const [session, setSession] = useState(null);
   const [token, setToken] = useState(null);
+
   const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
   const navigate = useNavigate();
 
@@ -59,7 +61,7 @@ const App = () => {
       />
       <Route
         path="/onboard"
-        element={<OnBoard session={session} token={token} />}
+        element={<OnBoard token={token} session={session} />}
       />
       <Route
         path="/discover"
