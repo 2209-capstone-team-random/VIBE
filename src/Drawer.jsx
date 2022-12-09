@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import VibesList from './VibesList.jsx';
+import { supabase } from './supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 export default function Drawer({ children, isOpen, setIsOpen, userId }) {
+  const nav = useNavigate();
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    nav('./');
+  };
   return (
     <main
       className={
@@ -24,6 +31,8 @@ export default function Drawer({ children, isOpen, setIsOpen, userId }) {
           <Link to="/editProfile">
             <p className="justify-between p-4">Edit Profile</p>
           </Link>
+          <VibesList userId={userId} />
+          <button onClick={signOut}>Sign Out</button>
         </article>
       </section>
       <button

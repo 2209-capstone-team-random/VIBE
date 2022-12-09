@@ -5,6 +5,7 @@ const VibesList = ({ userId }) => {
   const [vibes, setVibest] = useState([]);
 
   const getVibest = async () => {
+    // console.log(props);
     const { data } = await supabase
       .from('Vibe')
       .select('vibeSpotify')
