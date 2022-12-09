@@ -15,6 +15,19 @@ export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
+  const [vibe, setVibe] = useState(false);
+  console.log("session", session);
+  const vibeHandler = () => {
+    console.log("clicked");
+  };
+
+  useEffect(() => {
+    // let { data: Vibe, error } = await supabase
+    //   .from("Vibe")
+    //   .select("mutual")
+    //   // .match({ userSpotify:userId, vibeSpotify
+    //   //  });
+  }, []);
 
   useEffect(() => {
     dispatch(fetchUserByIdPlaylists(userId, token));
@@ -23,6 +36,7 @@ export default function CurrentUserProfile({ token, session }) {
     return (
       <div className="flex flex-col justify-center items-center">
         <NavBar />
+        <button onClick={vibeHandler}>V I B E</button>
         <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
         <TopTracks session={session} token={token} />

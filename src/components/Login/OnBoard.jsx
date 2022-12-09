@@ -18,7 +18,8 @@ const OnBoard = ({ session, token }) => {
 
   let userId = session?.user.id;
   let spotifyId = session?.user.user_metadata.name;
-  console.log("session", session);
+  let spotifySub = session?.user.user_metadata.sub;
+
   const navigate = useNavigate();
   const allTracks = useSelector((store) => store.userTopTracks.items);
   const allArtists = useSelector((store) => store.userTopArtists.items);
@@ -78,7 +79,7 @@ const OnBoard = ({ session, token }) => {
 
   useEffect(() => {
     if (userId) {
-      updateUser(userId, spotifyId, spotifyId);
+      updateUser(userId, spotifySub, spotifyId);
     }
   }, [userId]);
 
@@ -97,11 +98,11 @@ const OnBoard = ({ session, token }) => {
     //set first time user status to false
     onBoarding(userId);
     //adding cat to first time user
-    addCategories(spotifyId, genre[0], genre[1], genre[2]);
-    //insert spotify data into DB
-    insertTop(spotifyId, allArtists, allTracks);
+    addCategories(spotifySub, genre[0], genre[1], genre[2]);
     //rerouting
-    navigate(`/profile/${spotifyId}`);
+    navigate(`/profile/${spotifySub}`);
+    //insert spotify data into DB
+    insertTop(spotifySub, allArtists, allTracks);
   };
   return (
     <div className="w-full h-screen relative">
