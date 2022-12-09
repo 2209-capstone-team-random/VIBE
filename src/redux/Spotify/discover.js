@@ -58,7 +58,7 @@ export const fetchTopTracks = (genre, token) => {
             params: {
               seed_genres: genre,
               target_popularity: 100,
-              limit: 10,
+              limit: 20,
             },
           }
         );

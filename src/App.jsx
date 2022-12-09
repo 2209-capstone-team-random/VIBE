@@ -9,10 +9,12 @@ import NotFound from "./components/NotFound";
 import EditProfile from "./components/Profile/EditProfile";
 import { useNavigate } from "react-router-dom";
 import Discover from "./components/Discover/Discover";
+import { set } from "zod";
 
 const App = () => {
   const [session, setSession] = useState(null);
   const [token, setToken] = useState(null);
+
   const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
   const navigate = useNavigate();
   const [theme, setTheme] = useState(null);
@@ -141,6 +143,7 @@ const App = () => {
         </Routes>
       </div>
     </div>
+
   );
 };
 

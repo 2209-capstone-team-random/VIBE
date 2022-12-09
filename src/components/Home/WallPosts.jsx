@@ -71,6 +71,7 @@ export default function WallPosts({ session }) {
           </button>
         </form>
         <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 rounded-lg p-6">
+
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
