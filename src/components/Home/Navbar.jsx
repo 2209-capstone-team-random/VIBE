@@ -36,7 +36,7 @@ export default function NavBar({ userId }) {
             </li>
           </ul>
         </div>
-        <Link to="/">
+        <Link to={`/`}>
           <a className="btn btn-ghost normal-case text-2xl">V I B E</a>
         </Link>
       </div>
