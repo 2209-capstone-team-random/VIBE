@@ -49,7 +49,7 @@ const Discover = ({ token, session }) => {
         Vibe Hive
       </h2>
       <div className="w-full shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col m-3 font-semibold">
-        {genres.map((genre, i) => {
+        {categories.map((genre, i) => {
           return (
             <div
               key={i}
@@ -76,7 +76,7 @@ const Discover = ({ token, session }) => {
       ) : (
         ''
       )}
-      <div className={' overflow-hidden z-0'}>
+      <div className={"   overflow-hidden z-0"}>
         <Swiper
           slidesPerView={5}
           spaceBetween={10}
@@ -86,8 +86,8 @@ const Discover = ({ token, session }) => {
           modules={[Pagination, Navigation]}
           className={
             !users.length
-              ? 'flex m-10  p-3 mySwiper w-[80%]  rounded-2xl overflow-x-auto'
-              : 'flex m-10 p-3 w-[80%]  mySwiper rounded-2xl shadow-xl bg-gray-100 overflow-x-auto'
+              ? "flex m-10  p-3 mySwiper w-[80%]  rounded-2xl overflow-x-auto dark:bg-gray-600"
+              : "flex m-10 p-3 w-[80%]  mySwiper rounded-2xl shadow-xl  bg-gray-100 overflow-x-auto"
           }
         >
           {users
