@@ -48,8 +48,9 @@ const Discover = ({ token, session }) => {
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hive
       </h2>
-      <div className=" sticky shadow-xl mb-10 flex flex-wrap justify-center rounded-full items-center m-3 sm:flex-row flex-col px-8 bottom-0   bg-blur">
-        {categories.map((genre, i) => {
+      <div className="w-full shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col m-3 font-semibold">
+        {genres.map((genre, i) => {
+
           return (
             <div
               key={i}

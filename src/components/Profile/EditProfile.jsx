@@ -48,7 +48,7 @@ const EditProfile = ({ token, session }) => {
           </h1>
           <div className="form-control">
             <label className="input-group input-group-vertical">
-              <span>Username</span>
+              <span className="dark:text-black/80">Username</span>
               <input
                 type="text"
                 placeholder="Username"
@@ -59,7 +59,7 @@ const EditProfile = ({ token, session }) => {
           </div>
           <div className="form-control mt-4">
             <label className="input-group input-group-vertical">
-              <span>Bio</span>
+              <span className="dark:text-black/80">Bio</span>
               <textarea
                 className="textarea textarea-bordered"
                 placeholder="Bio"
@@ -70,7 +70,9 @@ const EditProfile = ({ token, session }) => {
           <div className="grid justify-center">
             <div className="form-control mt-2">
               <label className="label">
-                <span className="label-text">Profile Pic</span>
+                <span className="label-text dark:text-white/80">
+                  Profile Pic
+                </span>
               </label>
               <label className="input-group input-group-vertical">
                 <input
@@ -78,7 +80,7 @@ const EditProfile = ({ token, session }) => {
                   onChange={(e) => {
                     setImage(e.target.files[0]);
                   }}
-                  className="file-input file-input-bordered file-input-md w-full max-w-xs"
+                  className="file-input file-input-bordered file-input-md w-full max-w-xs dark:text-black/80"
                 />
               </label>
             </div>
