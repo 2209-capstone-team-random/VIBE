@@ -1,41 +1,41 @@
-import "./styles/index.css";
-import React, { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
-import { Route, Routes } from "react-router-dom";
-import CurrentUserProfile from "./components/Home/CurrentUserProfile";
-import OnBoard from "./components/Login/OnBoard";
-import Landing from "./components/Login/Landing";
-import NotFound from "./components/NotFound";
-import EditProfile from "./components/Profile/EditProfile";
-import { useNavigate } from "react-router-dom";
-import Discover from "./components/Discover/Discover";
-import { set } from "zod";
+import './styles/index.css';
+import React, { useState, useEffect } from 'react';
+import { supabase } from './supabaseClient';
+import { Route, Routes } from 'react-router-dom';
+import CurrentUserProfile from './components/Home/CurrentUserProfile';
+import OnBoard from './components/Login/OnBoard';
+import Landing from './components/Login/Landing';
+import NotFound from './components/NotFound';
+import EditProfile from './components/Profile/EditProfile';
+import { useNavigate } from 'react-router-dom';
+import Discover from './components/Discover/Discover';
+import { set } from 'zod';
 
 const App = () => {
   const [session, setSession] = useState(null);
   const [token, setToken] = useState(null);
 
-  const [isFirstTimeUser, setIsFirstTimeUser] = useState("");
+  const [isFirstTimeUser, setIsFirstTimeUser] = useState('');
   const navigate = useNavigate();
   const [theme, setTheme] = useState(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
     } else {
-      setTheme("light");
+      setTheme('light');
     }
   }, []);
 
   const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark');
     }
   }, [theme]);
 
@@ -79,9 +79,9 @@ const App = () => {
   const getUserStatus = async (userId) => {
     try {
       let { data: User, error } = await supabase
-        .from("User")
-        .select("isFirstTimeUser")
-        .eq("id", userId);
+        .from('User')
+        .select('isFirstTimeUser')
+        .eq('id', userId);
       setIsFirstTimeUser(User[0].isFirstTimeUser);
     } catch (error) {
       console.log(error);
@@ -97,8 +97,9 @@ const App = () => {
         getUserStatus(userId);
       } else {
         supabase.auth.onAuthStateChange((event, session) => {
-          if (event == "SIGNED_OUT") {
+          if (event == 'SIGNED_OUT') {
             setSession(null);
+            navigate('/');
           }
         });
       }
@@ -112,7 +113,7 @@ const App = () => {
         onClick={handleThemeSwitch}
         className="fixed p-2 z-10 right-20 top-4 bg-violet-300 dark:bg-orange-300 text-lg p-1 rounded-md"
       >
-        {theme === "dark" ? sun : moon}
+        {theme === 'dark' ? sun : moon}
       </button>
       <div className="bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-300 min-h-screen font-inter">
         <Routes>
@@ -143,7 +144,6 @@ const App = () => {
         </Routes>
       </div>
     </div>
-
   );
 };
 

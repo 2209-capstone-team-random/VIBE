@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Drawer from '../../Drawer';
 import Discover from '../Discover/Discover';
 
-export default function NavBar({ userId }) {
+export default function NavBar({ userId, session }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar bg-blue-50 mb-8">
@@ -57,7 +57,12 @@ export default function NavBar({ userId }) {
           </div>
         </label>
       </div>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} userId={userId}></Drawer>
+      <Drawer
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userId={userId}
+        session={session}
+      ></Drawer>
     </div>
   );
 }

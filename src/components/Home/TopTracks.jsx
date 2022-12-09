@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation, EffectFade } from "swiper";
-import "../../styles/index.css";
-import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation, EffectFade } from 'swiper';
+import '../../styles/index.css';
+import { supabase } from '../../supabaseClient';
+import { useParams } from 'react-router-dom';
 
 export default function TopTracks({ token }) {
   const dispatch = useDispatch();
@@ -16,10 +16,10 @@ export default function TopTracks({ token }) {
 
   const fetchTracks = async () => {
     const { data, error } = await supabase
-      .from("User_Top_Lists")
-      .select("topTracks")
-      .eq("userSpotify", userId);
-    console.log("DATA", data);
+      .from('User_Top_Lists')
+      .select('topTracks')
+      .eq('userSpotify', userId);
+    console.log('DATA', data);
     const parsedTracks = data[0].topTracks.map((trackInfo) => {
       return JSON.parse(trackInfo);
     });
@@ -59,5 +59,5 @@ export default function TopTracks({ token }) {
       </div>
     );
   }
-  console.log("Sorry, there are no tracks");
+  console.log('Sorry, there are no tracks');
 }
