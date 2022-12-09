@@ -1,8 +1,6 @@
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       backgroundSize: {
@@ -14,9 +12,9 @@ module.exports = {
       },
     },
   },
-  variants:{
-    extend:{
-      backgroundColor: ['active']
+  variants: {
+    extend: {
+      backgroundColor: ["active"],
     },
   },
   plugins: [require("daisyui")],

@@ -50,8 +50,13 @@ export default function Drawer({
     >
       <section
         className={
+<<<<<<< HEAD
           ' w-screen max-w-lg right-0 absolute bg-white h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  ' +
           (isOpen ? ' translate-x-0 ' : ' translate-x-full ')
+=======
+          " w-screen max-w-lg right-0 absolute bg-white dark:bg-zinc-600 h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
+          (isOpen ? " translate-x-0 " : " translate-x-full ")
+>>>>>>> main
         }
       >
         <article className="relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">

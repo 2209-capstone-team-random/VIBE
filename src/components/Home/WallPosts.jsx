@@ -63,24 +63,25 @@ export default function WallPosts({ session }) {
         <form id="postForm" onSubmit={handleSubmit}>
           <textarea
             name="post"
-            className="flex flex-col textarea textarea-primary w-96 mt-6 mb-2"
+            className="flex flex-col textarea textarea-primary dark:textarea-accent w-96 mt-6 mb-2"
             placeholder="Write a post"
           ></textarea>
           <button form="postForm" className="btn btn-sm btn-secondary mb-20">
             Submit
           </button>
         </form>
-        <div className="flex flex-col-reverse overflow-y-auto h-96">
+        <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 rounded-lg p-6">
+
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
                 <div className="chat-header">
                   <div
                     key={post.id}
-                    className="flex flex-col chat chat-start text-accent-focus"
+                    className="flex flex-col chat chat-start text-accent-focus dark:text-accent"
                   >
                     {post.posterSpotify}
-                    <time className="text-xs opacity-50">
+                    <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
                     </time>
 
@@ -95,10 +96,10 @@ export default function WallPosts({ session }) {
                 <div className="chat-header">
                   <div
                     key={post.id}
-                    className="flex flex-col chat chat-end text-secondary-focus"
+                    className="flex flex-col chat chat-end text-secondary-focus dark:text-primary"
                   >
                     {post.posterSpotify}
-                    <time className="text-xs opacity-50">
+                    <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
                     </time>
                     <div className="chat-bubble chat-bubble-success">
