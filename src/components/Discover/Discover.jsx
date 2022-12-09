@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { fetchTopTracks, fetchUserGenre } from '../../redux/Spotify/discover';
-import { useDispatch, useSelector } from 'react-redux';
-import SongCard from './SongCard';
-import UserCard from './UserCard';
-import Player from '../Home/Player';
-import { supabase } from '../../supabaseClient';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import NavBar from '../Home/Navbar';
+import React, { useState, useEffect } from "react";
+import { fetchTopTracks, fetchUserGenre } from "../../redux/Spotify/discover";
+import { useDispatch, useSelector } from "react-redux";
+import SongCard from "./SongCard";
+import UserCard from "./UserCard";
+import Player from "../Home/Player";
+import { supabase } from "../../supabaseClient";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import NavBar from "../Home/Navbar";
 
 const Discover = ({ token, session }) => {
   const user = session?.user?.user_metadata?.name;
@@ -23,7 +23,7 @@ const Discover = ({ token, session }) => {
 
   useEffect(() => {
     const fetchCatagories = async () => {
-      const { data } = await supabase.from('Categories').select();
+      const { data } = await supabase.from("Categories").select();
       setCategories(data);
     };
 
@@ -34,7 +34,7 @@ const Discover = ({ token, session }) => {
 
   const handleClick = async (genre) => {
     setPickedGenre(
-      genre.name.toLowerCase() === 'r&b' ? 'r-n-b' : genre.name.toLowerCase()
+      genre.name.toLowerCase() === "r&b" ? "r-n-b" : genre.name.toLowerCase()
     );
     setDisplayName(genre.name);
   };
@@ -44,7 +44,7 @@ const Discover = ({ token, session }) => {
 
   return (
     <div className="flex flex-col  ">
-      <NavBar />
+      <NavBar session={session} />
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hive
       </h2>
@@ -62,7 +62,7 @@ const Discover = ({ token, session }) => {
             >
               <img src={genre.img} className="w-full rounded shadow" />
               <h3 className="text-gray-200 font-semibold mt-5">
-                {' '}
+                {" "}
                 {genre.name}
               </h3>
             </div>
@@ -74,7 +74,7 @@ const Discover = ({ token, session }) => {
           Future Vibees
         </h2>
       ) : (
-        ''
+        ""
       )}
       <div className={"   overflow-hidden z-0"}>
         <Swiper
@@ -102,7 +102,7 @@ const Discover = ({ token, session }) => {
                   </SwiperSlide>
                 );
               })
-            : ''}
+            : ""}
         </Swiper>
       </div>
       <h2 className="animate-bounce mt-11 text-5xl text-center font-bold">
@@ -111,8 +111,8 @@ const Discover = ({ token, session }) => {
       <div
         className={
           !list.tracks
-            ? 'flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8'
-            : 'flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 bg-blue-100 shadow-2xl'
+            ? "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8"
+            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 bg-blue-100 shadow-2xl"
         }
       >
         {list.tracks
@@ -121,8 +121,8 @@ const Discover = ({ token, session }) => {
                 <SongCard token={token} user={user} key={i} track={track} />
               );
             })
-          : ''}
-      </div>{' '}
+          : ""}
+      </div>{" "}
       <div className="fixed w-full bottom-0 z-11 bg-blur text-white">
         <Player token={token} />
       </div>
