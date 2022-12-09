@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Drawer from "../../Drawer";
-import Discover from "../Discover/Discover";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Drawer from '../../Drawer';
+import Discover from '../Discover/Discover';
 
-export default function NavBar() {
+export default function NavBar({ userId }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar bg-blue-50 mb-8">
@@ -34,12 +34,9 @@ export default function NavBar() {
             <li>
               <a>Discover</a>
             </li>
-            <li>
-              <a>Vibe Hive</a>
-            </li>
           </ul>
         </div>
-        <Link to="/">
+        <Link to={`/`}>
           <a className="btn btn-ghost normal-case text-2xl">V I B E</a>
         </Link>
       </div>
@@ -50,9 +47,6 @@ export default function NavBar() {
               <a className="font-bold">Discover</a>
             </Link>
           </li>
-          {/* <li>
-            <a className="font-bold">Vibe Hive</a>
-          </li> */}
         </ul>
       </div>
       <div className="navbar-end"></div>
@@ -63,7 +57,7 @@ export default function NavBar() {
           </div>
         </label>
       </div>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen}></Drawer>
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} userId={userId}></Drawer>
     </div>
   );
 }

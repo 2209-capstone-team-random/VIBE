@@ -59,36 +59,58 @@ export default function WallPosts({ session }) {
 
   if (posts) {
     return (
-      <div className=" w-60">
+      <div>
         <form id="postForm" onSubmit={handleSubmit}>
           <textarea
             name="post"
-            className="textarea textarea-primary w-96"
+            className="flex flex-col textarea textarea-primary w-96 mt-6 mb-2"
             placeholder="Write a post"
           ></textarea>
-          <button form="postForm" className="btn btn-sm btn-secondary">
+          <button form="postForm" className="btn btn-sm btn-secondary mb-20">
             Submit
           </button>
         </form>
-        {posts.map((post, id) => {
-          if (post.posterSpotify !== userId) {
-            return (
-              <div key={post.id} className="flex flex-col chat chat-start">
-                <div className="chat-bubble chat-bubble-primary mt-4 mb-4">
-                  {post.body}
+
+        <div className="flex flex-col-reverse overflow-y-auto h-96">
+          {posts.map((post, id) => {
+            if (post.posterSpotify !== userId) {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-start text-accent-focus"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50">
+                      {String(post.created_at).slice(0, 10)}
+                    </time>
+
+                    <div className="chat-bubble chat-bubble-primary mb-4">
+                      {post.body}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          } else {
-            return (
-              <div key={post.id} className="chat chat-end">
-                <div className="chat-bubble chat-bubble-success">
-                  {post.body}
+              );
+            } else {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-end text-secondary-focus"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50">
+                      {String(post.created_at).slice(0, 10)}
+                    </time>
+                    <div className="chat-bubble chat-bubble-success">
+                      {post.body}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          }
-        })}
+              );
+            }
+          })}
+        </div>
       </div>
     );
   }
