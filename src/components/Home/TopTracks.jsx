@@ -27,7 +27,6 @@ export default function TopTracks({ token }) {
   useEffect(() => {
     fetchTracks();
   }, []);
-  console.log("TRACKS", tracks);
 
   if (tracks) {
     return (

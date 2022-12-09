@@ -27,7 +27,6 @@ export default function TopArtists({ token }) {
   useEffect(() => {
     fetchArtists();
   }, []);
-  console.log("ARTISTS", artists);
 
   if (artists) {
     return (
