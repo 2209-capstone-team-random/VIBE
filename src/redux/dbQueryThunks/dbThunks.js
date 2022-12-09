@@ -35,7 +35,7 @@
 //     const { data, error } = await supabase
 //       .from("Vibe")
 //       .delete()
-//       //shorthand - userId : userId, friendId: friendId  
+//       //shorthand - userId : userId, friendId: friendId
 //       .match({ userId, friendId });
 //     let { data: deleteMutual } = await supabase
 //       .from("Vibe")
@@ -205,6 +205,3 @@
 //     console.log(error)
 //   }
 // }
-
-
-

@@ -12,30 +12,29 @@ const UserCard = ({ user }) => {
         .from("Profile_Image")
         .select("url")
         .eq("userSpotify", `${user.userSpotify}`);
-      setpic(data);
+      setpic(data[0].url);
     };
     getImage();
   }, []);
 
   return (
-    <div className="shadow-xl flex items-center p-4 m-4 flex-col w-[200px] h-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer bg-black/10">
-      <div className="flex flex-wrap justify-center">
-        <img
-          className="shadow p-2 w-auto rounded-full h-auto  border-none"
-          src={pic[0]?.url}
-        />
-      </div>
-      <Link to={`/profile/${user.userSpotify}`}>
-        <div className="mt-4 flex flex-col ">
-          <p className="flex font-semibold justify-center text-2xl truncate">
-            {user.userSpotify}
-          </p>
+    <Link to={`/profile/${user.userSpotify}`}>
+      <div className="shadow-xl gap-3 p-4 m-4 mb-10 w-[200px] h-[250px] bg-opacity-80 backdrop-blur-sm rounded-lg cursor-pointer bg-blue-100 hover:bg-blue-200 dark:bg-gray-600 dark:hover:bg-gray-500">
+        <div className="flex flex-wrap justify-center">
+          <img
+            className="shadow  p-2 bg-white w-auto rounded-full h-auto  border-none"
+            src={pic}
+          />
+        </div>
+        <div className="mt-4 dark:text-white/90 flex flex-col ">
+          <p className="font-semibold text-2xl truncate">{user.userSpotify}</p>
+
           <p className="test-sm truncate text-black-300 mt-1">
             {user.catA}.{user.catB}.{user.catC}
           </p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

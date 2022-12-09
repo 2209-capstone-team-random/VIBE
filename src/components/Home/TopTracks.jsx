@@ -40,12 +40,16 @@ export default function TopTracks({ token }) {
             {tracks.map((item) => {
               return (
                 <SwiperSlide key={item.id}>
-                  <h1 className="text-center text-lg font-semibold mt-2">
+                  <h1 className="dark:text-black text-center text-lg font-semibold mt-2">
                     Top Tracks
                   </h1>
                   <img src={item.album.images[0].url} className="p-4" />
-                  <p className="text-center font-semibold mt-4">{item.name}</p>
-                  <p className="text-center mb-2">{item.artists[0].name}</p>
+                  <p className="dark:text-black text-center font-semibold mt-4">
+                    {item.name}
+                  </p>
+                  <p className="dark:text-black text-center mb-2">
+                    {item.artists[0].name}
+                  </p>
                 </SwiperSlide>
               );
             })}

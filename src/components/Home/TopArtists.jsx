@@ -40,11 +40,13 @@ export default function TopArtists({ token }) {
             {artists.map((item) => {
               return (
                 <SwiperSlide key={item.id}>
-                  <h1 className="text-center text-lg font-semibold mt-2">
+                  <h1 className="dark:text-black text-center text-lg font-semibold mt-2">
                     Top Artists
                   </h1>
                   <img src={item.images[0].url} className="p-4 h-60 w-60" />
-                  <p className="text-center font-semibold mt-4">{item.name}</p>
+                  <p className="dark:text-black text-center font-semibold mt-4">
+                    {item.name}
+                  </p>
                 </SwiperSlide>
               );
             })}
