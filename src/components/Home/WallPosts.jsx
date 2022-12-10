@@ -60,7 +60,7 @@ export default function WallPosts({ session, mutual }) {
   if (posts) {
     return (
       <div>
-        {mutual ? (
+        {mutual || userId === session.user.user_metadata.sub ? (
           <form id="postForm" onSubmit={handleSubmit}>
             <textarea
               name="post"
