@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-export default function WallPosts({ session }) {
+export default function WallPosts({ session, mutual }) {
   const spotifyId = session?.user.user_metadata.sub;
   const [posts, setPosts] = useState([]);
 
@@ -60,18 +60,22 @@ export default function WallPosts({ session }) {
   if (posts) {
     return (
       <div>
-        <form id="postForm" onSubmit={handleSubmit}>
-          <textarea
-            name="post"
-            className="flex flex-col textarea textarea-primary dark:textarea-accent w-96 mt-6 mb-2"
-            placeholder="Write a post"
-          ></textarea>
-          <button form="postForm" className="btn btn-sm btn-secondary mb-20">
-            Submit
-          </button>
-        </form>
-        <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 rounded-lg p-6">
+        {mutual || userId === session.user.user_metadata.sub ? (
+          <form id="postForm" onSubmit={handleSubmit}>
+            <textarea
+              name="post"
+              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 w-96 mt-6 mb-2"
+              placeholder="Write a post"
+            ></textarea>
+            <button form="postForm" className="btn btn-sm btn-secondary mb-20">
+              Submit
+            </button>
+          </form>
+        ) : (
+          <></>
+        )}
 
+        <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6">
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
