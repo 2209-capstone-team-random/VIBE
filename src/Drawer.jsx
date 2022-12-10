@@ -50,26 +50,43 @@ export default function Drawer({
     >
       <section
         className={
-          " w-screen max-w-lg right-0 absolute bg-white dark:bg-zinc-600 h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
+          " w-screen  max-w-lg right-0 absolute bg-blue-100 dark:bg-zinc-600 h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
           (isOpen ? " translate-x-0 " : " translate-x-full ")
         }
       >
         <article className="relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">
-          <header className="p-4 font-bold text-lg">Header</header>
-          {children}
-          <Link to="/editProfile">
-            <p className="justify-between p-4">Edit Profile</p>
+          <header className="p-4 font-bold text-center text-2xl dark:bg-black/70  bg-white">
+            Header
+          </header>
+          <Link to={`/profile/${session?.user.user_metadata.sub}`}>
+            <h2 className=" p-3 text-center hover:bg-blue-300 dark:hover:bg-black/60 font-semibold">
+              Home
+            </h2>
           </Link>
-          <VibesList
-            userId={userId}
-            vibes={vibes}
-            ownId={session?.user.user_metadata.sub}
-          />
-          <button onClick={signOut}>Sign Out</button>
+          {children}
+          <Link to="/editProfile" className="">
+            <p className="justify-between text-center font-semibold dark:hover:bg-black/60 hover:bg-blue-300  p-3">
+              Edit Profile
+            </p>
+          </Link>
+          <button
+            className="font-semibold dark:hover:bg-black/60 hover:bg-blue-300 p-3"
+            onClick={signOut}
+          >
+            Sign Out
+          </button>
+          <div>
+            <h2 className="font-semibold text-center text-2xl">VIBEES</h2>
+            <VibesList
+              userId={userId}
+              vibes={vibes}
+              ownId={session?.user.user_metadata.sub}
+            />
+          </div>
         </article>
       </section>
       <button
-        className="fixed top-5 right-5"
+        className="fixed top-5 right-5 text-xl p-1 hover:bg-gray-200"
         onClick={() => {
           setIsOpen(false);
         }}

@@ -48,7 +48,7 @@ const Discover = ({ token, session }) => {
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hive
       </h2>
-      <div className="gap-5 shadow-xl bg-white dark:bg-white/20 p-10 flex flex-wrap justify-center sm:flex-row flex-col rounded-xl font-semibold">
+      <div className="gap-5 shadow-xl bg-gray-100 dark:bg-white/30 p-10 flex flex-wrap justify-center sm:flex-row mx-12 rounded-xl font-semibold">
         {categories.map((genre, i) => {
           return (
             <div
@@ -112,7 +112,7 @@ const Discover = ({ token, session }) => {
         className={
           !list.tracks
             ? "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8 "
-            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8  dark:bg-gray-600 bg-blue-100 shadow-2xl"
+            : "flex flex-wrap justify-center m-20 p-10 rounded-2xl gap-8  dark:bg-gray-200 bg-blue-100 shadow-2xl"
         }
       >
         {list.tracks
@@ -123,7 +123,7 @@ const Discover = ({ token, session }) => {
             })
           : ""}
       </div>{" "}
-      <div className="fixed w-full bottom-0 z-11 bg-blur text-white">
+      <div className="fixed w-full bottom-0 z-11 text-white">
         <Player token={token} />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -7,6 +7,9 @@ import NavBar from "../Home/Navbar";
 const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
   const [image, setImage] = useState("");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,8 +34,28 @@ const EditProfile = ({ token, session }) => {
         .match({ spotifyId: spotifyId })
         .select();
     };
+
+    await supabase
+      .from("User")
+      .update({ display_name: nameForm.display_name })
+      .match({ spotifyId: spotifyId });
     updateForm();
+
+    navigate(`/profile/${spotifyId}`);
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase
+        .from("User")
+        .select()
+        .match({ spotifyId: `giggity` });
+      setName(data[0].display_name);
+      setBio(data[0].bio);
+    };
+    fetchUser();
+  }, [spotifyId]);
+  console.log(name);
 
   return (
     <div>
@@ -53,6 +76,8 @@ const EditProfile = ({ token, session }) => {
                 type="text"
                 placeholder="Username"
                 name="display_name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="input input-bordered"
               />
             </label>
@@ -61,6 +86,8 @@ const EditProfile = ({ token, session }) => {
             <label className="input-group input-group-vertical">
               <span className="dark:text-black/80">Bio</span>
               <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
                 className="textarea textarea-bordered"
                 placeholder="Bio"
                 name="bio"

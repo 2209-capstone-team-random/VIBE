@@ -8,7 +8,7 @@ import Discover from "../Discover/Discover";
 export default function NavBar({ userId, session }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="navbar bg-blue-50 mb-8 dark:bg-gray-600">
+    <div className="navbar bg-blue-50 mb-8 dark:hover:gray/10 dark:bg-gray-600">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

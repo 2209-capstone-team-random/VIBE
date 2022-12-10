@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { supabase } from "./supabaseClient";
+import { Link, useNavigate } from "react-router-dom";
 
 const VibesList = ({ vibes, ownId }) => {
   const navigate = useNavigate();
   return (
-    <>
-      <h2 className="grid ml-2">VIBEES!</h2>
+    <div className="  border-2 border-black m-10 p-5 dark:border-white">
       <ul className="menu bg-base-100 w-56 dark:bg-zinc-600 ">
-        <li key={'homelink'}>
-          <a href={`../profile/${ownId}`}>Home</a>
-        </li>
         {vibes.map((vibe) => {
           return (
             <li key={vibe.id}>
@@ -19,7 +15,7 @@ const VibesList = ({ vibes, ownId }) => {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };
 
