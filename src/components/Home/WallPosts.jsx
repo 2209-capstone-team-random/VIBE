@@ -77,23 +77,42 @@ export default function WallPosts({ session, mutual }) {
 
         <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6">
           {posts.map((post, id) => {
-            return (
-              <div className="chat-header">
-                <div
-                  key={post.id}
-                  className="flex flex-col chat chat-start text-accent-focus dark:text-accent"
-                >
-                  {post.posterSpotify}
-                  <time className="text-xs opacity-50 dark:opacity-80">
-                    {String(post.created_at).slice(0, 10)}
-                  </time>
+            if (post.posterSpotify !== userId) {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-start text-accent-focus dark:text-accent"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50 dark:opacity-80">
+                      {String(post.created_at).slice(0, 10)}
+                    </time>
 
-                  <div className="chat-bubble chat-bubble-primary mb-4">
-                    {post.body}
+                    <div className="chat-bubble chat-bubble-primary mb-4">
+                      {post.body}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
+            } else {
+              return (
+                <div className="chat-header">
+                  <div
+                    key={post.id}
+                    className="flex flex-col chat chat-start text-secondary-focus dark:text-primary"
+                  >
+                    {post.posterSpotify}
+                    <time className="text-xs opacity-50 dark:opacity-80">
+                      {String(post.created_at).slice(0, 10)}
+                    </time>
+                    <div className="chat-bubble chat-bubble-success">
+                      {post.body}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
           })}
         </div>
       </div>
