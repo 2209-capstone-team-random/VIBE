@@ -1,12 +1,26 @@
-import React from "react";
-import { supabase } from "../../supabaseClient";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import NavBar from "../Home/Navbar";
+import React from 'react';
+import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import NavBar from '../Home/Navbar';
 
 const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
+  const [extension, setExtension] = useState('');
+
+  const handleChange = (e) => {
+    const fileExt = e.target.files[0].name;
+    const allowedTypes = /(\.jpg|\.jpeg)$/i;
+    if (allowedTypes.exec(fileExt)) {
+      setImage(e.target.files[0]);
+      setExtension(e.target.files[0].name.split(' ').pop());
+    } else {
+      alert('Please upload file having extensions .jpeg/.jpg only.');
+      setImage('');
+      setExtension('');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +30,10 @@ const EditProfile = ({ token, session }) => {
 
     if (image) {
       const { data, err } = await supabase.storage
-        .from("profile-images")
-        .upload(`/${spotifyId}-avatar`, image);
+        .from('profile-images')
+        .upload(`/${spotifyId}-avatar.${extension}`, image, {
+          upsert: true,
+        });
     }
 
     if (e.target.display_name.value)
@@ -26,7 +42,7 @@ const EditProfile = ({ token, session }) => {
 
     const updateForm = async () => {
       const { data, error } = await supabase
-        .from("User")
+        .from('User')
         .update({ bio: bioForm.bio })
         .match({ spotifyId: spotifyId })
         .select();
@@ -77,9 +93,7 @@ const EditProfile = ({ token, session }) => {
               <label className="input-group input-group-vertical">
                 <input
                   type="file"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
+                  onChange={handleChange}
                   className="file-input file-input-bordered file-input-md w-full max-w-xs dark:text-black/80"
                 />
               </label>
