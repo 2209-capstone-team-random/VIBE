@@ -24,7 +24,7 @@ module.exports = {
         mytheme: {
           // custom theme
           primary: "#9F2B68",
-          "primary-focus": "##3b82f6",
+          "primary-focus": "#d43616",
           "primary-content": "#ffffff",
 
           // other colors
