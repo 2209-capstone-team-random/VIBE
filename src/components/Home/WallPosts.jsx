@@ -11,7 +11,7 @@ export default function WallPosts({ session, mutual }) {
   const { userId } = useParams();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const postForm = {};
 
     if (e.target.post.value) postForm.post = e.target.post.value;
@@ -64,7 +64,7 @@ export default function WallPosts({ session, mutual }) {
           <form id="postForm" onSubmit={handleSubmit}>
             <textarea
               name="post"
-              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 w-96 mt-6 mb-2"
+              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
               placeholder="Write a post"
             ></textarea>
             <button form="postForm" className="btn btn-sm btn-secondary mb-20">
@@ -77,42 +77,23 @@ export default function WallPosts({ session, mutual }) {
 
         <div className="flex flex-col-reverse overflow-y-auto h-96 border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6">
           {posts.map((post, id) => {
-            if (post.posterSpotify !== userId) {
-              return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-start text-accent-focus dark:text-accent"
-                  >
-                    {post.posterSpotify}
-                    <time className="text-xs opacity-50 dark:opacity-80">
-                      {String(post.created_at).slice(0, 10)}
-                    </time>
+            return (
+              <div className="chat-header">
+                <div
+                  key={post.id}
+                  className="flex flex-col chat chat-start text-accent-focus dark:text-accent"
+                >
+                  {post.posterSpotify}
+                  <time className="text-xs opacity-50 dark:opacity-80">
+                    {String(post.created_at).slice(0, 10)}
+                  </time>
 
-                    <div className="chat-bubble chat-bubble-primary mb-4">
-                      {post.body}
-                    </div>
+                  <div className="chat-bubble chat-bubble-primary mb-4">
+                    {post.body}
                   </div>
                 </div>
-              );
-            } else {
-              return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-end text-secondary-focus dark:text-primary"
-                  >
-                    {post.posterSpotify}
-                    <time className="text-xs opacity-50 dark:opacity-80">
-                      {String(post.created_at).slice(0, 10)}
-                    </time>
-                    <div className="chat-bubble chat-bubble-success">
-                      {post.body}
-                    </div>
-                  </div>
-                </div>
-              );
-            }
+              </div>
+            );
           })}
         </div>
       </div>
