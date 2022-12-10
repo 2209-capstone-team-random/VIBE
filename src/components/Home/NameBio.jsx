@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUser } from '../../redux/dbQueryThunks/user';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "../../redux/dbQueryThunks/user";
 
 export default function NameBio({ session, userId }) {
   const dispatch = useDispatch();
   const display_name = session?.user.user_metadata.name;
-  const [userData, setUserData] = useState('');
-  const [userImg, setUserImg] = useState('');
+  const [userData, setUserData] = useState("");
+  const [userImg, setUserImg] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
       const { data, error } = await supabase
-        .from('User')
-        .select('*')
-        .eq('spotifyId', userId);
+        .from("User")
+        .select("*")
+        .eq("spotifyId", userId);
       setUserData(data);
     };
     getUser();
 
     const getImg = async () => {
       const { data, error } = await supabase
-        .from('Profile_Image')
-        .select('url')
-        .eq('userSpotify', userId);
+        .from("Profile_Image")
+        .select("url")
+        .eq("userSpotify", userId);
       setUserImg(data);
     };
     getImg();
@@ -40,7 +40,7 @@ export default function NameBio({ session, userId }) {
         <p className="font-semibold text-lg mb-4">
           {userData[0]?.display_name}
         </p>
-        <p className="mb-4">{userData[0]?.bio}</p>
+        <p className="mb-4">Bio : {userData[0]?.bio}</p>
       </div>
     </div>
   );

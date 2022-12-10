@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Typed from 'react-typed';
-import Bee from '../../assets/bee.png';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabaseClient';
+import React, { useState, useEffect } from "react";
+import Typed from "react-typed";
+import Bee from "../../assets/bee.png";
+import { Navigate, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 
 const Landing = ({ isFirstTimeUser, session }) => {
   const video =
-    'https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4';
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
   let spotifyId = session?.user.user_metadata.sub;
   let userId = session?.user.id;
 
@@ -14,7 +14,7 @@ const Landing = ({ isFirstTimeUser, session }) => {
   async function signInWithSpotify() {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'spotify',
+        provider: "spotify",
         options: {
           scopes: `ugc-image-upload
     user-modify-playback-state
@@ -44,7 +44,7 @@ const Landing = ({ isFirstTimeUser, session }) => {
 
   useEffect(() => {
     if (isFirstTimeUser && session) {
-      navigate('/onboard');
+      navigate("/onboard");
     } else if (!isFirstTimeUser && session) {
       navigate(`/profile/${spotifyId}`);
     }
@@ -66,7 +66,7 @@ const Landing = ({ isFirstTimeUser, session }) => {
         <h1 className="text-8xl ">V I B E</h1>
         <Typed
           className="text-4xl md:text-4xl font-bold"
-          strings={['Discover.', 'Listen.', 'Connect.']}
+          strings={["Discover.", "Listen.", "Connect."]}
           typeSpeed={80}
           backSpeed={80}
           loop
