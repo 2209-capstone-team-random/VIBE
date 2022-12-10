@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import TopPlaylists from "./TopPlaylists";
-import SpotifyPlayer from "react-spotify-web-playback";
-import { fetchUserByIdPlaylists } from "../../redux/Spotify/userPlaylists";
-import NameBio from "./NameBio";
-import WallPosts from "./WallPosts";
-import NavBar from "./Navbar";
-import { useParams } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import TopPlaylists from './TopPlaylists';
+import SpotifyPlayer from 'react-spotify-web-playback';
+import { fetchUserByIdPlaylists } from '../../redux/Spotify/userPlaylists';
+import NameBio from './NameBio';
+import WallPosts from './WallPosts';
+import NavBar from './Navbar';
+import { useParams } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
 
 export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export default function CurrentUserProfile({ token, session }) {
   const setVibeTrue = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
+        .from('Vibe')
         .insert([{ userSpotify, vibeSpotify, mutual: false }]);
       checkMyVibe(userSpotify, vibeSpotify);
     } catch (error) {
@@ -47,12 +47,12 @@ export default function CurrentUserProfile({ token, session }) {
   const setMutualStatus = async (userSpotify, vibeSpotify) => {
     try {
       let { data: userA } = await supabase
-        .from("Vibe")
-        .update({ mutual: "true" })
+        .from('Vibe')
+        .update({ mutual: 'true' })
         .match({ userSpotify, vibeSpotify });
       let { data: userB } = await supabase
-        .from("Vibe")
-        .update({ mutual: "true" })
+        .from('Vibe')
+        .update({ mutual: 'true' })
         .match({ userSpotify: vibeSpotify, vibeSpotify: userSpotify });
     } catch (error) {
       console.log(error);
@@ -64,7 +64,7 @@ export default function CurrentUserProfile({ token, session }) {
   const removeVibe = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
+        .from('Vibe')
         .delete()
         .match({ userSpotify, vibeSpotify });
     } catch (error) {
@@ -76,7 +76,7 @@ export default function CurrentUserProfile({ token, session }) {
   const removeMutual = async (userSpotify, vibeSpotify) => {
     try {
       const { data, error } = await supabase
-        .from("Vibe")
+        .from('Vibe')
         .update({ mutual: false })
         .match({ userSpotify, vibeSpotify })
         .select();
@@ -86,7 +86,7 @@ export default function CurrentUserProfile({ token, session }) {
       if (error) {
         console.log(error);
       }
-      console.log("testing");
+      console.log('testing');
     } catch (error) {
       console.log(error);
     }
@@ -95,12 +95,12 @@ export default function CurrentUserProfile({ token, session }) {
   const checkMyVibe = async (userSpotify, vibeSpotify) => {
     try {
       const { data: vibe, error } = await supabase
-        .from("Vibe")
-        .select("*")
+        .from('Vibe')
+        .select('*')
         .match({ userSpotify, vibeSpotify });
       const { data: theirVibe } = await supabase
-        .from("Vibe")
-        .select("*")
+        .from('Vibe')
+        .select('*')
         .match({ userSpotify: vibeSpotify, vibeSpotify: userSpotify });
       if (vibe.length > 0) {
         setVibe(true);
@@ -127,24 +127,26 @@ export default function CurrentUserProfile({ token, session }) {
       <div className="flex flex-col justify-center items-center">
         <NavBar session={session} />
         <div></div>
+
+        <NameBio session={session} userId={userId} />
         {userId !== mySpotifySub ? (
           mutual ? (
             <button
-              className="m-2 h-8 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
               onClick={vibeHandler}
             >
               V I B E E !
             </button>
           ) : !vibe ? (
             <button
-              className="m-2 h-8 px-5 stext-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
               onClick={vibeHandler}
             >
               V I B E with Me!
             </button>
           ) : (
             <button
-              className="m-2 h-8 px-5 stext-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
               onClick={vibeHandler}
             >
               V I B E D
@@ -153,14 +155,13 @@ export default function CurrentUserProfile({ token, session }) {
         ) : (
           <></>
         )}
-        <NameBio session={session} userId={userId} />
         <TopPlaylists session={session} token={token} />
-        <WallPosts session={session} />
+        <WallPosts session={session} mutual={mutual} />
         <div className="fixed z-10 bottom-0 mt-10 w-full">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
         </div>
       </div>
     );
   }
-  console.log("Sorry, we could not load your profile.");
+  console.log('Sorry, we could not load your profile.');
 }
