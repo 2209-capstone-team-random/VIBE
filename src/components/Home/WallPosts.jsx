@@ -11,7 +11,7 @@ export default function WallPosts({ session, mutual }) {
   const { userId } = useParams();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const postForm = {};
 
     if (e.target.post.value) postForm.post = e.target.post.value;
@@ -64,7 +64,7 @@ export default function WallPosts({ session, mutual }) {
           <form id="postForm" onSubmit={handleSubmit}>
             <textarea
               name="post"
-              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 w-96 mt-6 mb-2"
+              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
               placeholder="Write a post"
             ></textarea>
             <button form="postForm" className="btn btn-sm btn-secondary mb-20">
@@ -100,7 +100,7 @@ export default function WallPosts({ session, mutual }) {
                 <div className="chat-header">
                   <div
                     key={post.id}
-                    className="flex flex-col chat chat-end text-secondary-focus dark:text-primary"
+                    className="flex flex-col chat chat-start text-secondary-focus dark:text-primary"
                   >
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
