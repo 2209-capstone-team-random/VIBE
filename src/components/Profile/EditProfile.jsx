@@ -7,6 +7,7 @@ import NavBar from "../Home/Navbar";
 const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
   const [image, setImage] = useState("");
+  const [extension, setExtension] = useState("");
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const EditProfile = ({ token, session }) => {
     if (image) {
       const { data } = await supabase.storage
         .from("profile-images")
-        .upload(`${spotifyId}-avatar`, image);
+        .upload(`/${spotifyId}-avatar.${extension}`, image);
       if (data) {
         const { data: img } = await supabase.storage
           .from("profile-images")
@@ -128,7 +129,7 @@ const EditProfile = ({ token, session }) => {
               type="submit"
               form="editForm"
               value="Submit"
-              className="btn dark:bg-orange-300 btn-secondary dark:border-0 text-black/60 hover:bg-gray-300 dark:text-black/80 bg-purple-200 border-0 w-60 mt-4"
+              className="btn dark:bg-orange-300 dark:hover:bg-gray-200 btn-secondary dark:border-0 text-black/60 hover:bg-gray-200 dark:text-black/80 bg-purple-200 border-0 w-60 mt-4"
             >
               Submit
             </button>
