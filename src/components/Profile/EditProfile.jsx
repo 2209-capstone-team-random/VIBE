@@ -40,7 +40,7 @@ const EditProfile = ({ token, session }) => {
       if (data) {
         const { data: img } = await supabase.storage
           .from("profile-images")
-          .getPublicUrl(`${spotifyId}-avatar`);
+          .getPublicUrl(`${spotifyId}-avatar.${extension}`);
         await supabase
           .from("Profile_Image")
           .update({ url: img.publicUrl })
