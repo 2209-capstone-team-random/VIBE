@@ -3,21 +3,21 @@ import { supabase } from "../../supabaseClient";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../redux/dbQueryThunks/user";
 
-export default function NameBio({ session, userId }) {
+export default function NameBio({ session, userId, userData }) {
   const dispatch = useDispatch();
   const display_name = session?.user.user_metadata.name;
-  const [userData, setUserData] = useState("");
+  // const [userData, setUserData] = useState("");
   const [userImg, setUserImg] = useState("");
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase
-        .from("User")
-        .select("*")
-        .eq("spotifyId", userId);
-      setUserData(data);
-    };
-    getUser();
+    // const getUser = async () => {
+    //   const { data, error } = await supabase
+    //     .from("User")
+    //     .select("*")
+    //     .eq("spotifyId", userId);
+    //   setUserData(data);
+    // };
+    // getUser();
 
     const getImg = async () => {
       const { data, error } = await supabase

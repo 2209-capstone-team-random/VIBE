@@ -1,24 +1,24 @@
-import React from 'react';
-import { supabase } from '../../supabaseClient';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import NavBar from '../Home/Navbar';
+import React from "react";
+import { supabase } from "../../supabaseClient";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import NavBar from "../Home/Navbar";
 
 const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
-  const [image, setImage] = useState('');
-  const [extension, setExtension] = useState('');
+  const [image, setImage] = useState("");
+  const [extension, setExtension] = useState("");
 
   const handleChange = (e) => {
     const fileExt = e.target.files[0].name;
     const allowedTypes = /(\.jpg|\.jpeg)$/i;
     if (allowedTypes.exec(fileExt)) {
       setImage(e.target.files[0]);
-      setExtension(e.target.files[0].name.split(' ').pop());
+      setExtension(e.target.files[0].name.split(" ").pop());
     } else {
-      alert('Please upload file having extensions .jpeg/.jpg only.');
-      setImage('');
-      setExtension('');
+      alert("Please upload file having extensions .jpeg/.jpg only.");
+      setImage("");
+      setExtension("");
     }
   };
 
@@ -26,11 +26,12 @@ const EditProfile = ({ token, session }) => {
     e.preventDefault();
     const nameForm = {};
     const bioForm = {};
-    const submitForm = [nameForm, bioForm];
+    const backgroundForm = {};
+    const submitForm = [nameForm, bioForm, backgroundForm];
 
     if (image) {
       const { data, err } = await supabase.storage
-        .from('profile-images')
+        .from("profile-images")
         .upload(`/${spotifyId}-avatar.${extension}`, image, {
           upsert: true,
         });
@@ -39,11 +40,13 @@ const EditProfile = ({ token, session }) => {
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
     if (e.target.bio.value) bioForm.bio = e.target.bio.value;
+    if (e.target.background.value)
+      backgroundForm.background = e.target.background.value;
 
     const updateForm = async () => {
       const { data, error } = await supabase
-        .from('User')
-        .update({ bio: bioForm.bio })
+        .from("User")
+        .update({ bio: bioForm.bio, background: backgroundForm.background })
         .match({ spotifyId: spotifyId })
         .select();
     };
@@ -97,6 +100,17 @@ const EditProfile = ({ token, session }) => {
                   className="file-input file-input-bordered file-input-md w-full max-w-xs dark:text-black/80"
                 />
               </label>
+              <div className="form-control mt-4">
+                <span className="label-text dark:text-white/80">
+                  Enter background URL :
+                </span>
+                <input
+                  type="text"
+                  placeholder="Background URL"
+                  name="background"
+                  className="input input-bordered"
+                />
+              </div>
             </div>
           </div>
           <div className="flex justify-center">
