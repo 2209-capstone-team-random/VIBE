@@ -18,16 +18,18 @@ const EditProfile = ({ token, session }) => {
     const submitForm = [nameForm, bioForm];
 
     if (image) {
-      await supabase.storage
-        .from("profile-images")
-        .upload(`${spotifyId}-avatar`, image);
       const { data } = await supabase.storage
         .from("profile-images")
-        .getPublicUrl(`${spotifyId}-avatar`);
-      await supabase
-        .from("Profile_Image")
-        .update({ url: data.publicUrl })
-        .match({ userSpotify: `${userSpotify}` });
+        .upload(`${spotifyId}-avatar`, image);
+      if (data) {
+        const { data: img } = await supabase.storage
+          .from("profile-images")
+          .getPublicUrl(`${spotifyId}-avatar`);
+        await supabase
+          .from("Profile_Image")
+          .update({ url: img.publicUrl })
+          .match({ userSpotify: `${spotifyId}` });
+      }
     }
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
@@ -63,7 +65,6 @@ const EditProfile = ({ token, session }) => {
     };
     fetchUser();
   }, [spotifyId]);
-  console.log(name);
 
   return (
     <div>
