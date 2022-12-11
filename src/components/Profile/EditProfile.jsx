@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -8,6 +8,9 @@ const EditProfile = ({ token, session }) => {
   const spotifyId = session?.user.user_metadata.sub;
   const [image, setImage] = useState("");
   const [extension, setExtension] = useState("");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const fileExt = e.target.files[0].name;
@@ -32,11 +35,20 @@ const EditProfile = ({ token, session }) => {
     if (image) {
       const { data, err } = await supabase.storage
         .from("profile-images")
+        .from("profile-images")
         .upload(`/${spotifyId}-avatar.${extension}`, image, {
           upsert: true,
         });
+      if (data) {
+        const { data: img } = await supabase.storage
+          .from("profile-images")
+          .getPublicUrl(`${spotifyId}-avatar.${extension}`);
+        await supabase
+          .from("Profile_Image")
+          .update({ url: img.publicUrl })
+          .match({ userSpotify: `${spotifyId}` });
+      }
     }
-
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
     if (e.target.bio.value) bioForm.bio = e.target.bio.value;
@@ -47,11 +59,34 @@ const EditProfile = ({ token, session }) => {
       const { data, error } = await supabase
         .from("User")
         .update({ bio: bioForm.bio, background: backgroundForm.background })
+        .from("User")
+        .update({ bio: bioForm.bio })
         .match({ spotifyId: spotifyId })
         .select();
     };
+
+    await supabase
+      .from("User")
+      .update({ display_name: nameForm.display_name })
+      .match({ spotifyId: spotifyId });
     updateForm();
+
+    navigate(`/profile/${spotifyId}`);
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase
+        .from("User")
+        .select()
+        .match({ spotifyId: `${spotifyId}` });
+      if (data) {
+        setName(data[0].display_name);
+        setBio(data[0].bio);
+      }
+    };
+    fetchUser();
+  }, [spotifyId]);
 
   return (
     <div>
@@ -66,20 +101,28 @@ const EditProfile = ({ token, session }) => {
             Edit Profile
           </h1>
           <div className="form-control">
-            <label className="input-group input-group-vertical">
-              <span className="dark:text-black/80">Username</span>
+            <label className="input-group input-group-vertical ">
+              <span className="dark:text-white/80 bg-gray-200 dark:bg-gray-600">
+                Username
+              </span>
               <input
                 type="text"
                 placeholder="Username"
                 name="display_name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="input input-bordered"
               />
             </label>
           </div>
           <div className="form-control mt-4">
             <label className="input-group input-group-vertical">
-              <span className="dark:text-black/80">Bio</span>
+              <span className="dark:text-white/80 bg-gray-200 dark:bg-gray-600">
+                Bio
+              </span>
               <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
                 className="textarea textarea-bordered"
                 placeholder="Bio"
                 name="bio"
@@ -93,7 +136,7 @@ const EditProfile = ({ token, session }) => {
                   Profile Pic
                 </span>
               </label>
-              <label className="input-group input-group-vertical">
+              <label className="input-group input-group-vertical ">
                 <input
                   type="file"
                   onChange={handleChange}
@@ -113,12 +156,12 @@ const EditProfile = ({ token, session }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex  justify-center">
             <button
               type="submit"
               form="editForm"
               value="Submit"
-              className="btn btn-secondary w-60 mt-4"
+              className="btn dark:bg-orange-300 dark:hover:bg-gray-200 btn-secondary dark:border-0 text-black/60 hover:bg-gray-200 dark:text-black/80 bg-purple-200 border-0 w-60 mt-4"
             >
               Submit
             </button>

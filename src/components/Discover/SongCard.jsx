@@ -18,8 +18,8 @@ const SongCard = ({ track, token, user }) => {
   const discover = useSelector((state) => state.discover);
 
   return (
-    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-black/10 dark:bg-white/20">
-      <div className="relative w-full h-56 group">
+    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-gray-300  dark:bg-gray-600">
+      <div className="relative w-full  group">
         <div
           className={`cursor-pointer absolute inset-0 justify-center items-center bg-black bg-opacity-50 group-hover:flex ${
             activeSong === track.name && track.uri === discover.uri
@@ -42,7 +42,7 @@ const SongCard = ({ track, token, user }) => {
         </div>
         <img className=" shadow-xl" src={track.album.images[0].url} />
       </div>
-      <div className="mt-4 flex flex-col  dark:text-black ">
+      <div className="mt-4 flex flex-col  dark:text-white/90 ">
         <p className="font-semibold text-lg truncate">{track.name}</p>
         <p className="test-sm truncate text-black-300 mt-1">
           {track.artists[0].name}
