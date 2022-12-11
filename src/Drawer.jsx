@@ -30,7 +30,6 @@ export default function Drawer({
         .from("Vibe")
         .select("*")
         .match({ userSpotify: session?.user?.user_metadata.sub, mutual: true });
-      console.log("vibes", data);
       if (vibes.length < 1) {
         setVibes(data);
       }

@@ -18,4 +18,18 @@ module.exports = {
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          // custom theme
+          primary: "#9F2B68",
+          "primary-focus": "#d43616",
+          "primary-content": "#ffffff",
+
+          // other colors
+        },
+      },
+    ],
+  },
 };

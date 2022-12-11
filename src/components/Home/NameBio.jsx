@@ -30,8 +30,8 @@ export default function NameBio({ session, userId }) {
   }, []);
 
   return (
-    <div className="flex flex-row mb-20 mr-20">
-      <div className="avatar online h-20">
+    <div className="flex flex-row mx-20 mt-20">
+      <div className="avatar online h-40">
         <div className="rounded-full">
           <img src={userImg[0]?.url} />
         </div>
@@ -40,7 +40,7 @@ export default function NameBio({ session, userId }) {
         <p className="font-semibold text-lg mb-4">
           {userData[0]?.display_name}
         </p>
-        <p className="mb-4">{userData[0]?.bio}</p>
+        <p className="mb-4">Bio : {userData[0]?.bio}</p>
       </div>
     </div>
   );

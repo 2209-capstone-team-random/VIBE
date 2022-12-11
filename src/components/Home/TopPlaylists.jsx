@@ -23,7 +23,7 @@ export default function TopPlaylists({ token, session }) {
   if (items) {
     return (
       <div className="flex">
-        <div className="flex justify-center flex-wrap mb-20">
+        <div className="flex justify-center flex-wrap mb-20 space-x-10">
           <div className="p-2">
             <Swiper
               navigation={true}

@@ -12,6 +12,19 @@ const EditProfile = ({ token, session }) => {
   const [bio, setBio] = useState("");
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const fileExt = e.target.files[0].name;
+    const allowedTypes = /(\.jpg|\.jpeg)$/i;
+    if (allowedTypes.exec(fileExt)) {
+      setImage(e.target.files[0]);
+      setExtension(e.target.files[0].name.split(" ").pop());
+    } else {
+      alert("Please upload file having extensions .jpeg/.jpg only.");
+      setImage("");
+      setExtension("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const nameForm = {};
@@ -19,9 +32,11 @@ const EditProfile = ({ token, session }) => {
     const submitForm = [nameForm, bioForm];
 
     if (image) {
-      const { data } = await supabase.storage
+      const { data, err } = await supabase.storage
         .from("profile-images")
-        .upload(`/${spotifyId}-avatar.${extension}`, image);
+        .upload(`/${spotifyId}-avatar.${extension}`, image, {
+          upsert: true,
+        });
       if (data) {
         const { data: img } = await supabase.storage
           .from("profile-images")
@@ -81,7 +96,7 @@ const EditProfile = ({ token, session }) => {
           </h1>
           <div className="form-control">
             <label className="input-group input-group-vertical ">
-              <span className="dark:text-white/80 dark:bg-gray-600">
+              <span className="dark:text-white/80 bg-gray-200 dark:bg-gray-600">
                 Username
               </span>
               <input
@@ -96,7 +111,9 @@ const EditProfile = ({ token, session }) => {
           </div>
           <div className="form-control mt-4">
             <label className="input-group input-group-vertical">
-              <span className="dark:text-white/80 dark:bg-gray-600">Bio</span>
+              <span className="dark:text-white/80 bg-gray-200 dark:bg-gray-600">
+                Bio
+              </span>
               <textarea
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
@@ -116,9 +133,7 @@ const EditProfile = ({ token, session }) => {
               <label className="input-group input-group-vertical ">
                 <input
                   type="file"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
+                  onChange={handleChange}
                   className="file-input file-input-bordered file-input-md w-full max-w-xs dark:text-black/80"
                 />
               </label>
