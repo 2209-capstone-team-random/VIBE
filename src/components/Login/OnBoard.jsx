@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Bee from '../../assets/bee.png';
-import Card from '../Cards/Card';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabaseClient';
-import { fetchUserArtists } from '../../redux/Spotify/userTopArtists';
-import { fetchUserTracks } from '../../redux/Spotify/userTopTracks';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Bee from "../../assets/bee.png";
+import Card from "../Cards/Card";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
+import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
+import { fetchUserProfile } from "../../redux/Spotify/userProfile";
 
 const OnBoard = ({ session, token }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const OnBoard = ({ session, token }) => {
   // const { user } = useSelector((state) => state);
   const count = useSelector((state) => state);
   const video =
-    'https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4';
+    "https://llxcoxktsyswmxmrwjsr.supabase.co/storage/v1/object/public/video/background.mp4";
 
   let userId = session?.user.id;
   let spotifyId = session?.user.user_metadata.name;
@@ -23,33 +24,41 @@ const OnBoard = ({ session, token }) => {
   const navigate = useNavigate();
   const allTracks = useSelector((store) => store.userTopTracks.items);
   const allArtists = useSelector((store) => store.userTopArtists.items);
+  const profileImage = useSelector((store) => store.userProfile);
 
   const bounceTransition = {
     y: {
       duration: 1,
       yoyo: Infinity,
-      ease: 'easeOut',
+      ease: "easeOut",
     },
   };
 
   const updateUser = async (id, spotifyId, display_name) => {
     try {
       const { data: user } = await supabase
-        .from('User')
+        .from("User")
         .update({ spotifyId, display_name })
-        .eq('id', id);
+        .eq("id", id);
     } catch (error) {
       console.log(error);
     }
   };
 
   const insertTop = async (userSpotify, topArtists, topTracks) => {
-    console.log('I AM HERE BEFORE TRY');
     try {
       const { data, error } = await supabase
-        .from('User_Top_Lists')
+        .from("User_Top_Lists")
         .insert([{ userSpotify, topArtists, topTracks }]);
-      console.log('I AM EXECUTED');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const insertProfileImage = async (userSpotify, url) => {
+    try {
+      const { data, error } = await supabase
+        .from("Profile_Image")
+        .insert([{ userSpotify, url }]);
     } catch (error) {
       console.log(error);
     }
@@ -58,10 +67,10 @@ const OnBoard = ({ session, token }) => {
   const addCategories = async (userSpotify, catA, catB, catC) => {
     try {
       let { data, error } = await supabase
-        .from('User_Top_Cat')
+        .from("User_Top_Cat")
         .insert([{ userSpotify, catA, catB, catC }])
         .select();
-      console.log('data', data);
+      console.log("data", data);
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +78,7 @@ const OnBoard = ({ session, token }) => {
 
   const onBoarding = async (id) => {
     const { data, error } = await supabase
-      .from('User')
+      .from("User")
       .update({ isFirstTimeUser: false })
       .match({ id });
     if (error) {
@@ -86,6 +95,7 @@ const OnBoard = ({ session, token }) => {
   useEffect(() => {
     dispatch(fetchUserArtists(token));
     dispatch(fetchUserTracks(token));
+    dispatch(fetchUserProfile(token));
   }, [token]);
 
   // useEffect(() => {
@@ -103,6 +113,8 @@ const OnBoard = ({ session, token }) => {
     navigate(`/profile/${spotifySub}`);
     //insert spotify data into DB
     insertTop(spotifySub, allArtists, allTracks);
+    //insert image into db
+    insertProfileImage(spotifySub, profileImage.images[0].url);
   };
   return (
     <div className="w-full h-screen relative">
@@ -117,7 +129,7 @@ const OnBoard = ({ session, token }) => {
         <div className="absolute inset-x-0 top-0">
           <motion.span
             transition={bounceTransition}
-            animate={{ y: ['6%', '-7%'] }}
+            animate={{ y: ["6%", "-7%"] }}
             className="flex justify-center item-center"
           >
             <img src={Bee} className="object-contain h-50 w-96 " alt="logo" />
@@ -132,7 +144,7 @@ const OnBoard = ({ session, token }) => {
 
         <div
           className={
-            count.count !== 3 ? 'hidden' : 'absolute inset-x-0 bottom-5'
+            count.count !== 3 ? "hidden" : "absolute inset-x-0 bottom-5"
           }
         >
           <button
