@@ -15,8 +15,8 @@ export default function CurrentUserProfile({ token, session }) {
   const { userId } = useParams();
   const [vibe, setVibe] = useState(false);
   const [mutual, setMutual] = useState(false);
+  const [background, setBackground] = useState("");
   const [userData, setUserData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const mySpotifySub = session?.user.user_metadata.sub;
 
@@ -123,25 +123,31 @@ export default function CurrentUserProfile({ token, session }) {
         .from("User")
         .select("*")
         .eq("spotifyId", userId);
-      console.log("data in thunk", data);
       setUserData(data);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    getUser();
-  }, []);
-  console.log("userData", userData);
+    if (!userData[0]?.display_name) {
+      getUser();
+    } else {
+      setBackground(userData[0]?.background);
+    }
+  }, [userData]);
 
   if (items) {
     return (
       <div
-        className={`w-full h-full relative bg-[url('${userData[0]?.background}')] bg-cover`}
+        style={{
+          "background-image": `url(${background})`,
+          "background-size": "cover",
+        }}
       >
         <NavBar session={session} />
         <div className="flex flex-col justify-center items-center ">
-          <NameBio session={session} userId={userId} userData={userData} />
+          <NameBio session={session} userId={userId} />
           {userId !== mySpotifySub ? (
             mutual ? (
               <button

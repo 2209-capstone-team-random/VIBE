@@ -59,8 +59,6 @@ const EditProfile = ({ token, session }) => {
       const { data, error } = await supabase
         .from("User")
         .update({ bio: bioForm.bio, background: backgroundForm.background })
-        .from("User")
-        .update({ bio: bioForm.bio })
         .match({ spotifyId: spotifyId })
         .select();
     };

@@ -60,13 +60,13 @@ export default function WallPosts({ session, mutual }) {
   if (posts) {
     return (
       <div>
-        {mutual || userId === session.user.user_metadata.sub ? (
+        {mutual || userId === session?.user.user_metadata.sub ? (
           <form id="postForm" onSubmit={handleSubmit}>
             <h1>✨ Sing To Me 🎤 ✨</h1>
             <textarea
               name="post"
               className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
-              placeholder="✨ Sing To Me 🎤 ✨"
+              placeholder="♪((ヽ(ᐛ)ﾉ))♬"
             ></textarea>
             <button
               form="postForm"
