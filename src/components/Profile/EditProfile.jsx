@@ -18,11 +18,17 @@ const EditProfile = ({ token, session }) => {
     const submitForm = [nameForm, bioForm];
 
     if (image) {
-      const { data, err } = await supabase.storage
+      await supabase.storage
         .from("profile-images")
-        .upload(`/${spotifyId}-avatar`, image);
+        .upload(`${spotifyId}-avatar`, image);
+      const { data } = await supabase.storage
+        .from("profile-images")
+        .getPublicUrl(`${spotifyId}-avatar`);
+      await supabase
+        .from("Profile_Image")
+        .update({ url: data.publicUrl })
+        .match({ userSpotify: `${userSpotify}` });
     }
-
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
     if (e.target.bio.value) bioForm.bio = e.target.bio.value;
@@ -49,9 +55,11 @@ const EditProfile = ({ token, session }) => {
       const { data } = await supabase
         .from("User")
         .select()
-        .match({ spotifyId: `giggity` });
-      setName(data[0].display_name);
-      setBio(data[0].bio);
+        .match({ spotifyId: `${spotifyId}` });
+      if (data) {
+        setName(data[0].display_name);
+        setBio(data[0].bio);
+      }
     };
     fetchUser();
   }, [spotifyId]);
@@ -70,8 +78,10 @@ const EditProfile = ({ token, session }) => {
             Edit Profile
           </h1>
           <div className="form-control">
-            <label className="input-group input-group-vertical">
-              <span className="dark:text-black/80">Username</span>
+            <label className="input-group input-group-vertical ">
+              <span className="dark:text-white/80 dark:bg-gray-600">
+                Username
+              </span>
               <input
                 type="text"
                 placeholder="Username"
@@ -84,7 +94,7 @@ const EditProfile = ({ token, session }) => {
           </div>
           <div className="form-control mt-4">
             <label className="input-group input-group-vertical">
-              <span className="dark:text-black/80">Bio</span>
+              <span className="dark:text-white/80 dark:bg-gray-600">Bio</span>
               <textarea
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
@@ -101,7 +111,7 @@ const EditProfile = ({ token, session }) => {
                   Profile Pic
                 </span>
               </label>
-              <label className="input-group input-group-vertical">
+              <label className="input-group input-group-vertical ">
                 <input
                   type="file"
                   onChange={(e) => {
@@ -112,12 +122,12 @@ const EditProfile = ({ token, session }) => {
               </label>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex  justify-center">
             <button
               type="submit"
               form="editForm"
               value="Submit"
-              className="btn btn-secondary w-60 mt-4"
+              className="btn dark:bg-orange-300 btn-secondary dark:border-0 text-black/60 hover:bg-gray-300 dark:text-black/80 bg-purple-200 border-0 w-60 mt-4"
             >
               Submit
             </button>

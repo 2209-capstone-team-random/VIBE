@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import VibesList from "./VibesList.jsx";
 import { supabase } from "./supabaseClient";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ export default function Drawer({
   const [status, setStatus] = useState(false);
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    setStatus(true);
   };
 
   useEffect(() => {

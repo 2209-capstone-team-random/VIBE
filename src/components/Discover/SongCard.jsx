@@ -18,7 +18,7 @@ const SongCard = ({ track, token, user }) => {
   const discover = useSelector((state) => state.discover);
 
   return (
-    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-gray-100  dark:bg-gray-600">
+    <div className="shadow-xl flex p-4 flex-col w-[250px] bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg  bg-gray-300  dark:bg-gray-600">
       <div className="relative w-full  group">
         <div
           className={`cursor-pointer absolute inset-0 justify-center items-center bg-black bg-opacity-50 group-hover:flex ${

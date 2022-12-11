@@ -13,7 +13,7 @@ import "swiper/css/pagination";
 import NavBar from "../Home/Navbar";
 
 const Discover = ({ token, session }) => {
-  const user = session?.user?.user_metadata?.name;
+  const user = session?.user?.user_metadata?.sub;
 
   const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const Discover = ({ token, session }) => {
       <h2 className="font-semibold text-5xl justify-center flex m-3 p-3 text-left">
         Vibe Hive
       </h2>
-      <div className="gap-5 shadow-xl bg-gray-100 dark:bg-white/30 p-10 flex flex-wrap justify-center sm:flex-row mx-12 rounded-xl font-semibold">
+      <div className="gap-5 shadow-xl bg-gray-200 dark:bg-white/30 p-10 flex flex-wrap justify-center sm:flex-row mx-12 rounded-xl font-semibold">
         {categories.map((genre, i) => {
           return (
             <div
@@ -87,7 +87,7 @@ const Discover = ({ token, session }) => {
           className={
             !users.length
               ? "flex m-10  p-3 mySwiper w-[80%]  rounded-2xl overflow-x-auto dark:bg-gray-600"
-              : "flex m-10 p-3 w-[80%]  mySwiper rounded-2xl shadow-xl  bg-gray-100 overflow-x-auto"
+              : "flex m-10 p-3 w-[80%]  mySwiper rounded-2xl shadow-xl  bg-gray-200 overflow-x-auto"
           }
         >
           {users
