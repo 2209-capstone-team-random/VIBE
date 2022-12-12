@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function WallPosts({ session, mutual }) {
   const spotifyId = session?.user.user_metadata.sub;
   const [posts, setPosts] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const { userId } = useParams();
 
@@ -22,7 +22,7 @@ export default function WallPosts({ session, mutual }) {
     if (e.target.post.value) postForm.post = e.target.post.value;
 
     const addPost = async () => {
-      const { data, error } = await supabase.from("Wall_Post").insert([
+      const { data, error } = await supabase.from('Wall_Post').insert([
         {
           userSpotify: userId,
           posterSpotify: spotifyId,
@@ -32,15 +32,15 @@ export default function WallPosts({ session, mutual }) {
       console.log(data);
     };
     addPost();
-    setInput("");
+    setInput('');
   };
 
   useEffect(() => {
     const channel = supabase
-      .channel("wall")
+      .channel('wall')
       .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "Wall_Post" },
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'Wall_Post' },
         (payload) =>
           setPosts((prev) => {
             console.log(payload, prev);
@@ -54,9 +54,9 @@ export default function WallPosts({ session, mutual }) {
     const getUserPosts = async () => {
       const { data: Wall_Post, error } = await supabase
 
-        .from("Wall_Post")
-        .select("*")
-        .eq("userSpotify", userId);
+        .from('Wall_Post')
+        .select('*')
+        .eq('userSpotify', userId);
 
       setPosts(Wall_Post);
     };
@@ -78,7 +78,7 @@ export default function WallPosts({ session, mutual }) {
             ></textarea>
             <button
               form="postForm"
-              className="btn btn-sm border-none text-white transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100 m-4"
+              className="btn btn-sm border-none text-white transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100 m-4"
             >
               Submit
             </button>
@@ -124,5 +124,5 @@ export default function WallPosts({ session, mutual }) {
       </div>
     );
   }
-  console.log("Error rendering posts");
+  console.log('Error rendering posts');
 }
