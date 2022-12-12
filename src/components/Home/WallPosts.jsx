@@ -71,7 +71,7 @@ export default function WallPosts({ session, mutual }) {
             <h1 className="dark:text-white ">✨ Sing To Me 🎤 ✨</h1>
             <textarea
               name="post"
-              className="flex flex-col textarea text-black textarea-primary dark:textarea-accent dark:border-none border-none dark:bg-slate-200 md:w-[500px] mt-6 mb-2 w-[250px]"
+              className="flex flex-col textarea text-black textarea-primary dark:textarea-accent dark:border-none border-none bg-gradient-to-r from-blue-200 to-cyan-200 dark:bg-gradient-to-r from-blue-200 to-cyan-200 md:w-[500px] mt-6 mb-2 w-[250px]"
               placeholder="♪((ヽ(ᐛ)ﾉ))♬"
               onChange={onChangeHandler}
               value={input}
@@ -87,7 +87,7 @@ export default function WallPosts({ session, mutual }) {
           <></>
         )}
 
-        <div className="flex flex-col-reverse overflow-y-auto h-80 border textarea textarea-primary dark:textarea-accent dark:bg-slate-200 border-slate-300 rounded-lg p-6 mb-10 mt-5 ">
+        <div className="flex flex-col-reverse overflow-y-auto h-80 border textarea textarea-primary dark:textarea-accent bg-gradient-to-r from-blue-200 to-cyan-200 dark:bg-gradient-to-r from-blue-200 to-cyan-200 border-slate-300 rounded-lg p-6 mb-10 mt-5 ">
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
