@@ -93,7 +93,7 @@ export default function Drawer({
                 <a href="https://www.linkedin.com/in/jerryhwu/">J.W</a>
               </li>
               <li className="avatar  h-10 w-10  bg-gray-100 text-black rounded-full p-2  flex justify-center">
-                <a href="">H.C</a>
+                <a href="https://www.linkedin.com/in/henry-cardenas89/">H.C</a>
               </li>
             </ul>
           </div>
