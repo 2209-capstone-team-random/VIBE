@@ -16,6 +16,7 @@ export default function Drawer({
   const [status, setStatus] = useState(false);
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
+    nav("/");
   };
 
   useEffect(() => {

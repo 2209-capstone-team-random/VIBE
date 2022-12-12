@@ -11,7 +11,7 @@ export default function WallPosts({ session, mutual }) {
   const { userId } = useParams();
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const postForm = {};
 
     if (e.target.post.value) postForm.post = e.target.post.value;
@@ -60,13 +60,13 @@ export default function WallPosts({ session, mutual }) {
   if (posts) {
     return (
       <div>
-        {mutual || userId === session.user.user_metadata.sub ? (
+        {mutual || userId === session?.user.user_metadata.sub ? (
           <form id="postForm" onSubmit={handleSubmit}>
             <h1>✨ Sing To Me 🎤 ✨</h1>
             <textarea
               name="post"
               className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
-              placeholder="✨ Sing To Me 🎤 ✨"
+              placeholder="♪((ヽ(ᐛ)ﾉ))♬"
             ></textarea>
             <button
               form="postForm"
@@ -83,11 +83,8 @@ export default function WallPosts({ session, mutual }) {
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-start text-accent-focus dark:text-primary"
-                  >
+                <div key={post.id} className="chat-header">
+                  <div className="flex flex-col chat chat-start text-accent-focus dark:text-primary">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
@@ -101,11 +98,8 @@ export default function WallPosts({ session, mutual }) {
               );
             } else {
               return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-start text-secondary-focus dark:text-black"
-                  >
+                <div key={post.id} className="chat-header">
+                  <div className="flex flex-col chat chat-start text-secondary-focus dark:text-black">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}

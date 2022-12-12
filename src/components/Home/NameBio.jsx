@@ -9,24 +9,26 @@ export default function NameBio({ session, userId }) {
   const [userData, setUserData] = useState("");
   const [userImg, setUserImg] = useState("");
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase
-        .from("User")
-        .select("*")
-        .eq("spotifyId", userId);
-      setUserData(data);
-    };
-    getUser();
+  const getImg = async () => {
+    const { data, error } = await supabase
+      .from("Profile_Image")
+      .select("url")
+      .eq("userSpotify", userId);
+    setUserImg(data);
+  };
+  const getUser = async () => {
+    const { data, error } = await supabase
+      .from("User")
+      .select("*")
+      .eq("spotifyId", userId);
+    setUserData(data);
+  };
 
-    const getImg = async () => {
-      const { data, error } = await supabase
-        .from("Profile_Image")
-        .select("url")
-        .eq("userSpotify", userId);
-      setUserImg(data);
-    };
-    getImg();
+  useEffect(() => {
+    getUser();
+    if (userImg?.length < 1) {
+      getImg();
+    }
   }, []);
 
   return (
