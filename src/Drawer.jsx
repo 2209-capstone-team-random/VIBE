@@ -20,7 +20,7 @@ export default function Drawer({
 
   useEffect(() => {
     if (status) {
-      nav("/");
+      nav("/discover");
     }
   }, [status]);
 
@@ -73,18 +73,33 @@ export default function Drawer({
           >
             Sign Out
           </button>
-          <div>
-            <h2 className="font-semibold text-center text-2xl">VIBEES</h2>
-            <VibesList
-              userId={userId}
-              vibes={vibes}
-              ownId={session?.user.user_metadata.sub}
-            />
+
+          <h2 className="font-semibold text-center text-2xl">VIBEES</h2>
+          <VibesList
+            userId={userId}
+            vibes={vibes}
+            ownId={session?.user.user_metadata.sub}
+          />
+          <div className="">
+            <ul className="flex mt-4 justify-evenly">
+              <li className="avatar  h-10 w-10 bg-gray-100 text-black rounded-full p-2  flex justify-center">
+                <a href="https://www.linkedin.com/in/lelu95/">L.L</a>
+              </li>
+              <li className="avatar h-10 w-10 bg-gray-100 text-black rounded-full p-2  flex justify-center">
+                <a href="https://www.linkedin.com/in/kevinan1004/">K.A</a>
+              </li>
+              <li className="avatar  h-10 w-10  bg-gray-100 text-black rounded-full p-2  flex justify-center">
+                <a href="https://www.linkedin.com/in/jerryhwu/">J.W</a>
+              </li>
+              <li className="avatar  h-10 w-10  bg-gray-100 text-black rounded-full p-2  flex justify-center">
+                <a href="">H.C</a>
+              </li>
+            </ul>
           </div>
         </article>
       </section>
       <button
-        className="fixed top-5 right-5 text-xl p-1 hover:bg-gray-200"
+        className="fixed top-5 right-5 text-xl p-1 hover:bg-gray-200 dark:hover:bg-zinc-600"
         onClick={() => {
           setIsOpen(false);
         }}

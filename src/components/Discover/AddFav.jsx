@@ -6,7 +6,7 @@ import { map, set } from "zod";
 
 const AddFav = ({ user, uri, song }) => {
   const [added, setAdded] = useState(null);
-  const [ii, setii] = useState(null);
+  const [track, settrack] = useState(null);
 
   const handleClickLike = async () => {
     await supabase.from("User_Favorites").insert([
@@ -17,7 +17,7 @@ const AddFav = ({ user, uri, song }) => {
       },
     ]);
     setAdded(true);
-    setii(uri);
+    settrack(uri);
   };
 
   useEffect(() => {
@@ -26,8 +26,8 @@ const AddFav = ({ user, uri, song }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(ii, JSON.stringify(added));
-  }, [added, ii]);
+    localStorage.setItem(track, JSON.stringify(added));
+  }, [added, track]);
 
   const handleDelete = async () => {
     await supabase

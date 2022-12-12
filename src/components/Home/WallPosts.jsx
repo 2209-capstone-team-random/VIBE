@@ -60,26 +60,31 @@ export default function WallPosts({ session, mutual }) {
   if (posts) {
     return (
       <div>
-        {mutual || userId === session.user.user_metadata.sub ? (
-          <form id="postForm" onSubmit={handleSubmit}>
-            <h1>✨ Sing To Me 🎤 ✨</h1>
-            <textarea
-              name="post"
-              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
-              placeholder="✨ Sing To Me 🎤 ✨"
-            ></textarea>
+        {
+          <form
+            id="postForm"
+            className="flex flex-col mb-10 w-[30%] h-[200px] item-center border-black p-4 "
+            onSubmit={handleSubmit}
+          >
+            <div className="justify-center items-center">
+              <h1>✨ My Wall ✨</h1>
+              <textarea
+                name="post"
+                className="textarea border-slate-300 border textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
+                placeholder=" Sing To Me 🎤 "
+              ></textarea>
+            </div>
             <button
               form="postForm"
-              className="btn btn-sm bg-blue-500 mb-20 text-black/80 hover:bg-blue-400"
+              className="btn btn-sm bg-blue-100 w-[48%] mb-20 text-white border-0
+              transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
             >
               Submit
             </button>
           </form>
-        ) : (
-          <></>
-        )}
+        }
 
-        <div className="flex flex-col-reverse overflow-y-auto h-80 border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6 mb-20 ">
+        <div className="flex flex-col-reverse overflow-y-auto h-80  border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6 mb-20 ">
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (

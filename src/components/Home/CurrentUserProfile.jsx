@@ -8,14 +8,24 @@ import WallPosts from "./WallPosts";
 import NavBar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
-
+import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
+import TopArtists from "./TopArtists";
+import TopTracks from "./TopTracks";
 export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
   const [vibe, setVibe] = useState(false);
+  const [play, setplay] = useState(false);
   const [mutual, setMutual] = useState(false);
   const mySpotifySub = session?.user.user_metadata.sub;
+  const { uri } = useSelector((state) => state.discover);
+
+  useEffect(() => {
+    if (uri) {
+      setplay(true);
+    }
+  }, [uri]);
 
   const vibeHandler = () => {
     if (vibe === false) {
@@ -124,44 +134,58 @@ export default function CurrentUserProfile({ token, session }) {
 
   if (items) {
     return (
-      <div>
+      <div className="flex dark:text-gray-200 flex-col">
         <NavBar session={session} />
-        <div className="flex flex-col justify-center items-center ">
+        <div className="flex justify-center">
           <NameBio session={session} userId={userId} />
-          {userId !== mySpotifySub ? (
-            mutual ? (
-              <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                onClick={vibeHandler}
-              >
-                V I B E E !
-              </button>
-            ) : !vibe ? (
-              <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                onClick={vibeHandler}
-              >
-                V I B E with Me!
-              </button>
+          <div className="absolute top-[50%] m-4 left-[16%]">
+            {userId !== mySpotifySub ? (
+              mutual ? (
+                <button
+                  className="h-10 px-5 text-lg border-hidden text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                  onClick={vibeHandler}
+                >
+                  V I B E E !
+                </button>
+              ) : !vibe ? (
+                <button
+                  className="h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                  onClick={vibeHandler}
+                >
+                  V I B E
+                </button>
+              ) : (
+                <button
+                  className="h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                  onClick={vibeHandler}
+                >
+                  V I B E D
+                </button>
+              )
             ) : (
-              <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                onClick={vibeHandler}
-              >
-                V I B E D
-              </button>
-            )
-          ) : (
-            <></>
-          )}
+              <></>
+            )}
+          </div>
         </div>
-        <div className="m-10 flex	place-content-evenly">
-          <TopPlaylists session={session} token={token} />
+        <div className="flex justify-around flex-wrap p-3 rounded-xl mx-10 w-full">
+          <TopPlaylists
+            className="m-10 place-content-evenly"
+            session={session}
+            token={token}
+          />
+          <TopArtists />
+          <TopTracks />
           <WallPosts session={session} mutual={mutual} />
         </div>
-
-        <div className="fixed z-10 bottom-0 mt-10 w-full ">
-          <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
+        <div className="fixed z-[9] bottom-0 mt-10 w-full ">
+          <SpotifyPlayer
+            callback={(state) => {
+              if (!state.isPlaying) setplay(false);
+            }}
+            play={play}
+            token={token}
+            uris={uri.length ? [uri] : items.map((item) => item.uri)}
+          />
         </div>
       </div>
     );

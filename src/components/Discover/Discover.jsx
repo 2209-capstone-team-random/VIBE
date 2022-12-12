@@ -76,10 +76,10 @@ const Discover = ({ token, session }) => {
       ) : (
         ""
       )}
-      <div className={"   overflow-hidden z-0"}>
+      <div className={"overflow-hidden z-0"}>
         <Swiper
           slidesPerView={5}
-          spaceBetween={10}
+          spaceBetween={20}
           pagination={{
             clickable: true,
           }}
