@@ -15,6 +15,9 @@ export default function CurrentUserProfile({ token, session }) {
   const { userId } = useParams();
   const [vibe, setVibe] = useState(false);
   const [mutual, setMutual] = useState(false);
+  const [background, setBackground] = useState("");
+  const [userData, setUserData] = useState([]);
+
   const mySpotifySub = session?.user.user_metadata.sub;
 
   const vibeHandler = () => {
@@ -78,15 +81,7 @@ export default function CurrentUserProfile({ token, session }) {
       const { data, error } = await supabase
         .from("Vibe")
         .update({ mutual: false })
-        .match({ userSpotify, vibeSpotify })
-        .select();
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        console.log(error);
-      }
-      console.log("testing");
+        .match({ userSpotify, vibeSpotify });
     } catch (error) {
       console.log(error);
     }
@@ -122,9 +117,34 @@ export default function CurrentUserProfile({ token, session }) {
     dispatch(fetchUserByIdPlaylists(userId, token));
   }, [token]);
 
+  const getUser = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("User")
+        .select("*")
+        .eq("spotifyId", userId);
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!userData[0]?.display_name) {
+      getUser();
+    } else {
+      setBackground(userData[0]?.background);
+    }
+  }, [userData]);
+
   if (items) {
     return (
-      <div>
+      <div
+        style={{
+          "background-image": `url(${background})`,
+          "background-size": "cover",
+        }}
+      >
         <NavBar session={session} />
         <div className="flex flex-col justify-center items-center ">
           <NameBio session={session} userId={userId} />
