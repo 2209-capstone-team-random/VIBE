@@ -141,8 +141,8 @@ export default function CurrentUserProfile({ token, session }) {
     return (
       <div
         style={{
-          "background-image": `url(${background})`,
-          "background-size": "cover",
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
         }}
       >
         <NavBar session={session} />

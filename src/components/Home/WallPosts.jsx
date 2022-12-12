@@ -83,11 +83,8 @@ export default function WallPosts({ session, mutual }) {
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-start text-accent-focus dark:text-primary"
-                  >
+                <div key={post.id} className="chat-header">
+                  <div className="flex flex-col chat chat-start text-accent-focus dark:text-primary">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
@@ -101,11 +98,8 @@ export default function WallPosts({ session, mutual }) {
               );
             } else {
               return (
-                <div className="chat-header">
-                  <div
-                    key={post.id}
-                    className="flex flex-col chat chat-start text-secondary-focus dark:text-black"
-                  >
+                <div key={post.id} className="chat-header">
+                  <div className="flex flex-col chat chat-start text-secondary-focus dark:text-black">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
