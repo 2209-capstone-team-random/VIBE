@@ -68,10 +68,10 @@ export default function WallPosts({ session, mutual }) {
       <div>
         {mutual || userId === session?.user.user_metadata.sub ? (
           <form id="postForm" onSubmit={handleSubmit} className="m">
-            <h1>✨ Sing To Me 🎤 ✨</h1>
+            <h1 className="dark:text-black">✨ Sing To Me 🎤 ✨</h1>
             <textarea
               name="post"
-              className="flex flex-col textarea text-black textarea-primary dark:textarea-accent dark:bg-slate-200 border-slate-300 md:w-[500px] mt-6 mb-2 w-[250px]"
+              className="flex flex-col textarea text-black textarea-primary dark:textarea-accent dark:border-none border-none dark:bg-slate-200 md:w-[500px] mt-6 mb-2 w-[250px]"
               placeholder="♪((ヽ(ᐛ)ﾉ))♬"
               onChange={onChangeHandler}
               value={input}
