@@ -142,7 +142,11 @@ export default function CurrentUserProfile({ token, session }) {
       <div
         style={{
           backgroundImage: `url(${background})`,
-          backgroundSize: "cover",
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+
+          height: "100vh",
+          width: "100vw",
         }}
       >
         <NavBar session={session} />
@@ -151,21 +155,21 @@ export default function CurrentUserProfile({ token, session }) {
           {userId !== mySpotifySub ? (
             mutual ? (
               <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
                 onClick={vibeHandler}
               >
                 V I B E E !
               </button>
             ) : !vibe ? (
               <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
                 onClick={vibeHandler}
               >
                 V I B E with Me!
               </button>
             ) : (
               <button
-                className="mb-20 h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
                 onClick={vibeHandler}
               >
                 V I B E D
@@ -175,12 +179,12 @@ export default function CurrentUserProfile({ token, session }) {
             <></>
           )}
         </div>
-        <div className="m-10 flex	place-content-evenly">
+        <div className="mx-10  flex	place-content-evenly">
           <TopPlaylists session={session} token={token} />
           <WallPosts session={session} mutual={mutual} />
         </div>
 
-        <div className="fixed z-10 bottom-0 mt-10 w-full ">
+        <div className="fixed z-10 bottom-0 w-full ">
           <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
         </div>
       </div>

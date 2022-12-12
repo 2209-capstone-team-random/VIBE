@@ -7,8 +7,13 @@ import { useParams } from "react-router-dom";
 export default function WallPosts({ session, mutual }) {
   const spotifyId = session?.user.user_metadata.sub;
   const [posts, setPosts] = useState([]);
+  const [input, setInput] = useState("");
 
   const { userId } = useParams();
+
+  const onChangeHandler = (e) => {
+    setInput(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +32,7 @@ export default function WallPosts({ session, mutual }) {
       console.log(data);
     };
     addPost();
+    setInput("");
   };
 
   useEffect(() => {
@@ -61,16 +67,18 @@ export default function WallPosts({ session, mutual }) {
     return (
       <div>
         {mutual || userId === session?.user.user_metadata.sub ? (
-          <form id="postForm" onSubmit={handleSubmit}>
+          <form id="postForm" onSubmit={handleSubmit} className="m">
             <h1>✨ Sing To Me 🎤 ✨</h1>
             <textarea
               name="post"
-              className="flex flex-col textarea textarea-primary dark:textarea-accent dark:bg-slate-200 dark:text-purple-800 w-96 mt-6 mb-2"
+              className="flex flex-col textarea text-black textarea-primary dark:textarea-accent dark:bg-slate-200 border-slate-300 md:w-[500px] mt-6 mb-2 w-[250px]"
               placeholder="♪((ヽ(ᐛ)ﾉ))♬"
+              onChange={onChangeHandler}
+              value={input}
             ></textarea>
             <button
               form="postForm"
-              className="btn btn-sm bg-blue-500 mb-20 text-black/80 hover:bg-blue-400"
+              className="btn btn-sm text-white transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100 m-4"
             >
               Submit
             </button>
@@ -79,7 +87,7 @@ export default function WallPosts({ session, mutual }) {
           <></>
         )}
 
-        <div className="flex flex-col-reverse overflow-y-auto h-80 border border-slate-300 dark:border-white/40 dark:bg-slate-200 rounded-lg p-6 mb-20 ">
+        <div className="flex flex-col-reverse overflow-y-auto h-80 border textarea textarea-primary dark:textarea-accent dark:bg-slate-200 border-slate-300 rounded-lg p-6 mb-10 mt-5 ">
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (

@@ -110,7 +110,7 @@ const App = () => {
       >
         {theme === "dark" ? sun : moon}
       </button> */}
-      <div className="bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-300 min-h-screen font-inter">
+      <div className="bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-300  font-inter">
         <Routes>
           <Route
             exact
