@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
-import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Drawer from "../../Drawer";
-import Discover from "../Discover/Discover";
 
 export default function NavBar({ userId, session }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +61,7 @@ export default function NavBar({ userId, session }) {
   };
 
   return (
-    <div className="navbar bg-blue-50 mb-8 dark:hover:gray/10 dark:bg-gray-600">
+    <div className="navbar bg-blue-50 dark:hover:gray/10 dark:bg-gray-600">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -89,21 +86,19 @@ export default function NavBar({ userId, session }) {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <Link to="/discover">
-              <li>
-                <a>Discover</a>
-              </li>
+              <li>Discover</li>
             </Link>
           </ul>
         </div>
         <Link to={`/`}>
-          <a className="btn btn-ghost normal-case text-2xl">V I B E</a>
+          <p className="btn btn-ghost normal-case text-2xl">V I B E</p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
           <li>
             <Link to="/discover">
-              <a className="font-bold">Discover</a>
+              <p className="font-bold">Discover</p>
             </Link>
           </li>
         </ul>

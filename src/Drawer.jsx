@@ -16,11 +16,12 @@ export default function Drawer({
   const [status, setStatus] = useState(false);
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
+    nav("/");
   };
 
   useEffect(() => {
     if (status) {
-      nav("/discover");
+      nav("/");
     }
   }, [status]);
 
@@ -54,7 +55,7 @@ export default function Drawer({
       >
         <article className="relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">
           <header className="p-4 font-bold text-center text-2xl dark:bg-black/70  bg-white">
-            Header
+            V I B E
           </header>
           <Link to={`/profile/${session?.user.user_metadata.sub}`}>
             <h2 className=" p-3 text-center hover:bg-blue-300 dark:hover:bg-black/60 font-semibold">

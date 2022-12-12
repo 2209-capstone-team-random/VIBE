@@ -8,17 +8,16 @@ import WallPosts from "./WallPosts";
 import NavBar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
-import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
-import TopArtists from "./TopArtists";
-import TopTracks from "./TopTracks";
+
 export default function CurrentUserProfile({ token, session }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.userPlaylists);
   const { userId } = useParams();
   const [vibe, setVibe] = useState(false);
-  const [play, setplay] = useState(false);
   const [mutual, setMutual] = useState(false);
-  const mySpotifySub = session?.user.user_metadata.sub;
+  const [background, setBackground] = useState("");
+  const [userData, setUserData] = useState([]);
+  const [play, setplay] = useState(false);
   const { uri } = useSelector((state) => state.discover);
 
   useEffect(() => {
@@ -26,6 +25,8 @@ export default function CurrentUserProfile({ token, session }) {
       setplay(true);
     }
   }, [uri]);
+
+  const mySpotifySub = session?.user.user_metadata.sub;
 
   const vibeHandler = () => {
     if (vibe === false) {
@@ -88,15 +89,7 @@ export default function CurrentUserProfile({ token, session }) {
       const { data, error } = await supabase
         .from("Vibe")
         .update({ mutual: false })
-        .match({ userSpotify, vibeSpotify })
-        .select();
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        console.log(error);
-      }
-      console.log("testing");
+        .match({ userSpotify, vibeSpotify });
     } catch (error) {
       console.log(error);
     }
@@ -132,52 +125,74 @@ export default function CurrentUserProfile({ token, session }) {
     dispatch(fetchUserByIdPlaylists(userId, token));
   }, [token]);
 
+  const getUser = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("User")
+        .select("*")
+        .eq("spotifyId", userId);
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!userData[0]?.display_name) {
+      getUser();
+    } else {
+      setBackground(userData[0]?.background);
+    }
+  }, [userData]);
+
   if (items) {
     return (
-      <div className="flex dark:text-gray-200 flex-col">
+      <div
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+
+          height: "100vh",
+          width: "100vw",
+        }}
+      >
         <NavBar session={session} />
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center items-center ">
           <NameBio session={session} userId={userId} />
-          <div className="absolute top-[50%] m-4 left-[16%]">
-            {userId !== mySpotifySub ? (
-              mutual ? (
-                <button
-                  className="h-10 px-5 text-lg border-hidden text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                  onClick={vibeHandler}
-                >
-                  V I B E E !
-                </button>
-              ) : !vibe ? (
-                <button
-                  className="h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                  onClick={vibeHandler}
-                >
-                  V I B E
-                </button>
-              ) : (
-                <button
-                  className="h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
-                  onClick={vibeHandler}
-                >
-                  V I B E D
-                </button>
-              )
+          {userId !== mySpotifySub ? (
+            mutual ? (
+              <button
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-pink-300 via-orange-300 to-pink-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                onClick={vibeHandler}
+              >
+                V I B E E !
+              </button>
+            ) : !vibe ? (
+              <button
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                onClick={vibeHandler}
+              >
+                V I B E with Me!
+              </button>
             ) : (
-              <></>
-            )}
-          </div>
+              <button
+                className=" h-10 px-5 text-lg border-hidden  text-white rounded-xl transition-all duration-500 bg-gradient-to-tl from-purple-300 via-blue-300 to-purple-300 bg-size-200 bg-pos-0 hover:bg-pos-100"
+                onClick={vibeHandler}
+              >
+                V I B E D
+              </button>
+            )
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="flex justify-around flex-wrap p-3 rounded-xl mx-10 w-full">
-          <TopPlaylists
-            className="m-10 place-content-evenly"
-            session={session}
-            token={token}
-          />
-          <TopArtists />
-          <TopTracks />
+        <div className="mx-10  flex	place-content-evenly">
+          <TopPlaylists session={session} token={token} />
           <WallPosts session={session} mutual={mutual} />
         </div>
-        <div className="fixed z-[9] bottom-0 mt-10 w-full ">
+
+        <div className="fixed z-10 bottom-0 w-full ">
           <SpotifyPlayer
             callback={(state) => {
               if (!state.isPlaying) setplay(false);
@@ -185,7 +200,7 @@ export default function CurrentUserProfile({ token, session }) {
             play={play}
             token={token}
             uris={uri.length ? [uri] : items.map((item) => item.uri)}
-          />
+          />{" "}
         </div>
       </div>
     );
