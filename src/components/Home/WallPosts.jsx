@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function WallPosts({ session, mutual }) {
   const spotifyId = session?.user.user_metadata.sub;
   const [posts, setPosts] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   const { userId } = useParams();
 
@@ -22,7 +22,7 @@ export default function WallPosts({ session, mutual }) {
     if (e.target.post.value) postForm.post = e.target.post.value;
 
     const addPost = async () => {
-      const { data, error } = await supabase.from('Wall_Post').insert([
+      const { data, error } = await supabase.from("Wall_Post").insert([
         {
           userSpotify: userId,
           posterSpotify: spotifyId,
@@ -32,15 +32,15 @@ export default function WallPosts({ session, mutual }) {
       console.log(data);
     };
     addPost();
-    setInput('');
+    setInput("");
   };
 
   useEffect(() => {
     const channel = supabase
-      .channel('wall')
+      .channel("wall")
       .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'Wall_Post' },
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "Wall_Post" },
         (payload) =>
           setPosts((prev) => {
             console.log(payload, prev);
@@ -54,9 +54,9 @@ export default function WallPosts({ session, mutual }) {
     const getUserPosts = async () => {
       const { data: Wall_Post, error } = await supabase
 
-        .from('Wall_Post')
-        .select('*')
-        .eq('userSpotify', userId);
+        .from("Wall_Post")
+        .select("*")
+        .eq("userSpotify", userId);
 
       setPosts(Wall_Post);
     };
@@ -87,12 +87,12 @@ export default function WallPosts({ session, mutual }) {
           <></>
         )}
 
-        <div className="flex flex-col-reverse overflow-y-auto h-80 border textarea textarea-primary dark:textarea-accent bg-gradient-to-r from-blue-200 to-cyan-200 dark:bg-gradient-to-r from-blue-200 to-cyan-200 border-slate-300 rounded-lg p-6 mb-10 mt-5 ">
+        <div className="flex flex-col-reverse overflow-y-auto h-80 border textarea textarea-primary dark:textarea-accent bg-gradient-to-r from-blue-200 to-cyan-200 dark:bg-gradient-to-r from-blue-200 to-cyan-200 border-slate-300 rounded-lg p-6 mb-10 mt-5 md:w-[500px] mt-6 mb-2 w-[250px] ">
           {posts.map((post, id) => {
             if (post.posterSpotify !== userId) {
               return (
                 <div key={post.id} className="chat-header">
-                  <div className="flex flex-col chat chat-start text-accent-focus dark:text-primary">
+                  <div className="flex flex-col chat chat-start text-accent-focus dark:text-primary ">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
@@ -107,7 +107,7 @@ export default function WallPosts({ session, mutual }) {
             } else {
               return (
                 <div key={post.id} className="chat-header">
-                  <div className="flex flex-col chat chat-start text-secondary-focus dark:text-black">
+                  <div className="flex flex-col chat chat-start text-secondary-focus dark:text-black ">
                     {post.posterSpotify}
                     <time className="text-xs opacity-50 dark:opacity-80">
                       {String(post.created_at).slice(0, 10)}
@@ -124,5 +124,5 @@ export default function WallPosts({ session, mutual }) {
       </div>
     );
   }
-  console.log('Error rendering posts');
+  console.log("Error rendering posts");
 }
