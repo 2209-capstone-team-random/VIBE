@@ -5,6 +5,7 @@ import Drawer from "../../Drawer";
 export default function NavBar({ userId, session }) {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState(null);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
@@ -12,6 +13,15 @@ export default function NavBar({ userId, session }) {
       setTheme("light");
     }
   }, []);
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", JSON.stringify(theme));
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   const sun = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +29,7 @@ export default function NavBar({ userId, session }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      className="w-6 h-6 dark:text-black"
     >
       <path
         strokeLinecap="round"
@@ -49,14 +59,6 @@ export default function NavBar({ userId, session }) {
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
 
   return (
     <div className="navbar bg-blue-50 dark:hover:gray/10 dark:bg-gray-600">

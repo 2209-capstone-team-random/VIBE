@@ -17,6 +17,14 @@ export default function CurrentUserProfile({ token, session }) {
   const [mutual, setMutual] = useState(false);
   const [background, setBackground] = useState("");
   const [userData, setUserData] = useState([]);
+  const [play, setplay] = useState(false);
+  const { uri } = useSelector((state) => state.discover);
+
+  useEffect(() => {
+    if (uri) {
+      setplay(true);
+    }
+  }, [uri]);
 
   const mySpotifySub = session?.user.user_metadata.sub;
 
@@ -185,7 +193,14 @@ export default function CurrentUserProfile({ token, session }) {
         </div>
 
         <div className="fixed z-10 bottom-0 w-full ">
-          <SpotifyPlayer token={token} uris={items.map((item) => item.uri)} />
+          <SpotifyPlayer
+            callback={(state) => {
+              if (!state.isPlaying) setplay(false);
+            }}
+            play={play}
+            token={token}
+            uris={uri.length ? [uri] : items.map((item) => item.uri)}
+          />{" "}
         </div>
       </div>
     );

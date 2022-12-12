@@ -44,10 +44,6 @@ const VibesList = ({ vibes, ownId }) => {
     }
   }, [imgList]);
 
-  console.log("vibe", vibes);
-  console.log("dictionary", dictionary);
-  console.log("imglist", imgList);
-
   const getImg = async () => {
     const { data, error } = await supabase.from("User").select(`
     spotifyId,
@@ -59,8 +55,8 @@ const VibesList = ({ vibes, ownId }) => {
   };
 
   return (
-    <div className="  border-2 border-black m-10 p-5 dark:border-white">
-      <ul className="menu bg-base-100 w-56 dark:bg-zinc-600 ">
+    <div className=" border-2 border-black dark:bg-gray-600  m-10 p-5 flex flex-wrap justify-evenly  bg-white dark:border-white">
+      <ul className="menu w-56 bg-white dark:bg-gray-600 ">
         {vibes.map((vibe) => {
           return (
             <li key={vibe.id}>
