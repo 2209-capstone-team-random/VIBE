@@ -11,7 +11,7 @@ export default function WallPosts({ session, mutual }) {
   const { userId } = useParams();
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const postForm = {};
 
     if (e.target.post.value) postForm.post = e.target.post.value;
