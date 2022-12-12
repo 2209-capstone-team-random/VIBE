@@ -55,7 +55,7 @@ const VibesList = ({ vibes, ownId }) => {
   };
 
   return (
-    <div className=" border-2 border-black dark:bg-gray-600  m-10 p-5 flex flex-wrap justify-evenly  bg-white dark:border-white">
+    <div className=" border-2 border-black dark:bg-gray-600  m-10 p-5 flex flex-wrap   bg-white dark:border-white">
       <ul className="menu w-56 bg-white dark:bg-gray-600 ">
         {vibes.map((vibe) => {
           return (
