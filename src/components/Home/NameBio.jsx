@@ -38,11 +38,11 @@ export default function NameBio({ session, userId }) {
           <img src={userImg[0]?.url} />
         </div>
       </div>
-      <div className="flex-col flex justify-center">
-        <h2 className="font-semibold -right-[4%] relative text-3xl mb-4">
+      <div className="flex-column ml-20">
+        <p className="font-semibold text-lg mb-4 dark:text-white">
           {userData[0]?.display_name}
-        </h2>
-        <p className="mb-4 ">Bio : {userData[0]?.bio}</p>
+        </p>
+        <p className="mb-4 dark:text-white ">Bio : {userData[0]?.bio}</p>
       </div>
     </div>
   );

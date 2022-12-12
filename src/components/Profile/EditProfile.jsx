@@ -154,7 +154,7 @@ const EditProfile = ({ token, session }) => {
               </div>
             </div>
           </div>
-          <div className="flex  justify-center">
+          <div className="flex justify-center">
             <button
               type="submit"
               form="editForm"
