@@ -35,20 +35,20 @@ const EditProfile = ({ token, session }) => {
     if (image) {
       const { data, err } = await supabase.storage
         .from("profile-images")
-        .from("profile-images")
-        .upload(`/${spotifyId}-avatar.${extension}`, image, {
+        .upload(`/${spotifyId}-avatar.jpg.${extension}`, image, {
           upsert: true,
         });
       if (data) {
-        const { data: img } = await supabase.storage
+        const { data: img } = supabase.storage
           .from("profile-images")
-          .getPublicUrl(`${spotifyId}-avatar.${extension}`);
+          .getPublicUrl(`${spotifyId}-avatar.jpg.${extension}`);
         await supabase
           .from("Profile_Image")
           .update({ url: img.publicUrl })
           .match({ userSpotify: `${spotifyId}` });
       }
     }
+
     if (e.target.display_name.value)
       nameForm.display_name = e.target.display_name.value;
     if (e.target.bio.value) bioForm.bio = e.target.bio.value;

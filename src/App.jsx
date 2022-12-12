@@ -90,16 +90,16 @@ const App = () => {
         setToken(session.provider_token);
         let userId = session.user.identities[0].user_id;
         getUserStatus(userId);
-      } else {
-        supabase.auth.onAuthStateChange((event, session) => {
-          if (event == "SIGNED_OUT") {
-            setSession(null);
-            navigate("/");
-          }
-        });
       }
     });
   }, []);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == "SIGNED_OUT") {
+      setSession(null);
+      navigate("/");
+    }
+  });
 
   return (
     <div>

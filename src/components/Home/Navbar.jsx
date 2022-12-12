@@ -87,21 +87,19 @@ export default function NavBar({ userId, session }) {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <Link to="/discover">
-              <li>
-                <a>Discover</a>
-              </li>
+              <li>Discover</li>
             </Link>
           </ul>
         </div>
         <Link to={`/`}>
-          <a className="btn btn-ghost normal-case text-2xl">V I B E</a>
+          <p className="btn btn-ghost normal-case text-2xl">V I B E</p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
           <li>
             <Link to="/discover">
-              <a className="font-bold">Discover</a>
+              <p className="font-bold">Discover</p>
             </Link>
           </li>
         </ul>

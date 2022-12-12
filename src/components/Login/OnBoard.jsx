@@ -8,6 +8,7 @@ import { supabase } from "../../supabaseClient";
 import { fetchUserArtists } from "../../redux/Spotify/userTopArtists";
 import { fetchUserTracks } from "../../redux/Spotify/userTopTracks";
 import { fetchUserProfile } from "../../redux/Spotify/userProfile";
+import axios from "axios";
 
 const OnBoard = ({ session, token }) => {
   const dispatch = useDispatch();
@@ -68,9 +69,7 @@ const OnBoard = ({ session, token }) => {
     try {
       let { data, error } = await supabase
         .from("User_Top_Cat")
-        .insert([{ userSpotify, catA, catB, catC }])
-        .select();
-      console.log("data", data);
+        .insert([{ userSpotify, catA, catB, catC }]);
     } catch (error) {
       console.log(error);
     }
@@ -98,13 +97,7 @@ const OnBoard = ({ session, token }) => {
     dispatch(fetchUserProfile(token));
   }, [token]);
 
-  // useEffect(() => {
-  //   if (allArtists?.length > 0 || allTracks?.length > 0) {
-  //     insertTop(spotifyId, allArtists, allTracks);
-  //   }
-  // }, [allTracks]);
-
-  const clickHandler = () => {
+  const clickHandler = async () => {
     //set first time user status to false
     onBoarding(userId);
     //adding cat to first time user
@@ -116,6 +109,7 @@ const OnBoard = ({ session, token }) => {
     //insert image into db
     insertProfileImage(spotifySub, profileImage.images[0].url);
   };
+
   return (
     <div className="w-full h-screen relative">
       <video
