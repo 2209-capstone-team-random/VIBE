@@ -2,7 +2,7 @@
 
 Capstone Project - VIBE
 
-a music social media app that allow users to discover new music and new friends who share similar or different music taste as you! Come check out more for yourself at https://vibe-2wir.onrender.com. IMPORTANT, because of the use of SPOTIFY API, the app is currently under developer mode and can only be accessed with email added into the developer mode, so if you want to test out the app, please send us a message prior so we can add you into the system!
+a music social media app that allow users to discover new music and new friends who share similar or different music taste as you! Come check out more for yourself at https://vibe-2wir.onrender.com. IMPORTANT! TEST EMAIL- nobodiesxp@gmail.com PW- vibe1234, because of the use of SPOTIFY API, the app is currently under developer mode and can only be accessed with email added into the developer mode, so if you want to test out the app, please feel free to use the test account or send us a message prior so we can add you into the system!
 
 youtube walkthrough demo at https://www.youtube.com/watch?v=G-No6EUqpVo
 
